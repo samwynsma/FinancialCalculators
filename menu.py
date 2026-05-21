@@ -3,6 +3,7 @@ def main():
     starting_value = -1.0
     interest_rate = -1.0
     time = -1
+    money_by_year = []
     while starting_value < 0.0:
         num_input = input("How much money are we starting with: ")
         try:
@@ -22,8 +23,16 @@ def main():
         except:
             print("Invalid input: try putting a number there")
 
-    final_money = round(starting_value * pow(1 + interest_rate/100, time), 2)
-    print("Your final money is %d", final_money)
+    money_by_year.append(starting_value)
+    current_money = starting_value
+    for i in range(time):
+        current_money = round(current_money * (1 + interest_rate / 100), 2)
+        money_by_year.append(current_money)
+    
+    for i in range(time + 1):
+        print("Money at the beginning of year %d: %d" % (i, money_by_year[i]))
+        
+    
     
 
 if __name__ == "__main__":
