@@ -32,18 +32,19 @@ def generate_interest():
         money_by_year.append(current_money)
     
 
-    workbook = xlsxwriter.Workbook("InterestCalculation.xlsx")
-    worksheet = workbook.add_worksheet()
+    workbook = xlsxwriter.Workbook("InterestCalculation.xlsx", {'strings_to_numbers' : True})
+    worksheet = workbook.add_worksheet("Money with Interest")
 
     worksheet.write("A1", "Budget calculation at %d percent interest" % (interest_rate))
     worksheet.write("A2", "Year")
     worksheet.write("B2", "Money at Year")
+    money_format = workbook.add_format({'num_format': '$#,##0.00'})
 
 
     for i in range(time + 1):
         print("Money at the beginning of year %d: %d" % (i, money_by_year[i]))
         worksheet.write(i+2, 0, i)
-        worksheet.write(i+2, 1, money_by_year[i])
+        worksheet.write(i+2, 1, money_by_year[i], money_format)
 
     workbook.close()
     print("Finished creating financial documents.")
