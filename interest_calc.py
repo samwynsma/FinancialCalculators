@@ -5,26 +5,56 @@ def generate_interest():
     starting_value = -1.0
     interest_rate = -1.0
     time = -1
-    while starting_value < 0.0:
-        num_input = input("How much money are we starting with: ")
+    period_type = ""
+    added_investment = 0.0
+    will_add = ""
+
+    while starting_value <=0.0:
+        num_input = input("How much money are we starting with? ")
         try:
             starting_value = float(num_input)
-        except:
-            print("Invalid input: try putting a number there")
-    while interest_rate < 0.0:
-        num_input = input("What is the annual interest rate: ")
-        try:
-            interest_rate = float(num_input)
-        except:
-            print("Invalid input: try putting a number there")
-    while time < 0:
-        num_input = input("How many years is the money going to sit there: ")
-        try:
-            time = int(num_input)
+            if(starting_value <= 0.0):
+                print("Invalid input: positive amounts only. If you want to discuss negative amounts, go to the loan calculator")
         except:
             print("Invalid input: try putting a number there")
 
-    generate_interest_document(starting_value, interest_rate, time)
+    while interest_rate <= 0.0:
+        num_input = input("What is the annual interest rate? ")
+        try:
+            interest_rate = float(num_input)
+            if(interest_rate <= 0.0):
+                print("If your interest rate is negative, don't invest in that source. Put your money into savings or a low-yield safe investment.")
+        except:
+            print("Invalid input: try putting a number there")
+
+
+
+    while period_type != "month" and period_type != "year":
+        period_type = input("How often are is the interest and additional investments calculated? Each month, or each year? ").lower()
+
+    while time < 0:
+        num_input = input("How many %ss is the money going to sit there? " % (period_type))
+        try:
+            time = int(num_input)
+            if(time < 0):
+                print("Invalid input: time must be a positive number. We can't take our money back in time, only forward.")
+        except:
+            print("Invalid input: try putting a number there")
+    
+    while will_add != 'yes' and will_add != 'no':
+        will_add = input("Will you add additional investments (yes or no)? ")
+    
+    if(will_add == "yes"):
+        while added_investment <= 0.0:
+            num_input = input("How much money will you add each %s? " % (period_type))
+            try:
+                added_investment = float(num_input)
+            except:
+                print("Please enter a number greater than $0.00. If you have a retirement account and are pulling out money, try the retirement calculator.")
+    
+
+
+    generate_interest_document(starting_value, interest_rate, time, period_type, added_investment)
     return
 
 def generate_interest_document(start, interest, periods, duration_of_period="Year", additional_money=0.0):
