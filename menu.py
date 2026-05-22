@@ -31,15 +31,19 @@ def main():
         current_money = round(current_money * (1 + interest_rate / 100), 2)
         money_by_year.append(current_money)
     
-    for i in range(time + 1):
-        print("Money at the beginning of year %d: %d" % (i, money_by_year[i]))
-    
+
     workbook = xlsxwriter.Workbook("InterestCalculation.xlsx")
     worksheet = workbook.add_worksheet()
 
     worksheet.write("A1", "Budget calculation at %d percent interest" % (interest_rate))
     worksheet.write("A2", "Year")
-    worksheet.write("B1", "Money at Year")
+    worksheet.write("B2", "Money at Year")
+
+
+    for i in range(time + 1):
+        print("Money at the beginning of year %d: %d" % (i, money_by_year[i]))
+        worksheet.write(i+2, 0, i)
+        worksheet.write(i+2, 1, money_by_year[i])
 
     workbook.close()
     print("Finished creating financial documents.")
