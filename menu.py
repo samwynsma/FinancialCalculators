@@ -1,3 +1,5 @@
+import xlsxwriter
+
 def main():
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")
     starting_value = -1.0
@@ -31,6 +33,16 @@ def main():
     
     for i in range(time + 1):
         print("Money at the beginning of year %d: %d" % (i, money_by_year[i]))
+    
+    workbook = xlsxwriter.Workbook("InterestCalculation.xlsx")
+    worksheet = workbook.add_worksheet()
+
+    worksheet.write("A1", "Budget calculation at %d percent interest" % (interest_rate))
+    worksheet.write("A2", "Year")
+    worksheet.write("B1", "Money at Year")
+
+    workbook.close()
+    print("Finished creating financial documents.")
         
     
     
