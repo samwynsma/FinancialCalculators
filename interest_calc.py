@@ -75,14 +75,19 @@ def generate_interest_document(start, interest, periods, duration_of_period="Yea
     
 
     workbook = None
+    worksheet = None
+    
     if(not fileExists):
         workbook = Workbook()
+        worksheet = workbook.active
         fileExists = True
     else:
         workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
-    worksheet = workbook.active
+        worksheet = workbook.create_sheet()
+    
+    worksheet.title = "Investment %d" % int(start)
 
-    worksheet["A1"] = "Budget calculation"
+    worksheet["A1"] = "Interest calculation"
     worksheet["A2"] = "Starting amount: %.2f" % (start)
     worksheet["A3"] = "Interest rate: %.4f percent per %s" % (interest, duration_of_period)
     worksheet["A4"] = "Additional investment of %.2f per %s" % (additional_money, duration_of_period)
