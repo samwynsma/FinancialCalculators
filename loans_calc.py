@@ -32,8 +32,9 @@ def loan_payoff(fileExists):
             amount_paid = float(num_input)
             if(amount_paid <= 0.0):
                 print("Invalid input: you need to spend money to pay off your loan")
-            if(amount_paid <= (starting_loan * (interest_rate / 1200.0))):
+            if(amount_paid < (starting_loan * (interest_rate / 1200.0))):
                print("If you pay that amount, you will never pay off the loan. Sorry, but you'll have to pay a larger amount.")
+               amount_paid = -1.0
         except:
             print("Invalid input: try putting a number there")
     
