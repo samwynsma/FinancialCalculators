@@ -86,6 +86,9 @@ def generate_loan_documents(loan, interest, payment, fileExists):
             worksheet["A5"] = "Loan will be paid off in 1 month"
     else:
         worksheet["A5"] = "Loan will take longer than 50 years to pay off."
+    if(len(loan_remaining) < 600):
+        total_amount = payment * (len(loan_remaining) - 2) + (loan_remaining[len(loan_remaining)-2] * (1 + interest / 100.0))
+        worksheet["A6"] = "Total amount of money paid is %.2f" % (total_amount)
     worksheet["B2"] = "Month"
     worksheet["C2"] = "Remaining loan"
     money_format = "$#,##0.00"
