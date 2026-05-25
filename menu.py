@@ -1,5 +1,3 @@
-import xlsxwriter
-
 from interest_calc import generate_interest
 from loans_calc import loan_payoff
 

@@ -1,5 +1,6 @@
 import xlsxwriter
 import openpyxl
+from openpyxl import Workbook
 
 def loan_payoff(fileExists):
     print("Welcome to the loan payoff calculator! Today, I will take a starting loan amount, the interest of the loan, and the amount being paid each month, and I will calculate how long it will take for the loan to be paid off, showing how much loan will remain each month.")
@@ -36,8 +37,24 @@ def loan_payoff(fileExists):
         except:
             print("Invalid input: try putting a number there")
     
-    generate_loan_documents(starting_loan, interest_rate, amount_paid, fileExists)
-    return
+    file = generate_loan_documents(starting_loan, interest_rate, amount_paid, fileExists)
+    return file
 
 def generate_loan_documents(loan, interest, payment, fileExists):
-    return
+    loan_remaining = []
+    loan_remaining.append(loan)
+
+    interest = interest / 12.0
+    current_money = loan
+
+    while(current_money > 0.0 and len(loan_remaining) <= 600):
+        current_money = round(current_money * (1 + interest / 100.0), 2) - payment
+        if(current_money > 0.0):
+            loan_remaining.append(current_money)
+        else:
+            loan_remaining.append(0.0)
+    
+    for i in range(len(loan_remaining)):
+        print("Money at the beginning of month %d: %d" % (i, loan_remaining[i]))
+
+    return fileExists
