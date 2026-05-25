@@ -1,4 +1,5 @@
 import xlsxwriter
+import pandas
 
 def generate_interest():
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")

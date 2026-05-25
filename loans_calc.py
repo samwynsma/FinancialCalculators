@@ -1,3 +1,5 @@
+import pandas
+
 def loan_payoff():
     print("Welcome to the loan payoff calculator! Today, I will take a starting loan amount, the interest of the loan, and the amount being paid each month, and I will calculate how long it will take for the loan to be paid off, showing how much loan will remain each month.")
     starting_loan = -1.0
