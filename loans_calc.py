@@ -1,6 +1,7 @@
-import pandas
+import xlsxwriter
+import openpyxl
 
-def loan_payoff():
+def loan_payoff(fileExists):
     print("Welcome to the loan payoff calculator! Today, I will take a starting loan amount, the interest of the loan, and the amount being paid each month, and I will calculate how long it will take for the loan to be paid off, showing how much loan will remain each month.")
     starting_loan = -1.0
     interest_rate = -1.0
@@ -35,8 +36,8 @@ def loan_payoff():
         except:
             print("Invalid input: try putting a number there")
     
-    generate_loan_documents(starting_loan, interest_rate, amount_paid)
+    generate_loan_documents(starting_loan, interest_rate, amount_paid, fileExists)
     return
 
-def generate_loan_documents(loan, interest, payment):
+def generate_loan_documents(loan, interest, payment, fileExists):
     return

@@ -1,7 +1,7 @@
-import xlsxwriter
-import pandas
+import openpyxl
+from openpyxl import Workbook
 
-def generate_interest():
+def generate_interest(fileExists):
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")
     starting_value = -1.0
     interest_rate = -1.0
@@ -55,10 +55,10 @@ def generate_interest():
     
 
 
-    generate_interest_document(starting_value, interest_rate, time, period_type, added_investment)
-    return
+    file = generate_interest_document(starting_value, interest_rate, time, period_type, added_investment, fileExists)
+    return file
 
-def generate_interest_document(start, interest, periods, duration_of_period="Year", additional_money=0.0):
+def generate_interest_document(start, interest, periods, duration_of_period="Year", additional_money=0.0, fileExists=False):
     money_by_period = []
     money_by_period.append(start)
 
@@ -74,26 +74,42 @@ def generate_interest_document(start, interest, periods, duration_of_period="Yea
         money_by_period.append(current_money)
     
 
-    workbook = xlsxwriter.Workbook("InterestCalculation.xlsx", {'strings_to_numbers' : True})
-    worksheet = workbook.add_worksheet("Money with Interest")
+    workbook = None
+    if(not fileExists):
+        workbook = Workbook()
+        fileExists = True
+    else:
+        workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+    worksheet = workbook.active
 
-    worksheet.write("A1", "Budget calculation")
-    worksheet.write("A2", "Starting amount: %.2f" % (start))
-    worksheet.write("A3", "Interest rate: %.4f percent per %s" % (interest, duration_of_period))
-    worksheet.write("A4", "Additional investment of %.2f per %s" % (additional_money, duration_of_period))
-    worksheet.write("A5", "Total time investigated: %d %ss" % (periods, duration_of_period))
-    worksheet.write("B2", duration_of_period)
-    worksheet.write("C2", "Money at %s" % (duration_of_period))
-    money_format = workbook.add_format({'num_format': '$#,##0.00'})
+    worksheet["A1"] = "Budget calculation"
+    worksheet["A2"] = "Starting amount: %.2f" % (start)
+    worksheet["A3"] = "Interest rate: %.4f percent per %s" % (interest, duration_of_period)
+    worksheet["A4"] = "Additional investment of %.2f per %s" % (additional_money, duration_of_period)
+    worksheet["A5"] = "Total time investigated: %d %ss" % (periods, duration_of_period)
+    worksheet["B2"] = duration_of_period
+    worksheet["C2"] = "Money at %s" % (duration_of_period)
+    money_format = "$#,##0.00"
 
 
     for i in range(periods + 1):
         print("Money at the beginning of %s %d: %d" % (duration_of_period, i, money_by_period[i]))
-        worksheet.write(i+2, 1, i)
-        worksheet.write(i+2, 2, money_by_period[i], money_format)
-
-    worksheet.autofit()
-
-    workbook.close()
+        worksheet["B%d" % (i+3)] = i
+        worksheet["C%d" % (i+3)] = money_by_period[i]
+        worksheet["C%d" % (i+3)].number_format = money_format
+        
+    
+    for col in worksheet.columns:
+        length = 0
+        column = col[0].column_letter
+        for cell in col:
+            try:
+                if(len(str(cell.value)) > length):
+                    length = len(str(cell.value))
+            except:
+                pass
+        worksheet.column_dimensions[column].width = length + 2
+    
+    workbook.save("InterestCalculation.xlsx")
     print("Finished creating financial documents.")
-    return
+    return fileExists
