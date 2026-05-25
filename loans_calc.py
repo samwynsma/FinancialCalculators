@@ -54,6 +54,41 @@ def generate_loan_documents(loan, interest, payment, fileExists):
             loan_remaining.append(current_money)
         else:
             loan_remaining.append(0.0)
+
+    if(not fileExists):
+        workbook = Workbook()
+        worksheet = workbook.active
+        fileExists = True
+    else:
+        workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+        worksheet = workbook.create_sheet()
+    
+    worksheet.title = "Loan %d " % (loan)
+
+    worksheet["A1"] = "Loan calculation"
+    worksheet["A2"] = "Starting amount: %.2f" % (loan)
+    worksheet["A3"] = "Interest rate: %.4f percent per year" % (interest)
+    worksheet["A4"] = "Loan payment of %.2f per month" % (payment)
+    if(len(loan_remaining) < 600):
+        years = (len(loan_remaining) - 1) // 12
+        months = (len(loan_remaining) - 1) % 12
+        if years > 1 and months > 1:
+            worksheet["A5"] = "Loan will be paid off in %d years and %d months" % (years, months)
+        elif years == 1 and months > 1:
+            worksheet["A5"] = "Loan will be paid off in 1 year and %d months" % (months)
+        elif years > 1 and months == 1:
+            worksheet["A5"] = "Loan will be paid off in %d years and 1 month" % (years)
+        elif years == 1 and months == 1:
+            worksheet["A5"] = "Loan will be paid off in 1 year and 1 month"
+        elif months > 1:
+            worksheet["A5"] = "Loan will be paid off in %d months" % (months)
+        else:
+            worksheet["A5"] = "Loan will be paid off in 1 month"
+    else:
+        worksheet["A5"] = "Loan will take longer than 50 years to pay off."
+    worksheet["B2"] = "Month"
+    worksheet["C2"] = "Remaining loan"
+    money_format = "$#,##0.00"
     
     for i in range(len(loan_remaining)):
         print("Money at the beginning of month %d: %d" % (i, loan_remaining[i]))
