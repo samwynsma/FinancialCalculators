@@ -22,4 +22,19 @@ def loan_payoff():
         except:
             print("Invalid input: try putting a number there")
 
+    while amount_paid <= 0.0:
+        num_input = input("How much do you plan to pay each month in loan payments? ")
+        try:
+            amount_paid = float(num_input)
+            if(amount_paid <= 0.0):
+                print("Invalid input: you need to spend money to pay off your loan")
+            if(amount_paid <= (starting_loan * (interest_rate / 1200.0))):
+               print("If you pay that amount, you will never pay off the loan. Sorry, but you'll have to pay a larger amount.")
+        except:
+            print("Invalid input: try putting a number there")
+    
+    generate_loan_documents(starting_loan, interest_rate, amount_paid)
+    return
+
+def generate_loan_documents(loan, interest, payment):
     return
