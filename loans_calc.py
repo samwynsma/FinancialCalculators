@@ -32,7 +32,7 @@ def loan_payoff(fileExists):
             amount_paid = float(num_input)
             if(amount_paid <= 0.0):
                 print("Invalid input: you need to spend money to pay off your loan")
-            if(amount_paid < (starting_loan * (interest_rate / 1200.0))):
+            if(amount_paid <= (starting_loan * (interest_rate / 1200.0))):
                print("If you pay that amount, you will never pay off the loan. Sorry, but you'll have to pay a larger amount.")
                amount_paid = -1.0
         except:
@@ -92,5 +92,23 @@ def generate_loan_documents(loan, interest, payment, fileExists):
     
     for i in range(len(loan_remaining)):
         print("Money at the beginning of month %d: %d" % (i, loan_remaining[i]))
+        worksheet["B%d" % (i+3)] = i
+        worksheet["C%d" % (i+3)] = loan_remaining[i]
+        worksheet["C%d" % (i+3)].number_format = money_format
+        
+    
+    for col in worksheet.columns:
+        length = 0
+        column = col[0].column_letter
+        for cell in col:
+            try:
+                if(len(str(cell.value)) > length):
+                    length = len(str(cell.value))
+            except:
+                pass
+        worksheet.column_dimensions[column].width = length + 2
+    
+    workbook.save("InterestCalculation.xlsx")
+    print("Finished creating loan documents.")
 
     return fileExists
