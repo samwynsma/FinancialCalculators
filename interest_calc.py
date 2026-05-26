@@ -1,5 +1,6 @@
 import openpyxl
 from openpyxl import Workbook
+from openpyxl.chart import BarChart, Reference
 
 def generate_interest(fileExists):
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")
@@ -115,6 +116,26 @@ def generate_interest_document(start, interest, periods, duration_of_period="Yea
                 pass
         worksheet.column_dimensions[column].width = length + 2
     
+    generate_graph(worksheet, periods, duration_of_period)
     workbook.save("InterestCalculation.xlsx")
     print("Finished creating financial documents.")
     return fileExists
+
+def generate_graph(worksheet, periods, duration_of_period = "Year"):
+
+    chart = BarChart()
+    chart.title = "Investment Amount over Time"
+    chart.type = "col"
+    chart.style = 10
+    chart.x_axis.title = duration_of_period
+    chart.y_axis.title = "Money in Account ($)"
+
+    values = Reference(worksheet, min_col = 3, min_row = 2, max_row = periods+3)
+    categories = Reference(worksheet, min_col = 2, min_row = 3, max_row = periods+3)
+    
+    chart.add_data(values, titles_from_data=True)
+    chart.set_categories(categories)
+    chart.shape = 4
+
+    worksheet.add_chart(chart, "E5")
+    return
