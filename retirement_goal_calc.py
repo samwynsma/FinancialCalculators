@@ -55,7 +55,17 @@ def retirement_goal(fileExists):
             elif(expected_retirement_age > 70):
                 print("In the USA, retiring past 70 carries a social security penalty. For the sake of this, please set your retirement age earlier.")
         except:
-            print("Invalid input. Please select a number greater than your current_age and up to seventy.")
+            print("Invalid input. Please select a number greater than your current age and up to seventy.")
     
+    while expected_death_age <= expected_retirement_age or expected_death_age > 105:
+        num_input = input("When do you expect to expire, or pass away?")
+        try:
+            expected_death_age = int(num_input)
+            if(expected_death_age <= expected_retirement_age):
+                print("If you expect to die before you retire, then this app is pointless. Let's assume that you won't, okay?")
+            elif(expected_death_age > 105):
+                print("You have a less than 0.01 percent chance to make it that far. Let's be a little more reasonable.")
+        except:
+            print("Invalid input. Please select a number greater than your retirement age and up to one hundred and five.")
 
     return fileExists
