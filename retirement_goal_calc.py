@@ -77,11 +77,16 @@ def generate_retirement_document(monthly_needs, current_savings, growth_rate, ag
     month_death = death * 12
     month_growth = growth_rate / 12.0
 
+    age_to_ret_gap = month_ret - month_age
+    ret_to_death_gap = month_death - month_ret
+
     scenario_one = current_savings # Scenario one: money lasts until death plus five years
     scenario_two = current_savings # Scenario two: account maintains itself: growth rate = take out rate.
     scenario_three = current_savings # Scenario three: account user takes out half the growth at the starting year.
 
-    scenario_one_goal = monthly_needs
+    scenario_one_total = monthly_needs * (ret_to_death_gap + 60)
+    scenario_two_goal = monthly_needs / (month_growth / 100.0)
+    scenario_three_goal = monthly_needs / (month_growth / 200.0)
 
 
     return fileExists
