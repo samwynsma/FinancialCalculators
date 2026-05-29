@@ -68,4 +68,20 @@ def retirement_goal(fileExists):
         except:
             print("Invalid input. Please select a number greater than your retirement age and up to one hundred and five.")
 
+    
+    return fileExists
+
+def generate_retirement_document(monthly_needs, current_savings, growth_rate, age, retirement, death, fileExists = False):
+    month_age = age * 12
+    month_ret = retirement * 12
+    month_death = death * 12
+    month_growth = growth_rate / 12.0
+
+    scenario_one = current_savings # Scenario one: money lasts until death plus five years
+    scenario_two = current_savings # Scenario two: account maintains itself: growth rate = take out rate.
+    scenario_three = current_savings # Scenario three: account user takes out half the growth at the starting year.
+
+    scenario_one_goal = monthly_needs
+
+
     return fileExists
