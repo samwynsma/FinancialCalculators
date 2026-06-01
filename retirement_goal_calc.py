@@ -68,7 +68,7 @@ def retirement_goal(fileExists):
         except:
             print("Invalid input. Please select a number greater than your retirement age and up to one hundred and five. ")
 
-    
+    fileExists = generate_retirement_document(monthly_needs, current_savings, growth_rate, current_age, expected_retirement_age, expected_death_age, fileExists)
     return fileExists
 
 def generate_retirement_document(monthly_needs, current_savings, growth_rate, age, retirement, death, fileExists = False):
@@ -84,13 +84,21 @@ def generate_retirement_document(monthly_needs, current_savings, growth_rate, ag
     scenario_two = current_savings # Scenario two: account maintains itself: growth rate = take out rate.
     scenario_three = current_savings # Scenario three: account user takes out half the growth at the starting year.
 
-    scenario_one_goal = monthly_needs * (1 - pow(1 + month_growth, -(ret_to_death_gap + 60))) / month_growth
+    scenario_one_goal = monthly_needs * (1 - pow(1 + (month_growth / 100.0), -(ret_to_death_gap + 60))) / (month_growth / 100.0)
     scenario_two_goal = monthly_needs / (month_growth / 100.0)
     scenario_three_goal = monthly_needs / (month_growth / 200.0)
 
-    print(scenario_one_goal)
+    print(round(scenario_one_goal, 2))
     print(scenario_two_goal)
     print(scenario_three_goal)
+    print(" ")
 
+    scenario_one_monthly = (scenario_one_goal - current_savings) * (month_growth / 100.0) / (pow(1.0 + month_growth / 100.0, age_to_ret_gap) - 1.0)
+    scenario_two_monthly = (scenario_two_goal - current_savings) * (month_growth / 100.0) / (pow(1.0 + month_growth / 100.0, age_to_ret_gap) - 1.0)
+    scenario_three_monthly = (scenario_three_goal - current_savings) * (month_growth / 100.0) / (pow(1.0 + month_growth / 100.0, age_to_ret_gap) - 1.0)
+
+    print(scenario_one_monthly)
+    print(scenario_two_monthly)
+    print(scenario_three_monthly)
 
     return fileExists
