@@ -9,7 +9,7 @@ def retirement_goal(fileExists):
     expected_death_age = -1
 
     while monthly_needs <= 0.0:
-        num_input = input("How much money will you need to take out each month to live?")
+        num_input = input("How much money will you need to take out each month to live? ")
         try:
             monthly_needs = float(num_input)
             if monthly_needs <= 0.0:
@@ -18,25 +18,25 @@ def retirement_goal(fileExists):
             print("Invalid input: try putting a number there")
     
     while current_savings < 0.0:
-        num_input = input("How much money do you curretly have saved? Do not include debts or non-liquid assets here.")
+        num_input = input("How much money do you currently have saved? Do not include debts or non-liquid assets here. ")
         try:
-            monthly_needs = float(num_input)
-            if monthly_needs < 0.0:
+            current_savings = float(num_input)
+            if current_savings < 0.0:
                 print("Invalid input: savings cannot be negative.")
         except:
             print("Invalid input: try putting a number there")
     
     while growth_rate < 0.0:
-        num_input = input("What is the percentage growth rate that you expect your retirement savings to grow at. Note: this growth continues after retirement.")
+        num_input = input("What is the percentage growth rate that you expect your retirement savings to grow at. Note: this growth continues after retirement. ")
         try:
-            monthly_needs = float(num_input)
-            if monthly_needs < 0.0:
+            growth_rate = float(num_input)
+            if growth_rate < 0.0:
                 print("Invalid input: interest rate must be positive.")
         except:
             print("Invalid input: try putting a number there")
     
     while current_age < 18 or current_age >= 70:
-        num_input = input("How old are you right now?")
+        num_input = input("How old are you right now? ")
         try:
             current_age = int(num_input)
             if(current_age < 18):
@@ -47,26 +47,26 @@ def retirement_goal(fileExists):
             print("Invalid input. Age must be a number between eighteen and seventy. For older users, use the retirement option to calculate your current retirement account, or the supplemental income option to determine how much more money you need to make.")
     
     while expected_retirement_age <= current_age or expected_retirement_age > 70:
-        num_input = input("How old do you expect to be when you retire?")
+        num_input = input("How old do you expect to be when you retire? ")
         try:
             expected_retirement_age = int(num_input)
             if(expected_retirement_age <= current_age):
-                print("If you are already retired and you're looking to see how far you'll make it, try the retirement option instead.")
+                print("If you are already retired and you're looking to see how far you'll make it, try the retirement option instead. ")
             elif(expected_retirement_age > 70):
-                print("In the USA, retiring past 70 carries a social security penalty. For the sake of this, please set your retirement age earlier.")
+                print("In the USA, retiring past 70 carries a social security penalty. For the sake of this, please set your retirement age earlier. ")
         except:
-            print("Invalid input. Please select a number greater than your current age and up to seventy.")
+            print("Invalid input. Please select a number greater than your current age and up to seventy. ")
     
     while expected_death_age <= expected_retirement_age or expected_death_age > 105:
-        num_input = input("When do you expect to expire, or pass away?")
+        num_input = input("When do you expect to expire, or pass away? ")
         try:
             expected_death_age = int(num_input)
             if(expected_death_age <= expected_retirement_age):
-                print("If you expect to die before you retire, then this app is pointless. Let's assume that you won't, okay?")
+                print("If you expect to die before you retire, then this app is pointless. Let's assume that you won't, okay? ")
             elif(expected_death_age > 105):
-                print("You have a less than 0.01 percent chance to make it that far. Let's be a little more reasonable.")
+                print("You have a less than 0.01 percent chance to make it that far. Let's be a little more reasonable. ")
         except:
-            print("Invalid input. Please select a number greater than your retirement age and up to one hundred and five.")
+            print("Invalid input. Please select a number greater than your retirement age and up to one hundred and five. ")
 
     
     return fileExists
@@ -84,9 +84,13 @@ def generate_retirement_document(monthly_needs, current_savings, growth_rate, ag
     scenario_two = current_savings # Scenario two: account maintains itself: growth rate = take out rate.
     scenario_three = current_savings # Scenario three: account user takes out half the growth at the starting year.
 
-    scenario_one_total = monthly_needs * (ret_to_death_gap + 60)
+    scenario_one_goal = monthly_needs * (1 - pow(1 + month_growth, -(ret_to_death_gap + 60))) / month_growth
     scenario_two_goal = monthly_needs / (month_growth / 100.0)
     scenario_three_goal = monthly_needs / (month_growth / 200.0)
+
+    print(scenario_one_goal)
+    print(scenario_two_goal)
+    print(scenario_three_goal)
 
 
     return fileExists
