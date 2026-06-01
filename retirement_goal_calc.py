@@ -1,3 +1,6 @@
+import openpyxl
+from openpyxl import Workbook
+
 def retirement_goal(fileExists):
     print("Welcome to the retirement goals calculator. The goal here is to see how much you need to save for retirement to survive.")
     print("First, I will ask you questions to gather all the information that I need.")
@@ -100,5 +103,34 @@ def generate_retirement_document(monthly_needs, current_savings, growth_rate, ag
     print(scenario_one_monthly)
     print(scenario_two_monthly)
     print(scenario_three_monthly)
+
+    money_s1 = []
+    money_s2 = []
+    money_s3 = []
+
+    money_s1.append(scenario_one)
+    money_s2.append(scenario_two)
+    money_s3.append(scenario_three)
+
+    for i in range(age_to_ret_gap):
+        scenario_one = round(scenario_one * (1 + month_growth / 100.0), 2) + scenario_one_monthly
+        scenario_two = round(scenario_two * (1 + month_growth / 100.0), 2) + scenario_two_monthly
+        scenario_three = round(scenario_three * (1 + month_growth / 100.0), 2) + scenario_three_monthly
+        money_s1.append(scenario_one)
+        money_s2.append(scenario_two)
+        money_s3.append(scenario_three)
+    
+    workbook = None
+    worksheet = None
+
+    if(not fileExists):
+        workbook = Workbook()
+        worksheet = workbook.active
+        fileExists = True
+    else:
+        workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+        worksheet = workbook.create_sheet()
+
+
 
     return fileExists
