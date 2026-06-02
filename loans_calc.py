@@ -66,9 +66,9 @@ def generate_loan_documents(loan, interest, payment, fileExists):
     worksheet.title = "Loan %d " % (loan)
 
     worksheet["A1"] = "Loan calculation"
-    worksheet["A2"] = "Starting amount: %.2f" % (loan)
+    worksheet["A2"] = "Starting amount: $%.2f" % (loan)
     worksheet["A3"] = "Interest rate: %.4f percent per month" % (interest)
-    worksheet["A4"] = "Loan payment of %.2f per month" % (payment)
+    worksheet["A4"] = "Loan payment of $%.2f per month" % (payment)
     if(len(loan_remaining) < 600):
         years = (len(loan_remaining) - 1) // 12
         months = (len(loan_remaining) - 1) % 12
