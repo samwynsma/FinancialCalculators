@@ -140,6 +140,15 @@ def generate_retirement_document(monthly_needs, current_savings, growth_rate, ag
     worksheet["A4"] = "For money to last until death: $%.2f per month." % scenario_one_monthly
     worksheet["A5"] = "For money to be sustainable: $%.2f per month." % scenario_two_monthly
     worksheet["A6"] = "For money to be economy-resilient: $%.2f per month." % scenario_three_monthly
+    worksheet["C1"] = "Last until death plus five years for safety."
+    worksheet["F1"] = "Last indefinitely, doesn't grow."
+    worksheet["I1"] = "Grows at a reasonable rate."
+    worksheet["B2"] = "Month"
+    worksheet["C2"] = "Money in account"
+    worksheet["E2"] = "Month"
+    worksheet["F2"] = "Money in Account"
+    worksheet["H2"] = "Month"
+    worksheet["I2"] = "Money in Account"
 
 
     workbook.save("InterestCalculation.xlsx")
