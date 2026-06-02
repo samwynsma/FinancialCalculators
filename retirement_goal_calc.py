@@ -130,7 +130,18 @@ def generate_retirement_document(monthly_needs, current_savings, growth_rate, ag
     else:
         workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
         worksheet = workbook.create_sheet()
+    
+
+    worksheet.title = "Retirement %d." % int(monthly_needs)
+
+    worksheet["A1"] = "Retirement Calculation"
+    worksheet["A2"] = "Current savings: $%.2f" % current_savings
+    worksheet["A3"] = "Growth rate: %.4f percent per month" % growth_rate
+    worksheet["A4"] = "For money to last until death: $%.2f per month." % scenario_one_monthly
+    worksheet["A5"] = "For money to be sustainable: $%.2f per month." % scenario_two_monthly
+    worksheet["A6"] = "For money to be economy-resilient: $%.2f per month." % scenario_three_monthly
 
 
-
+    workbook.save("InterestCalculation.xlsx")
+    print("Finished creating financial documents.")
     return fileExists
