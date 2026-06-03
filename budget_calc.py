@@ -13,6 +13,8 @@ def budget_maker(fileExists):
     food = 0.0
     extra_expenditures = 0.0
     medical = 0.0
+    giving = 0.0
+    investments = 0.0
 
     while(people <= 0):
         num_input = input("How many people are in your family? ")
@@ -65,6 +67,33 @@ def budget_maker(fileExists):
             debt_payments = float(num_input)
             if debt_payments < 0.0:
                 print("Invalid input: debt payments cannot be negative.")
+        except:
+            print("Invalid input: try putting a number there")
+
+    while utilities < 0.0:
+        num_input = input("How much do you pay on utilities every month? ")
+        try:
+            debt_payments = float(num_input)
+            if debt_payments < 0.0:
+                print("Invalid input: utilities cannot be negative.")
+        except:
+            print("Invalid input: try putting a number there")
+    
+    while insurance < 0.0:
+        num_input = input("How much do you pay on insurance (medical, pet, auto, home, life) every month? ")
+        try:
+            debt_payments = float(num_input)
+            if debt_payments < 0.0:
+                print("Invalid input: insurance cannot be negative.")
+        except:
+            print("Invalid input: try putting a number there")
+    
+    while food <= 0.0:
+        num_input = input("How much do you spend on food each month. Include doordash, grocery store, and restaurants.")
+        try:
+            food = float(num_input)
+            if food <= 0.0:
+                print("Invalid input: You must spend money on food.")
         except:
             print("Invalid input: try putting a number there")
 
