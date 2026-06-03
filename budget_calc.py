@@ -33,7 +33,7 @@ def budget_maker(fileExists):
             print("Invalid input: try putting a number there")
     
     while(cars < 0):
-        num_input = input("How many people are in your family? ")
+        num_input = input("How many cars do you own? ")
         try:
             cars = int(num_input)
             if cars < 0:
@@ -41,4 +41,32 @@ def budget_maker(fileExists):
         except:
             print("Invalid input: try putting a number there")
 
+    while mortgage_rent < 0.0:
+        num_input = input("What is your current mortgage or rent per month? ")
+        try:
+            mortgage_rent = float(num_input)
+            if mortgage_rent < 0.0:
+                print("Invalid input: mortgage or rent cannot be negative.")
+        except:
+            print("Invalid input: try putting a number there")
+    
+    while auto_payments < 0.0:
+        num_input = input("How much do you pay for your car loans per month? ")
+        try:
+            auto_payments = float(num_input)
+            if auto_payments < 0.0:
+                print("Invalid input: car loan payment cannot be negative.")
+        except:
+            print("Invalid input: try putting a number there")
+    
+    while debt_payments < 0.0:
+        num_input = input("What are your current debt payments besides mortgage and car loan? ")
+        try:
+            debt_payments = float(num_input)
+            if debt_payments < 0.0:
+                print("Invalid input: debt payments cannot be negative.")
+        except:
+            print("Invalid input: try putting a number there")
+
+    
     return fileExists
