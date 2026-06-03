@@ -1,3 +1,7 @@
+from openpyxl import Workbook
+import openpyxl
+
+
 def budget_maker(fileExists):
     print("Welcome to the budget calculator. I'm going to ask you some questions about your life to determine your budget.")
     print("Furthermore, I'm going to ask what your current spending is, so we can do a side by side comparison.")
@@ -137,4 +141,30 @@ def budget_maker(fileExists):
 
 def generate_budget_document(types, info, fileExists = False):
 
+    workbook = None
+    worksheet = None
+
+    giving_ten_percent = types[0] / 10
+    food_cost_min = types[1] * 250
+    extras_cost_min = types[1] * 20 + 60
+    pet_cost_min = types[2] * 40
+    insurance_min = types[3] * 100 + 150
+    
+    if(not fileExists):
+        workbook = Workbook()
+        worksheet = workbook.active
+        fileExists = True
+    else:
+        workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+        worksheet = workbook.create_sheet()
+    
+    worksheet.title = "Budget creator $%.2f" % types[0]
+
+    worksheet["A1"] = "Budget calculation"
+    worksheet["A2"] = "Monthly pay: $%.2f" % types[0]
+    worksheet["C1"] = "Current Spending"
+    worksheet["D1"] = "Frugal Chart"
+    worksheet["E1"] = "Generous Chart"
+
+        
     return fileExists
