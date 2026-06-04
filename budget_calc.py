@@ -7,7 +7,7 @@ def budget_maker(fileExists):
     print("Furthermore, I'm going to ask what your current spending is, so we can do a side by side comparison.")
     print("At the end, we will see how much leftover money there is, and I will give some recommendations.")
     budget_types = ["monthly pay", "people supported", "pets supported", "cars owned", "mortgage or rent", "auto payments", "debt payments", "utilities", "insurance", "food", "medical", "giving", "investments", "extra"]
-    budget_information = [0.0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    budget_information = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
 
     while budget_information[0] <= 0.0:
@@ -119,7 +119,7 @@ def budget_maker(fileExists):
             print("Invalid input: try putting a number there")
     
     while budget_information[12] < 0.0:
-        num_input = input("How much money do you give every month? ")
+        num_input = input("How much money do you invest every month? ")
         try:
             budget_information[12] = float(num_input)
             if budget_information[12] < 0.0:
@@ -144,11 +144,11 @@ def generate_budget_document(types, info, fileExists = False):
     workbook = None
     worksheet = None
 
-    giving_ten_percent = types[0] / 10
-    food_cost_min = types[1] * 250
-    extras_cost_min = types[1] * 20 + 60
-    pet_cost_min = types[2] * 40
-    insurance_min = types[3] * 100 + 150
+    giving_ten_percent = info[0] / 10
+    food_cost_min = info[1] * 250
+    extras_cost_min = info[1] * 20 + 60
+    pet_cost_min = info[2] * 40
+    insurance_min = info[3] * 100 + 150
     
     if(not fileExists):
         workbook = Workbook()
@@ -158,13 +158,31 @@ def generate_budget_document(types, info, fileExists = False):
         workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
         worksheet = workbook.create_sheet()
     
-    worksheet.title = "Budget creator $%.2f" % types[0]
+    worksheet.title = "Budget creator $%.2f" % info[0]
 
     worksheet["A1"] = "Budget calculation"
-    worksheet["A2"] = "Monthly pay: $%.2f" % types[0]
+    worksheet["A2"] = "Monthly pay: $%.2f" % info[0]
     worksheet["C1"] = "Current Spending"
     worksheet["D1"] = "Frugal Chart"
     worksheet["E1"] = "Generous Chart"
+    money_format = "$#,##0.00"
+
+    for i in range(len(types)):
+        worksheet["B%d" % (i + 2)] = types[i]
+
+    for col in worksheet.columns:
+        length = 0
+        column = col[0].column_letter
+        for cell in col:
+            try:
+                if(len(str(cell.value)) > length):
+                    length = len(str(cell.value))
+            except:
+                pass
+        worksheet.column_dimensions[column].width = length + 2
+    
+    workbook.save("InterestCalculation.xlsx")
+    print("Finished creating budget documents.")
 
         
     return fileExists
