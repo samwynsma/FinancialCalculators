@@ -170,6 +170,21 @@ def generate_budget_document(types, info, fileExists = False):
     for i in range(len(types)):
         worksheet["B%d" % (i + 2)] = types[i]
 
+    for c in "CDE":
+        worksheet[c + "2"] = info[0]
+        worksheet[c + "2"].number_format = money_format
+        worksheet[c + "3"] = info[1]
+        worksheet[c + "4"] = info[2]
+        worksheet[c + "5"] = info[3]
+        worksheet[c + "6"] = info[4]
+        worksheet[c + "6"].number_format = money_format
+        worksheet[c + "7"] = info[5]
+        worksheet[c + "7"].number_format = money_format
+        worksheet[c + "8"] = info[6]
+        worksheet[c + "8"].number_format = money_format
+        worksheet[c + "9"] = info[7]
+        worksheet[c + "9"].number_format = money_format
+
     for col in worksheet.columns:
         length = 0
         column = col[0].column_letter
