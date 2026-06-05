@@ -147,8 +147,9 @@ def generate_budget_document(types, info, fileExists = False):
     giving_ten_percent = info[0] / 10
     food_cost_min = info[1] * 250
     extras_cost_min = info[1] * 20 + 60
-    pet_cost_min = info[2] * 40
-    insurance_min = info[3] * 100 + 150
+    pet_cost_min = info[2] * 20
+    pet_insurance_min = info[2] * 20
+    insurance_min = info[3] * 50 + 150
     
     if(not fileExists):
         workbook = Workbook()
@@ -177,13 +178,27 @@ def generate_budget_document(types, info, fileExists = False):
         worksheet[c + "4"] = info[2]
         worksheet[c + "5"] = info[3]
         worksheet[c + "6"] = info[4]
-        worksheet[c + "6"].number_format = money_format
         worksheet[c + "7"] = info[5]
-        worksheet[c + "7"].number_format = money_format
         worksheet[c + "8"] = info[6]
-        worksheet[c + "8"].number_format = money_format
         worksheet[c + "9"] = info[7]
-        worksheet[c + "9"].number_format = money_format
+        worksheet[c + "12"] = info[10]
+    
+    worksheet["C10"] = info[8]
+    worksheet["C11"] = info[9]
+    worksheet["C13"] = info[11]
+    worksheet["C14"] = info[12]
+    worksheet["C15"] = info[13]
+    worksheet["C16"] = sum(info[4:])
+    worksheet["D10"] = insurance_min + pet_insurance_min
+    worksheet["D11"] = food_cost_min
+    worksheet["D13"] = min(100, giving_ten_percent)
+    worksheet["D14"] = 250
+    worksheet["D15"] = extras_cost_min + pet_cost_min
+    worksheet["D16"] = 0
+
+    for c in "CDE":
+        for i in range(6, 17):
+            worksheet["%c%d" % (c, i)].number_format = money_format
 
     for col in worksheet.columns:
         length = 0
