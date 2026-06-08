@@ -1,4 +1,5 @@
 from openpyxl import Workbook
+from openpyxl.chart import PieChart, Reference
 import openpyxl
 
 
@@ -223,8 +224,19 @@ def generate_budget_document(types, info, fileExists = False):
                 pass
         worksheet.column_dimensions[column].width = length + 2
     
+    generate_pie_chart(worksheet, 2, 3)
     workbook.save("InterestCalculation.xlsx")
     print("Finished creating budget documents.")
 
         
     return fileExists
+
+def generate_pie_chart(worksheet, label_col, data_col):
+    chart = PieChart()
+    labels = Reference(worksheet, min_col=label_col, min_row=6, max_row=15)
+    data = Reference(worksheet, min_col=data_col, min_row=5, max_row=15)
+    chart.add_data(data, titles_from_data=True)
+    chart.set_categories(labels)
+    chart.title = "Budget makeup"
+    worksheet.add_chart(chart, "H3")
+    return
