@@ -192,21 +192,24 @@ def generate_budget_document(types, info, fileExists = False):
     worksheet["C14"] = info[12]
     worksheet["C15"] = info[13]
     worksheet["C16"] = f"=SUM(C6:C15)"
+    worksheet["C17"] = f"=C2-C16"
     worksheet["D10"] = insurance_min + pet_insurance_min
     worksheet["D11"] = food_cost_min
     worksheet["D13"] = min(100, giving_ten_percent)
     worksheet["D14"] = 250
     worksheet["D15"] = extras_cost_min + pet_cost_min
     worksheet["D16"] = f"=SUM(D6:D15)"
+    worksheet["D17"] = f"=D2-D16"
     worksheet["E10"] = (insurance_min + pet_insurance_min) * 1.25
     worksheet["E11"] = food_cost_min * 1.5
     worksheet["E13"] = giving_ten_percent
     worksheet["E14"] = 1000
     worksheet["E15"] = extras_cost_min + pet_cost_min + 250
     worksheet["E16"] = f"=SUM(E6:E15)"
+    worksheet["E17"] = f"=E2-E16"
 
     for c in "CDE":
-        for i in range(6, 17):
+        for i in range(6, 18):
             worksheet["%c%d" % (c, i)].number_format = money_format
 
     for col in worksheet.columns:
