@@ -225,6 +225,8 @@ def generate_budget_document(types, info, fileExists = False):
         worksheet.column_dimensions[column].width = length + 2
     
     generate_pie_chart(worksheet, 2, 3)
+    generate_pie_chart(worksheet, 2, 4)
+    generate_pie_chart(worksheet, 2, 5)
     workbook.save("InterestCalculation.xlsx")
     print("Finished creating budget documents.")
 
@@ -237,6 +239,13 @@ def generate_pie_chart(worksheet, label_col, data_col):
     data = Reference(worksheet, min_col=data_col, min_row=5, max_row=15)
     chart.add_data(data, titles_from_data=True)
     chart.set_categories(labels)
-    chart.title = "Budget makeup"
-    worksheet.add_chart(chart, "H3")
+    if data_col == 3:
+        chart.title = "Current Budget Makeup"
+        worksheet.add_chart(chart, "H3")
+    elif data_col == 4:
+        chart.title = "Frugal Budget Makeup"
+        worksheet.add_chart(chart, "H19")
+    elif data_col == 5:
+        chart.title = "Generous Budget Makeup"
+        worksheet.add_chart(chart, "Q19")
     return
