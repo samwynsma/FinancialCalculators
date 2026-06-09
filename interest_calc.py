@@ -1,6 +1,18 @@
+import tkinter as tk
+from tkinter import messagebox
+
 import openpyxl
 from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
+
+class InterestCalculator:
+    def __init__(self, fileExists=False):
+        self.starting_value = 0.0
+        self.interest_rate = 0.0
+        self.time = -1
+        self.period_type = "year"
+        self.will_add = "yes"
+        self.added_investment = 0.0
 
 def generate_interest(fileExists):
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")

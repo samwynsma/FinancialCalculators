@@ -74,6 +74,7 @@ class LoanCalculator:
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
 
         window.grab_set()
+        window.mainloop()
 
     def on_calculate(self):
         try:
