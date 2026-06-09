@@ -67,6 +67,10 @@ class InterestCalculator:
         tk.Radiobutton(inv_frame, text="Year", variable=self.period_type_var, value="year").grid(row=2, column=1, sticky="w")
         tk.Radiobutton(inv_frame, text="Month", variable=self.period_type_var, value="month").grid(row=2, column=1)
 
+        tk.Label(inv_frame, text="Duration of investment:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.time_var = tk.Entry(inv_frame, width=28)
+        self.time_var.grid(row=1, column=1, pady=6)
+
         self.will_add_var = tk.StringVar(value="yes")
         tk.Label(inv_frame, text="Add investment each period?", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
         tk.Radiobutton(inv_frame, text="Yes", variable=self.will_add_var, value="yes").grid(row=3, column=1, sticky="w")
@@ -83,6 +87,35 @@ class InterestCalculator:
 
         window.grab_set()
         window.mainloop()
+    
+    def on_calculate(self):
+        try:
+            starting_value = self.parse_float(self.starting_inv_entry.get())
+            interest_rate = self.parse_float(self.interest_rate_entry.get())
+            time_value = self.parse_int(self.time_var.get())
+            if self.period_type_var.get() == "year":
+                period_type = "year"
+            else:
+                period_type = "month"
+            if self.will_add_var.get() == "yes":
+                will_add = "yes"
+            else:
+                will_add = "no"
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+        
+        if starting_value <= 0.0:
+            messagebox.showerror("Input error", "Starting investment must be greater than 0. We must start with something")
+            return
+        
+        if interest_rate <= 0.0:
+            messagebox.showerror("Input error", "Interest rate must be greater than 0%. This is an investment, not a loan.")
+            return
+        
+        if(time_value <= 0):
+            messagebox.showerror("Input error", "Time must be greater than 0.")
+            return
 
 
 
