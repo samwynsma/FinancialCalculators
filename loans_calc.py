@@ -23,6 +23,7 @@ class LoanCalculator:
         if raw_value.startswith("$"):
             raw_value = raw_value[1:]
         return float(raw_value)
+    
 
     def create_gui(self):
         window = tk.Toplevel()

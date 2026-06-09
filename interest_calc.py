@@ -6,13 +6,14 @@ from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
 
 class InterestCalculator:
-    def __init__(self, fileExists=False):
+    def __init__(self, file_exists=False):
         self.starting_value = 0.0
         self.interest_rate = 0.0
         self.time = -1
         self.period_type = "year"
         self.will_add = "yes"
         self.added_investment = 0.0
+        self.file_exists = file_exists
     
     def parse_float(self, raw_value):
         if raw_value is None:
@@ -26,10 +27,22 @@ class InterestCalculator:
             raw_value = raw_value[1:]
         return float(raw_value)
     
+    def parse_int(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int)):
+            return int(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return int(raw_value)
+    
     def create_gui(self):
         window = tk.Toplevel()
         window.title("Interest Generation Calculator")
-        window.geometry("600x360")
+        window.geometry("460x460")
         window.resizable(False, False)
 
         header = tk.Label(
@@ -159,10 +172,10 @@ class InterestCalculator:
         workbook = None
         worksheet = None
         
-        if(not fileExists):
+        if(not self.file_existsfileExists):
             workbook = Workbook()
             worksheet = workbook.active
-            fileExists = True
+            self.file_exists = True
         else:
             workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
             worksheet = workbook.create_sheet()
@@ -221,8 +234,13 @@ class InterestCalculator:
         return
 
 
-
 def generate_interest(fileExists):
+    calculator = InterestCalculator(fileExists)
+    calculator.create_gui()
+    return calculator.file_exists
+
+
+# def generate_interest(fileExists, val):
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")
     starting_value = -1.0
     interest_rate = -1.0
@@ -279,7 +297,7 @@ def generate_interest(fileExists):
     file = generate_interest_document(starting_value, interest_rate, time, period_type, added_investment, fileExists)
     return file
 
-def generate_interest_document(start, interest, periods, duration_of_period="Year", additional_money=0.0, fileExists=False):
+# def generate_interest_document(start, interest, periods, duration_of_period="Year", additional_money=0.0, fileExists=False):
     money_by_period = []
     money_by_period.append(start)
 
@@ -341,7 +359,7 @@ def generate_interest_document(start, interest, periods, duration_of_period="Yea
     print("Finished creating financial documents.")
     return fileExists
 
-def generate_graph(worksheet, periods, duration_of_period = "Year"):
+# def generate_graph(worksheet, periods, duration_of_period = "Year"):
 
     chart = BarChart()
     chart.title = "Investment Amount over Time"
