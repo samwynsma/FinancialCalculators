@@ -13,6 +13,78 @@ class InterestCalculator:
         self.period_type = "year"
         self.will_add = "yes"
         self.added_investment = 0.0
+    
+    def parse_float(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int, float)):
+            return float(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return float(raw_value)
+    
+    def create_gui(self):
+        window = tk.Toplevel()
+        window.title("Interest Generation Calculator")
+        window.geometry("600x360")
+        window.resizable(False, False)
+
+        header = tk.Label(
+            window,
+            text="Interest Generation Calculator",
+            font=("Segoe UI", 16, "bold"),
+            wraplength=420,
+            justify="center",
+            pady=12,
+        )
+        header.pack()
+
+        instructions = tk.Label(
+            window,
+            text="Enter your investment details below and click Calculate",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))  
+
+        inv_frame = tk.Frame(window)
+        inv_frame.pack(padx=20, pady=8, fill = "x")
+
+        tk.Label(inv_frame, text="Starting investment amount ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.starting_inv_entry = tk.Entry(inv_frame, width=28)
+        self.starting_inv_entry.grid(row=0, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.interest_rate_entry = tk.Entry(inv_frame, width=28)
+        self.interest_rate_entry.grid(row=1, column=1, pady=6)
+
+        self.period_type_var = tk.StringVar(value="year")
+        tk.Label(inv_frame, text="Period Type:", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        tk.Radiobutton(inv_frame, text="Year", variable=self.period_type_var, value="year").grid(row=2, column=1, sticky="w")
+        tk.Radiobutton(inv_frame, text="Month", variable=self.period_type_var, value="month").grid(row=2, column=1)
+
+        self.will_add_var = tk.StringVar(value="yes")
+        tk.Label(inv_frame, text="Add investment each period?", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        tk.Radiobutton(inv_frame, text="Yes", variable=self.will_add_var, value="yes").grid(row=3, column=1, sticky="w")
+        tk.Radiobutton(inv_frame, text="No", variable=self.will_add_var, value="no").grid(row=3, column=1)
+
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
+        window.grab_set()
+        window.mainloop()
+
+
 
 def generate_interest(fileExists):
     print("Welcome to the investment calculator. Here, we will take a starting amount, interest rate, and time and give you a final value")
