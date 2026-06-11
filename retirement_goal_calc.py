@@ -5,13 +5,14 @@ import openpyxl
 from openpyxl import Workbook
 
 class RetirementCalculator:
-    def __init__(self):
+    def __init__(self, file_exists=False):
         self.monthly_needs = -1.0
         self.current_savings = -1.0
         self.growth_rate = -1.0
         self.current_age = -1
         self.retirement_age = -1
         self.death_age = -1
+        self.file_exists = file_exists
     
     def parse_float(self, raw_value):
         if raw_value is None:
@@ -37,9 +38,41 @@ class RetirementCalculator:
             raw_value = raw_value[1:]
         return int(raw_value)
     
+    def create_gui(self):
+        window = tk.Toplevel()
+        window.title("Retirement Goals Calculator")
+        window.geometry("460x460")
+        window.resizable(False, False)
 
+        header = tk.Label(
+            window,
+            text="Retirement Goals Calculator",
+            font=("Segoe UI", 16, "bold"),
+            wraplength=420,
+            justify="center",
+            pady=12,
+        )
+        header.pack()
+
+        instructions = tk.Label(
+            window,
+            text="Enter your retirement goal details below and click Calculate.",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))
+
+        window.grab_set()
+        window.mainloop()
+    
 
 def retirement_goal(fileExists):
+    calculator = RetirementCalculator(fileExists)
+    calculator.create_gui()
+    return calculator.file_exists
+
+#def retirement_goal(fileExists):
     print("Welcome to the retirement goals calculator. The goal here is to see how much you need to save for retirement to survive.")
     print("First, I will ask you questions to gather all the information that I need.")
     monthly_needs = -1.0
@@ -112,7 +145,7 @@ def retirement_goal(fileExists):
     fileExists = generate_retirement_document(monthly_needs, current_savings, growth_rate, current_age, expected_retirement_age, expected_death_age, fileExists)
     return fileExists
 
-def generate_retirement_document(monthly_needs, current_savings, growth_rate, age, retirement, death, fileExists = False):
+#def generate_retirement_document(monthly_needs, current_savings, growth_rate, age, retirement, death, fileExists = False):
     month_age = age * 12
     month_ret = retirement * 12
     month_death = death * 12
