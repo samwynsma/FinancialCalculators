@@ -10,7 +10,7 @@ from retirement_goal_calc import retirement_goal
 def launch_calculator(calc_func, excelFileExists, title):
     messagebox.showinfo(
         title,
-        "This calculator uses the console for detailed inputs. After you click OK, enter values in the console window."
+        "This calculator will open a new window, while you will then use to input further information."
     )
     result = calc_func(excelFileExists)
     messagebox.showinfo(
