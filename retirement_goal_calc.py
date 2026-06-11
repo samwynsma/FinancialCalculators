@@ -1,5 +1,43 @@
+import tkinter as tk
+from tkinter import messagebox
+
 import openpyxl
 from openpyxl import Workbook
+
+class RetirementCalculator:
+    def __init__(self):
+        self.monthly_needs = -1.0
+        self.current_savings = -1.0
+        self.growth_rate = -1.0
+        self.current_age = -1
+        self.retirement_age = -1
+        self.death_age = -1
+    
+    def parse_float(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int, float)):
+            return float(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return float(raw_value)
+    
+    def parse_int(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int)):
+            return int(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return int(raw_value)
+    
+
 
 def retirement_goal(fileExists):
     print("Welcome to the retirement goals calculator. The goal here is to see how much you need to save for retirement to survive.")
