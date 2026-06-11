@@ -142,6 +142,130 @@ class RetirementCalculator:
             messagebox.showerror("Ridiculous age assessment error", "Less than 0.01 percent of people get to that age. Please pick a reasonable death age.")
             return
         
+        self.monthly_needs = needs
+        self.current_savings = starting_savings
+        self.growth_rate = interest
+        self.current_age = current_age
+        self.retirement_age = retirement_age
+        self.death_age = end_age
+
+        self.file_exists = self.generate_retirement_documents()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Retirement document complete", "Retirement calculation saved to InterestCalculation.xlsx.")
+        
+    def generate_retirement_documents(self):
+        month_age = self.current_age * 12
+        month_ret = self.retirement_age * 12
+        month_death = self.death_age * 12
+        month_growth = self.growth_rate / 12.0
+        current_savings = self.current_savings
+        monthly_needs = self.monthly_needs
+
+        age_to_ret_gap = month_ret - month_age
+        ret_to_death_gap = month_death - month_ret
+
+        scenario_one = current_savings # Scenario one: money lasts until death plus five years
+        scenario_two = current_savings # Scenario two: account maintains itself: growth rate = take out rate.
+        scenario_three = current_savings # Scenario three: account user takes out half the growth at the starting year.
+
+        scenario_one_goal = monthly_needs * (1 - pow(1 + (month_growth / 100.0), -(ret_to_death_gap + 60))) / (month_growth / 100.0)
+        scenario_two_goal = monthly_needs / (month_growth / 100.0)
+        scenario_three_goal = monthly_needs / (month_growth / 200.0)
+
+        print(round(scenario_one_goal, 2))
+        print(scenario_two_goal)
+        print(scenario_three_goal)
+        print(" ")
+
+        month_growth_percent = month_growth / 100.0
+        numerator_calc = current_savings * pow(1 + month_growth_percent, age_to_ret_gap)
+        denom_calc1 = (pow(1 + month_growth_percent, age_to_ret_gap) - 1.0) / month_growth_percent
+        scenario_one_monthly = (scenario_one_goal - numerator_calc) / denom_calc1
+        scenario_two_monthly = (scenario_two_goal - numerator_calc) / denom_calc1
+        scenario_three_monthly = (scenario_three_goal - numerator_calc) / denom_calc1
+
+        print(scenario_one_monthly)
+        print(scenario_two_monthly)
+        print(scenario_three_monthly)
+
+        money_s1 = []
+        money_s2 = []
+        money_s3 = []
+
+        money_s1.append(scenario_one)
+        money_s2.append(scenario_two)
+        money_s3.append(scenario_three)
+
+        for i in range(age_to_ret_gap):
+            scenario_one = round(scenario_one * (1 + (month_growth / 100.0)), 2) + scenario_one_monthly
+            scenario_two = round(scenario_two * (1 + (month_growth / 100.0)), 2) + scenario_two_monthly
+            scenario_three = round(scenario_three * (1 + (month_growth / 100.0)), 2) + scenario_three_monthly
+            money_s1.append(scenario_one)
+            money_s2.append(scenario_two)
+            money_s3.append(scenario_three)
+        
+        workbook = None
+        worksheet = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+
+        worksheet.title = "Retirement %d" % int(monthly_needs)
+
+        worksheet["A1"] = "Retirement Calculation"
+        worksheet["A2"] = "Current savings: $%.2f" % current_savings
+        worksheet["A3"] = "Monthly needs: $%.2f" % monthly_needs
+        worksheet["A4"] = "Growth rate: %.4f percent per month" % self.growth_rate
+        worksheet["A5"] = "For money to last until death: $%.2f per month." % scenario_one_monthly
+        worksheet["A6"] = "For money to be sustainable: $%.2f per month." % scenario_two_monthly
+        worksheet["A7"] = "For money to be economy-resilient: $%.2f per month." % scenario_three_monthly
+        worksheet["C1"] = "Last until death plus five years for safety."
+        worksheet["F1"] = "Last indefinitely, doesn't grow."
+        worksheet["I1"] = "Grows at a reasonable rate."
+        worksheet["B2"] = "Month"
+        worksheet["C2"] = "Money in account"
+        worksheet["E2"] = "Month"
+        worksheet["F2"] = "Money in Account"
+        worksheet["H2"] = "Month"
+        worksheet["I2"] = "Money in Account"
+        money_format = "$#,##0.00"
+
+        for i in range(len(money_s1)):
+            worksheet["B%d" % (i+3)] = i
+            worksheet["C%d" % (i+3)] = money_s1[i]
+            worksheet["C%d" % (i+3)].number_format = money_format
+        
+        for i in range(len(money_s2)):
+            worksheet["E%d" % (i+3)] = i
+            worksheet["F%d" % (i+3)] = money_s2[i]
+            worksheet["F%d" % (i+3)].number_format = money_format
+        
+        for i in range(len(money_s3)):
+            worksheet["H%d" % (i+3)] = i
+            worksheet["I%d" % (i+3)] = money_s3[i]
+            worksheet["I%d" % (i+3)].number_format = money_format
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating retirement documents.")
+        return self.file_exists
         
 
 
