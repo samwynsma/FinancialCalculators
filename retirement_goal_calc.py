@@ -67,28 +67,28 @@ class RetirementCalculator:
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
         tk.Label(inv_frame, text="Current Savings ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
-        self.starting_inv_entry = tk.Entry(inv_frame, width=28)
-        self.starting_inv_entry.grid(row=0, column=1, pady=6)
+        self.savings_entry = tk.Entry(inv_frame, width=28)
+        self.savings_entry.grid(row=0, column=1, pady=6)
 
         tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
         self.interest_rate_entry = tk.Entry(inv_frame, width=28)
         self.interest_rate_entry.grid(row=1, column=1, pady=6)
 
         tk.Label(inv_frame, text="Monthly Needs ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
-        self.time_var = tk.Entry(inv_frame, width=28)
-        self.time_var.grid(row=2, column=1, pady=6)
+        self.needs_entry = tk.Entry(inv_frame, width=28)
+        self.needs_entry.grid(row=2, column=1, pady=6)
 
         tk.Label(inv_frame, text="Current Age:", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
-        self.time_var = tk.Entry(inv_frame, width=28)
-        self.time_var.grid(row=3, column=1, pady=6)
+        self.age_entry = tk.Entry(inv_frame, width=28)
+        self.age_entry.grid(row=3, column=1, pady=6)
 
         tk.Label(inv_frame, text="Retirement Age:", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
-        self.time_var = tk.Entry(inv_frame, width=28)
-        self.time_var.grid(row=4, column=1, pady=6)
+        self.retirement_entry = tk.Entry(inv_frame, width=28)
+        self.retirement_entry.grid(row=4, column=1, pady=6)
 
         tk.Label(inv_frame, text="Life Expectancy:", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
-        self.time_var = tk.Entry(inv_frame, width=28)
-        self.time_var.grid(row=5, column=1, pady=6)
+        self.end_entry = tk.Entry(inv_frame, width=28)
+        self.end_entry.grid(row=5, column=1, pady=6)
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
@@ -101,6 +101,50 @@ class RetirementCalculator:
 
         window.grab_set()
         window.mainloop()
+    
+    def on_calculate(self):
+        try:
+            starting_savings = self.parse_float(self.savings_entry.get())
+            interest = self.parse_float(self.interest_rate_entry.get())
+            needs = self.parse_float(self.needs_entry.get())
+            current_age = self.parse_int(self.age_entry.get())
+            retirement_age = self.parse_int(self.retirement_entry.get())
+            end_age = self.parse_int(self.end_entry.get())
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+        
+        if(starting_savings <= 0.0):
+            messagebox.showerror("Input error", "Starting savings cannot be negative. That's called a loan.")
+            return
+        
+        if(interest <= 0.0):
+            messagebox.showerror("Input error", "Interest rate must be positive. This isn't a loan, its an investment.")
+            return
+        
+        if(needs <= 0.0):
+            messagebox.showerror("Input error", "If you honestly think that you will need no money, you are dumb.")
+            return
+        
+        if(current_age < 18 or current_age >= 70):
+            messagebox.showerror("Input error", "Your current age is out of range. Please select an age that is between 18 and 70.")
+            return
+        
+        if(retirement_age < current_age or retirement_age > 70):
+            messagebox.showerror("Input error", "Retirement age is out of range. Retirement age must be greater than current age and less than or equal to 70.")
+            return
+        
+        if(end_age <= retirement_age):
+            messagebox.showerror("Stupid person error", "Saving for retirement isn't for those who expect to die before they retire.")
+            return
+        
+        if(end_age >= 105):
+            messagebox.showerror("Ridiculous age assessment error", "Less than 0.01 percent of people get to that age. Please pick a reasonable death age.")
+            return
+        
+        
+
+
     
 
 def retirement_goal(fileExists):
