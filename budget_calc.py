@@ -50,7 +50,7 @@ class BudgetMaker:
     def create_gui(self):
         window = tk.Toplevel()
         window.title("Budget Calculator")
-        window.geometry("800x450")
+        window.geometry("800x460")
         window.resizable(False, False)
 
         header = tk.Label(
@@ -76,8 +76,8 @@ class BudgetMaker:
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
         tk.Label(inv_frame, text="Monthly post-tax take home pay ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
-        self.starting_inv_entry = tk.Entry(inv_frame, width=28)
-        self.starting_inv_entry.grid(row=0, column=1, pady=6)
+        self.take_home_entry = tk.Entry(inv_frame, width=28)
+        self.take_home_entry.grid(row=0, column=1, pady=6)
 
         tk.Label(inv_frame, text="Number of people in Family:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
         self.family_entry = tk.Entry(inv_frame, width=28)
@@ -131,6 +131,9 @@ class BudgetMaker:
         self.other_entry = tk.Entry(inv_frame, width=28)
         self.other_entry.grid(row=6, column=3, pady=6)
 
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
@@ -141,7 +144,172 @@ class BudgetMaker:
         window.mainloop()
     
     def on_calculate(self):
+        try:
+            salary = self.parse_float(self.take_home_entry.get())
+            family_size = self.parse_int(self.family_entry.get())
+            pets = self.parse_int(self.pets_entry.get())
+            cars = self.parse_int(self.cars_entry.get())
+            mortgage_rent = self.parse_float(self.mortrent_entry.get())
+            car_loan = self.parse_float(self.car_loan_entry.get())
+            other_debt = self.parse_float(self.other_debt_entry.get())
+            utilities = self.parse_float(self.util_entry.get())
+            insurance = self.parse_float(self.insurance_entry.get())
+            food = self.parse_float(self.food_entry.get())
+            copays = self.parse_float(self.med_entry.get())
+            giving = self.parse_float(self.give_entry.get())
+            investments = self.parse_float(self.invest_entry.get())
+            extra = self.parse_float(self.other_entry.get())
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+        
+        if salary <= 0.0 or food <= 0.0:
+            messagebox.showerror("Salary and food must be positive")
+            return
+        
+        if family_size <= 0:
+            messagebox.showerror("You count as a family member.")
+            return
+        
+        if pets < 0 or cars < 0:
+            messagebox.showerror("Cars and pets cannot be negative.")
+            return
+        
+        if mortgage_rent < 0.0 or car_loan < 0.0 or other_debt < 0.0 or utilities < 0.0 or insurance < 0.0 or copays < 0.0 or giving < 0.0 or investments < 0.0 or extra < 0.0:
+            messagebox.showerror("All responses must be greater than or equal to 0")
+            return
+        
+        self.salary = salary
+        self.family_size = family_size
+        self.pets = pets
+        self.cars = cars
+        self.mortgage_rent = mortgage_rent
+        self.car_loan = car_loan
+        self.other_debt = other_debt
+        self.utilities = utilities
+        self.insurance = insurance
+        self.food = food
+        self.copays = copays
+        self.giving = giving
+        self.investments = investments
+        self.extra = extra
+
+        budget_types = ["monthly pay", "people supported", "pets supported", "cars owned", "mortgage or rent", "auto payments", "debt payments", "utilities", "insurance", "food", "medical", "giving", "investments", "extra"]
+        budget_information = [self.salary, self.family_size, self.pets, self.cars, self.mortgage_rent, self.car_loan, self.other_debt, self.utilities, self.insurance, self.food, self.copays, self.giving, self.investments, self.extra]
+
+        self.file_exists = self.generate_budget_document(budget_types, budget_information)
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Budget document complete", "Budget saved to InterestCalculation.xlsx.")
+
+    def generate_budget_document(self, types, info):
+        workbook = None
+        worksheet = None
+
+        giving_ten_percent = info[0] / 10
+        food_cost_min = info[1] * 250
+        extras_cost_min = info[1] * 20 + 60
+        pet_cost_min = info[2] * 20
+        pet_insurance_min = info[2] * 20
+        insurance_min = info[3] * 50 + 150
+        
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+        worksheet.title = "Budget creator $%.2f" % info[0]
+
+        worksheet["A1"] = "Budget calculation"
+        worksheet["A2"] = "Monthly pay: $%.2f" % info[0]
+        worksheet["C1"] = "Current Spending"
+        worksheet["D1"] = "Frugal Chart"
+        worksheet["E1"] = "Generous Chart"
+        money_format = "$#,##0.00"
+
+        for i in range(len(types)):
+            worksheet["B%d" % (i + 2)] = types[i]
+        
+        worksheet["B16"] = "Total expenditures"
+        worksheet["B17"] = "Remaining Funds"
+
+        for c in "CDE":
+            worksheet[c + "2"] = info[0]
+            worksheet[c + "2"].number_format = money_format
+            worksheet[c + "3"] = info[1]
+            worksheet[c + "4"] = info[2]
+            worksheet[c + "5"] = info[3]
+            worksheet[c + "6"] = info[4]
+            worksheet[c + "7"] = info[5]
+            worksheet[c + "8"] = info[6]
+            worksheet[c + "9"] = info[7]
+            worksheet[c + "12"] = info[10]
+        
+        worksheet["C10"] = info[8]
+        worksheet["C11"] = info[9]
+        worksheet["C13"] = info[11]
+        worksheet["C14"] = info[12]
+        worksheet["C15"] = info[13]
+        worksheet["C16"] = f"=SUM(C6:C15)"
+        worksheet["C17"] = f"=C2-C16"
+        worksheet["D10"] = insurance_min + pet_insurance_min
+        worksheet["D11"] = food_cost_min
+        worksheet["D13"] = min(100, giving_ten_percent)
+        worksheet["D14"] = 250
+        worksheet["D15"] = extras_cost_min + pet_cost_min
+        worksheet["D16"] = f"=SUM(D6:D15)"
+        worksheet["D17"] = f"=D2-D16"
+        worksheet["E10"] = (insurance_min + pet_insurance_min) * 1.25
+        worksheet["E11"] = food_cost_min * 1.5
+        worksheet["E13"] = giving_ten_percent
+        worksheet["E14"] = 1000
+        worksheet["E15"] = extras_cost_min + pet_cost_min + 250
+        worksheet["E16"] = f"=SUM(E6:E15)"
+        worksheet["E17"] = f"=E2-E16"
+
+        for c in "CDE":
+            for i in range(6, 18):
+                worksheet["%c%d" % (c, i)].number_format = money_format
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+        self.generate_pie_chart(worksheet, 2, 3)
+        self.generate_pie_chart(worksheet, 2, 4)
+        self.generate_pie_chart(worksheet, 2, 5)
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating budget documents.")
+
+            
+        return self.file_exists
+    
+    def generate_pie_chart(self, worksheet, label_col, data_col):
+        chart = PieChart()
+        labels = Reference(worksheet, min_col=label_col, min_row=6, max_row=15)
+        data = Reference(worksheet, min_col=data_col, min_row=5, max_row=15)
+        chart.add_data(data, titles_from_data=True)
+        chart.set_categories(labels)
+        if data_col == 3:
+            chart.title = "Current Budget Makeup"
+            worksheet.add_chart(chart, "H3")
+        elif data_col == 4:
+            chart.title = "Frugal Budget Makeup"
+            worksheet.add_chart(chart, "H19")
+        elif data_col == 5:
+            chart.title = "Generous Budget Makeup"
+            worksheet.add_chart(chart, "Q19")
         return
+
 
 def budget_maker(file_exists):
     calculator = BudgetMaker(file_exists)
