@@ -5,8 +5,103 @@ from openpyxl import Workbook
 from openpyxl.chart import PieChart, Reference
 import openpyxl
 
+class BudgetMaker:
+    def __init__(self, file_exists=False):
+        self.salary = -1.0
+        self.family_size = -1
+        self.pets = -1
+        self.cars = -1
+        self.mortgage_rent = -1.0
+        self.car_loan = -1.0
+        self.other_debt = -1.0
+        self.utilities = -1.0
+        self.insurance = -1.0
+        self.food = -1.0
+        self.copays = -1.0
+        self.giving = -1.0
+        self.investments = -1.0
+        self.extra = -1.0
+        self.file_exists = file_exists
+    
+    def parse_float(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int, float)):
+            return float(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return float(raw_value)
+    
+    def parse_int(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int)):
+            return int(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return int(raw_value)
+    
+    def create_gui(self):
+        window = tk.Toplevel()
+        window.title("Budget Calculator")
+        window.geometry("460x460")
+        window.resizable(False, False)
 
-def budget_maker(fileExists):
+        header = tk.Label(
+            window,
+            text="Budget Calculator",
+            font=("Segoe UI", 16, "bold"),
+            wraplength=420,
+            justify="center",
+            pady=12,
+        )
+        header.pack()
+
+        instructions = tk.Label(
+            window,
+            text="Enter your budget details below and click Calculate. Enter a \"0\" into boxes that aren't relevant to your budget.",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))  
+
+        inv_frame = tk.Frame(window)
+        inv_frame.pack(padx=20, pady=8, fill = "x")
+
+        tk.Label(inv_frame, text="Monthly post-tax take home pay ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.starting_inv_entry = tk.Entry(inv_frame, width=28)
+        self.starting_inv_entry.grid(row=0, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Number of people in Family:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.interest_rate_entry = tk.Entry(inv_frame, width=28)
+        self.interest_rate_entry.grid(row=1, column=1, pady=6)
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
+        window.grab_set()
+        window.mainloop()
+    
+    def on_calculate(self):
+        return
+
+def budget_maker(file_exists):
+    calculator = BudgetMaker(file_exists)
+    calculator.create_gui()
+    return calculator.file_exists
+
+
+#def budget_maker(fileExists):
     print("Welcome to the budget calculator. I'm going to ask you some questions about your life to determine your budget.")
     print("Furthermore, I'm going to ask what your current spending is, so we can do a side by side comparison.")
     print("At the end, we will see how much leftover money there is, and I will give some recommendations.")
@@ -143,7 +238,7 @@ def budget_maker(fileExists):
     generate_budget_document(budget_types, budget_information, fileExists)
     return fileExists
 
-def generate_budget_document(types, info, fileExists = False):
+#def generate_budget_document(types, info, fileExists = False):
 
     workbook = None
     worksheet = None
@@ -236,7 +331,7 @@ def generate_budget_document(types, info, fileExists = False):
         
     return fileExists
 
-def generate_pie_chart(worksheet, label_col, data_col):
+#def generate_pie_chart(worksheet, label_col, data_col):
     chart = PieChart()
     labels = Reference(worksheet, min_col=label_col, min_row=6, max_row=15)
     data = Reference(worksheet, min_col=data_col, min_row=5, max_row=15)
