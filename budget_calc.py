@@ -50,7 +50,7 @@ class BudgetMaker:
     def create_gui(self):
         window = tk.Toplevel()
         window.title("Budget Calculator")
-        window.geometry("460x460")
+        window.geometry("800x450")
         window.resizable(False, False)
 
         header = tk.Label(
@@ -80,8 +80,56 @@ class BudgetMaker:
         self.starting_inv_entry.grid(row=0, column=1, pady=6)
 
         tk.Label(inv_frame, text="Number of people in Family:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
-        self.interest_rate_entry = tk.Entry(inv_frame, width=28)
-        self.interest_rate_entry.grid(row=1, column=1, pady=6)
+        self.family_entry = tk.Entry(inv_frame, width=28)
+        self.family_entry.grid(row=1, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Number of pets you own:", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        self.pets_entry = tk.Entry(inv_frame, width=28)
+        self.pets_entry.grid(row=2, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Number of cars you own:", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.cars_entry = tk.Entry(inv_frame, width=28)
+        self.cars_entry.grid(row=3, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Monthly mortgage/rent payment ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        self.mortrent_entry = tk.Entry(inv_frame, width=28)
+        self.mortrent_entry.grid(row=4, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Monthly car loan payment ($):", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        self.car_loan_entry = tk.Entry(inv_frame, width=28)
+        self.car_loan_entry.grid(row=5, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Monthly other debt payments ($):", anchor="w").grid(row=6, column=0, sticky="w", pady=6)
+        self.other_debt_entry = tk.Entry(inv_frame, width=28)
+        self.other_debt_entry.grid(row=6, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Monthly utilities ($):", anchor="w").grid(row=0, column=2, sticky="w", pady=6)
+        self.util_entry = tk.Entry(inv_frame, width=28)
+        self.util_entry.grid(row=0, column=3, pady=6)
+
+        tk.Label(inv_frame, text="Monthly insurance costs ($):", anchor="w").grid(row=1, column=2, sticky="w", pady=6)
+        self.insurance_entry = tk.Entry(inv_frame, width=28)
+        self.insurance_entry.grid(row=1, column=3, pady=6)
+
+        tk.Label(inv_frame, text="Monthly food costs ($):", anchor="w").grid(row=2, column=2, sticky="w", pady=6)
+        self.food_entry = tk.Entry(inv_frame, width=28)
+        self.food_entry.grid(row=2, column=3, pady=6)
+
+        tk.Label(inv_frame, text="Monthly copays/medical costs ($):", anchor="w").grid(row=3, column=2, sticky="w", pady=6)
+        self.med_entry = tk.Entry(inv_frame, width=28)
+        self.med_entry.grid(row=3, column=3, pady=6)
+
+        tk.Label(inv_frame, text="Monthly giving ($):", anchor="w").grid(row=4, column=2, sticky="w", pady=6)
+        self.give_entry = tk.Entry(inv_frame, width=28)
+        self.give_entry.grid(row=4, column=3, pady=6)
+
+        tk.Label(inv_frame, text="Monthly investments ($):", anchor="w").grid(row=5, column=2, sticky="w", pady=6)
+        self.invest_entry = tk.Entry(inv_frame, width=28)
+        self.invest_entry.grid(row=5, column=3, pady=6)
+
+        tk.Label(inv_frame, text="Monthly other costs ($):", anchor="w").grid(row=6, column=2, sticky="w", pady=6)
+        self.other_entry = tk.Entry(inv_frame, width=28)
+        self.other_entry.grid(row=6, column=3, pady=6)
 
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
