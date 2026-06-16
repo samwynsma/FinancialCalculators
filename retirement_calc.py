@@ -39,7 +39,13 @@ class RetirementDurationCalculator:
         return int(raw_value)
     
     def create_gui(self):
-        return
+        window = tk.Toplevel()
+        window.title("Retirement Duration Calculator")
+        window.geometry("460x460")
+        window.resizable(False, False)
+
+        window.grab_set()
+        window.mainloop()
 
 
 
