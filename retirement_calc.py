@@ -44,8 +44,63 @@ class RetirementDurationCalculator:
         window.geometry("460x460")
         window.resizable(False, False)
 
+        header = tk.Label(
+            window,
+            text="Retirement Duration Calculator",
+            font=("Segoe UI", 16, "bold"),
+            wraplength=420,
+            justify="center",
+            pady=12,
+        )
+        header.pack()
+
+        instructions = tk.Label(
+            window,
+            text="Enter your current savings and information below to make a retirement plan.",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))
+
+        inv_frame = tk.Frame(window)
+        inv_frame.pack(padx=20, pady=8, fill = "x")
+
+        tk.Label(inv_frame, text="Current Savings ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.savings_entry = tk.Entry(inv_frame, width=28)
+        self.savings_entry.grid(row=0, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.interest_rate_entry = tk.Entry(inv_frame, width=28)
+        self.interest_rate_entry.grid(row=1, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Monthly Needs ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        self.needs_entry = tk.Entry(inv_frame, width=28)
+        self.needs_entry.grid(row=2, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Socialy Security ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.age_entry = tk.Entry(inv_frame, width=28)
+        self.age_entry.grid(row=3, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Pension ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        self.retirement_entry = tk.Entry(inv_frame, width=28)
+        self.retirement_entry.grid(row=4, column=1, pady=6)
+
+        tk.Label(inv_frame, text="Expected Remaining Life Expectancy:", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        self.end_entry = tk.Entry(inv_frame, width=28)
+        self.end_entry.grid(row=5, column=1, pady=6)
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
         window.grab_set()
         window.mainloop()
+    
+    def on_calculate(self):
+        return
 
 
 
