@@ -5,6 +5,7 @@ from budget_calc import budget_maker
 from interest_calc import generate_interest
 from loans_calc import loan_payoff
 from retirement_goal_calc import retirement_goal
+from retirement_calc import retirement_dur
 
 
 def launch_calculator(calc_func, excelFileExists, title):
@@ -25,7 +26,7 @@ def create_gui():
 
     root = tk.Tk()
     root.title("Sam's Financial Planning")
-    root.geometry("420x320")
+    root.geometry("420x400")
     root.resizable(False, False)
 
     header = tk.Label(
@@ -60,11 +61,14 @@ def create_gui():
             excelFileExists = launch_calculator(retirement_goal, excelFileExists, "Retirement Goals")
         elif choice == "budget":
             excelFileExists = launch_calculator(budget_maker, excelFileExists, "Budget Calculator")
+        elif choice == "duration":
+            excelFileExists = launch_calculator(retirement_dur, excelFileExists, "Retirement Duration")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).pack(pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).pack(pady=4)
     tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement")).pack(pady=4)
     tk.Button(button_frame, text="4. Budget Calculator", width=34, command=lambda: handle_choice("budget")).pack(pady=4)
+    tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda : handle_choice("duration")).pack(pady=4)
 
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
