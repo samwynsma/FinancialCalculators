@@ -93,13 +93,13 @@ class RetirementDurationCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Duration", width=16, command=self.calculate_duration).grid(row=0, column=0, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
 
         window.grab_set()
         window.mainloop()
-    
-    def on_calculate(self):
+
+    def simulate_vals(self, has_needs=True):
         try:
             savings = self.parse_float(self.savings_entry.get())
             interest = self.parse_float(self.interest_rate_entry.get())
@@ -119,7 +119,7 @@ class RetirementDurationCalculator:
             messagebox.showerror("Input error", "Interest rate must be positive. Investments usually grow, even in retirement.")
             return
         
-        if needs <= 0.0:
+        if needs <= 0.0 and has_needs:
             messagebox.showerror("Input error", "You will need to spend money in retirement")
             return
         
@@ -142,12 +142,62 @@ class RetirementDurationCalculator:
         self.pension = pension
         self.expected_years_left = heaven
 
-        self.file_exists = self.generate_retirement_info_document()
+    def calculate_duration(self):
+        self.simulate_vals()
+        self.file_exists = self.generate_duration_document()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Retirement document complete", "Retirement calculation saved to InterestCalculation.xlsx.")
+    
+    def generate_duration_document(self):
+        months_remaining = self.expected_years_left * 12
+        current_money = self.current_savings
+        monthly_interest = self.growth_rate / 12.0
+        pension = self.pension
+        social = self.social_security
+        needs = self.monthly_needs
+        end_of_money = months_remaining + 1
 
-    def generate_retirement_info_document(self):
-        return True
+        money = []
+        money.append(current_money)
+
+        for i in range(months_remaining):
+            current_money = max(0.0, (current_money * monthly_interest) + pension + social - needs)
+            if(current_money == 0 and i+1 < end_of_money):
+                end_of_money = i+1
+            money.append(current_money)
+        
+        workbook = None
+        worksheet = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+
+        worksheet.title = "Duration %d" % int(self.current_savings)
+
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating retirement documents.")
+        return self.file_exists
+    
+        
 
 
 def retirement_dur(file_exists):
