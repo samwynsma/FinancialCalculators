@@ -78,17 +78,17 @@ class RetirementDurationCalculator:
         self.needs_entry = tk.Entry(inv_frame, width=28)
         self.needs_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Socialy Security ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
-        self.age_entry = tk.Entry(inv_frame, width=28)
-        self.age_entry.grid(row=3, column=1, pady=6)
+        tk.Label(inv_frame, text="Social Security ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.social_security_entry = tk.Entry(inv_frame, width=28)
+        self.social_security_entry.grid(row=3, column=1, pady=6)
 
         tk.Label(inv_frame, text="Pension ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
         self.retirement_entry = tk.Entry(inv_frame, width=28)
         self.retirement_entry.grid(row=4, column=1, pady=6)
 
         tk.Label(inv_frame, text="Expected Remaining Life Expectancy:", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
-        self.end_entry = tk.Entry(inv_frame, width=28)
-        self.end_entry.grid(row=5, column=1, pady=6)
+        self.meet_Jesus_entry = tk.Entry(inv_frame, width=28)
+        self.meet_Jesus_entry.grid(row=5, column=1, pady=6)
 
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
@@ -100,8 +100,54 @@ class RetirementDurationCalculator:
         window.mainloop()
     
     def on_calculate(self):
-        return
+        try:
+            savings = self.parse_float(self.savings_entry.get())
+            interest = self.parse_float(self.interest_rate_entry.get())
+            needs = self.parse_float(self.needs_entry.get())
+            government_money = self.parse_float(self.social_security_entry.get())
+            pension = self.parse_float(self.retirement_entry.get())
+            heaven = self.parse_int(self.meet_Jesus_entry.get())
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+        
+        if savings <= 0.0:
+            messagebox.showerror("Input error", "If you have negative retirement savings, then you screwed up life somewhere and I can't help you.")
+            return
+        
+        if interest <= 0.0:
+            messagebox.showerror("Input error", "Interest rate must be positive. Investments usually grow, even in retirement.")
+            return
+        
+        if needs <= 0.0:
+            messagebox.showerror("Input error", "You will need to spend money in retirement")
+            return
+        
+        if government_money <= 0.0:
+            messagebox.showerror("Input error", "Everyone in the USA receives social security in retirement, provided they worked in their life.")
+            return
+        
+        if pension < 0.0:
+            messagebox.showerror("Input error", "Pension must be non-negative")
+            return
+        
+        if heaven <= 0:
+            messagebox.showerror("Stupid person error", "Unless you can time-travel backwards to kill yourself, this isn't possible.")
+            return
+        
+        self.current_savings = savings
+        self.growth_rate = interest
+        self.monthly_needs = needs
+        self.social_security = government_money
+        self.pension = pension
+        self.expected_years_left = heaven
 
+        self.file_exists = self.generate_retirement_info_document()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Retirement document complete", "Retirement calculation saved to InterestCalculation.xlsx.")
+
+    def generate_retirement_info_document(self):
+        return True
 
 
 def retirement_dur(file_exists):
