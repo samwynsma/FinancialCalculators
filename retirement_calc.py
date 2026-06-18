@@ -164,7 +164,7 @@ class RetirementDurationCalculator:
         money.append(current_money)
 
         for i in range(months_remaining):
-            current_money = max(0.0, (current_money * monthly_interest) + pension + social - needs)
+            current_money = max(0.0, (current_money * (1 + monthly_interest / 100.0)) + pension + social - needs)
             if(current_money == 0 and i+1 < end_of_money):
                 end_of_money = i+1
             money.append(current_money)
@@ -186,7 +186,7 @@ class RetirementDurationCalculator:
         worksheet["A1"] = "Duration of Retirement Money"
         worksheet["A2"] = "Starting Money: $%.2f" % self.current_savings
         worksheet["A3"] = "Monthly needs: $%.2f" % needs
-        worksheet["A4"] = "Growth rate: %.4f percent per month" % self.growth_rate
+        worksheet["A4"] = "Growth rate: %.4f percent per month" % monthly_interest
         worksheet["A5"] = "Social Security: $%.2f" % social
         worksheet["A6"] = "Pension: $%.2f" % pension
         if end_of_money > months_remaining:
@@ -196,6 +196,11 @@ class RetirementDurationCalculator:
         worksheet["B1"] = "Month"
         worksheet["C1"] = "Money in Account Remaining"
         money_format = "$#,##0.00"
+
+        for i in range(len(money)):
+            worksheet["B%d" % (i+3)] = i
+            worksheet["C%d" % (i+3)] = money[i]
+            worksheet["C%d" % (i+3)].number_format = money_format
 
 
         for col in worksheet.columns:
