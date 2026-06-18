@@ -253,6 +253,55 @@ class RetirementDurationCalculator:
             scenario_one = (scenario_one * (1 + monthly_interest)) + pension + social - scenario_one_amt
             scenario_two = (scenario_two * (1 + monthly_interest)) + pension + social - scenario_two_amt
             scenario_three = (scenario_three * (1 + monthly_interest)) + pension + social - scenario_three_amt
+
+        workbook = None
+        worksheet = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+
+        worksheet.title = "Retirement Money $%.2f" % current_money
+
+        worksheet["A1"] = "Retirement Money Scenarios"
+        worksheet["A2"] = "Starting Money: $%.2f" % self.current_savings
+        worksheet["A3"] = "Growth rate: %.4f percent per month" % monthly_interest
+        worksheet["A4"] = "Social Security: $%.2f" % social
+        worksheet["A5"] = "Pension: $%.2f" % pension
+        worksheet["B2"] = "Month"
+        worksheet["C2"] = "Money in Account Remaining"
+        worksheet["E2"] = "Month"
+        worksheet["F2"] = "Money in Account Remaining"
+        worksheet["H2"] = "Month"
+        worksheet["I2"] = "Money in Account"
+        money_format = "$#,##0.00"
+
+        for i in range(len(money_s1)):
+            worksheet["B%d" % (i+3)] = i
+            worksheet["C%d" % (i+3)] = money_s1[i]
+            worksheet["C%d" % (i+3)].number_format = money_format
+
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating retirement documents.")
+        return self.file_exists
     
         
 
