@@ -90,6 +90,9 @@ class RetirementDurationCalculator:
         self.meet_Jesus_entry = tk.Entry(inv_frame, width=28)
         self.meet_Jesus_entry.grid(row=5, column=1, pady=6)
 
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
@@ -179,6 +182,20 @@ class RetirementDurationCalculator:
         
 
         worksheet.title = "Duration %d" % int(self.current_savings)
+
+        worksheet["A1"] = "Duration of Retirement Money"
+        worksheet["A2"] = "Starting Money: $%.2f" % self.current_savings
+        worksheet["A3"] = "Monthly needs: $%.2f" % needs
+        worksheet["A4"] = "Growth rate: %.4f percent per month" % self.growth_rate
+        worksheet["A5"] = "Social Security: $%.2f" % social
+        worksheet["A6"] = "Pension: $%.2f" % pension
+        if end_of_money > months_remaining:
+            worksheet["A7"] = "Money at end: $%.2f" % current_money
+        else:
+            worksheet["A7"] = "Money runs out at month %d" % end_of_money 
+        worksheet["B1"] = "Month"
+        worksheet["C1"] = "Money in Account Remaining"
+        money_format = "$#,##0.00"
 
 
         for col in worksheet.columns:
