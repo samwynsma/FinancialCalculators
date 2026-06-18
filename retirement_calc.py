@@ -97,7 +97,8 @@ class RetirementDurationCalculator:
         button_frame.pack(pady=16)
 
         tk.Button(button_frame, text="Duration", width=16, command=self.calculate_duration).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+        tk.Button(button_frame, text="Scenarios", width=16, command=self.calculate_scenarios).grid(row=0, column=1, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
@@ -149,7 +150,13 @@ class RetirementDurationCalculator:
         self.simulate_vals()
         self.file_exists = self.generate_duration_document()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
-        messagebox.showinfo("Retirement document complete", "Retirement calculation saved to InterestCalculation.xlsx.")
+        messagebox.showinfo("Retirement Duration complete", "Retirement calculation saved to InterestCalculation.xlsx.")
+
+    def calculate_scenarios(self):
+        self.simulate_vals()
+        self.file_exists = self.generate_scenarios_document()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Retirement Scenarios complete", "Retirement calculation saved to InterestCalculation.xlsx.")
     
     def generate_duration_document(self):
         months_remaining = self.expected_years_left * 12
@@ -218,6 +225,34 @@ class RetirementDurationCalculator:
         workbook.save("InterestCalculation.xlsx")
         print("Finished creating retirement documents.")
         return self.file_exists
+    
+    def generate_scenarios_document(self):
+        months_remaining = self.expected_years_left * 12
+        current_money = self.current_savings
+        monthly_interest = self.growth_rate / 12.0
+        pension = self.pension
+        social = self.social_security
+
+        money_s1 = []
+        money_s2 = []
+        money_s3 = []
+
+        scenario_one = current_money
+        scenario_two = current_money
+        scenario_three = current_money
+
+        money_s1.append(scenario_one)
+        money_s2.append(scenario_two)
+        money_s3.append(scenario_three)
+
+        scenario_one_amt = (current_money * monthly_interest / (pow(1 + monthly_interest, months_remaining)- 1)) + pension + social
+        scenario_two_amt = (current_money * monthly_interest) + pension + social
+        scenario_three_amt = pension + social
+
+        for i in range(months_remaining):
+            scenario_one = (scenario_one * (1 + monthly_interest)) + pension + social - scenario_one_amt
+            scenario_two = (scenario_two * (1 + monthly_interest)) + pension + social - scenario_two_amt
+            scenario_three = (scenario_three * (1 + monthly_interest)) + pension + social - scenario_three_amt
     
         
 
