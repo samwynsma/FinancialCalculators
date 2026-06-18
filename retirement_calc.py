@@ -245,14 +245,17 @@ class RetirementDurationCalculator:
         money_s2.append(scenario_two)
         money_s3.append(scenario_three)
 
-        scenario_one_amt = (current_money * monthly_interest / (pow(1 + monthly_interest, months_remaining)- 1)) + pension + social
-        scenario_two_amt = (current_money * monthly_interest) + pension + social
+        true_interest = monthly_interest / 100.0
+        scenario_one_amt = ((current_money * true_interest) / (pow(1 + true_interest, months_remaining)- 1)) * pow(1 + true_interest, months_remaining) + pension + social
+        scenario_two_amt = (current_money * true_interest) + pension + social
         scenario_three_amt = pension + social
 
         for i in range(months_remaining):
-            scenario_one = (scenario_one * (1 + monthly_interest)) + pension + social - scenario_one_amt
-            scenario_two = (scenario_two * (1 + monthly_interest)) + pension + social - scenario_two_amt
-            scenario_three = (scenario_three * (1 + monthly_interest)) + pension + social - scenario_three_amt
+            scenario_one = (scenario_one * (1 + true_interest)) - scenario_one_amt + pension + social
+            scenario_three = (scenario_three * (1 + true_interest))
+            money_s1.append(scenario_one)
+            money_s2.append(scenario_two)
+            money_s3.append(scenario_three)
 
         workbook = None
         worksheet = None
@@ -273,6 +276,9 @@ class RetirementDurationCalculator:
         worksheet["A3"] = "Growth rate: %.4f percent per month" % monthly_interest
         worksheet["A4"] = "Social Security: $%.2f" % social
         worksheet["A5"] = "Pension: $%.2f" % pension
+        worksheet["A6"] = "Money to last %d months: $%.2f" % (months_remaining, scenario_one_amt)
+        worksheet["A7"] = "Money to keep the account neutral: $%.2f" % scenario_two_amt
+        worksheet["A8"] = "Money to keep the account growing: $%.2f" % scenario_three_amt
         worksheet["B2"] = "Month"
         worksheet["C2"] = "Money in Account Remaining"
         worksheet["E2"] = "Month"
@@ -285,6 +291,12 @@ class RetirementDurationCalculator:
             worksheet["B%d" % (i+3)] = i
             worksheet["C%d" % (i+3)] = money_s1[i]
             worksheet["C%d" % (i+3)].number_format = money_format
+            worksheet["E%d" % (i+3)] = i
+            worksheet["F%d" % (i+3)] = money_s2[i]
+            worksheet["F%d" % (i+3)].number_format = money_format
+            worksheet["H%d" % (i+3)] = i
+            worksheet["I%d" % (i+3)] = money_s3[i]
+            worksheet["I%d" % (i+3)].number_format = money_format
 
 
         for col in worksheet.columns:
