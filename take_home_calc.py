@@ -79,6 +79,11 @@ class TakeHomeCalculator:
         tk.Label(inv_frame, text="Take Home Frequency:", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
         take_home_freq_frame = tk.Frame(inv_frame)
         take_home_freq_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
+        tk.Radiobutton(take_home_freq_frame, text="Year", variable=self.take_home_freq_var, value="yearly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(take_home_freq_frame, text="Month", variable=self.take_home_freq_var, value="monthly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(take_home_freq_frame, text="Week", variable=self.take_home_freq_var, value="weekly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(take_home_freq_frame, text="Day", variable=self.take_home_freq_var, value="daily").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(take_home_freq_frame, text="Hour", variable=self.take_home_freq_var, value="hourly").pack(side="left")
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
@@ -93,6 +98,7 @@ class TakeHomeCalculator:
         window.mainloop()
     
     def on_calculate(self):
+        
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Take home document", "Take home calculation saved to InterestCalculation.xlsx.")
 
