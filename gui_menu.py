@@ -6,6 +6,7 @@ from interest_calc import generate_interest
 from loans_calc import loan_payoff
 from retirement_goal_calc import retirement_goal
 from retirement_calc import retirement_dur
+from take_home_calc import take_home
 
 
 def launch_calculator(calc_func, excelFileExists, title):
@@ -63,12 +64,15 @@ def create_gui():
             excelFileExists = launch_calculator(budget_maker, excelFileExists, "Budget Calculator")
         elif choice == "duration":
             excelFileExists = launch_calculator(retirement_dur, excelFileExists, "Retirement Duration")
+        elif choice == "take_home":
+            excelFileExists = launch_calculator(take_home, excelFileExists, "Take Home Pay Calculator")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).pack(pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).pack(pady=4)
     tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement")).pack(pady=4)
     tk.Button(button_frame, text="4. Budget Calculator", width=34, command=lambda: handle_choice("budget")).pack(pady=4)
     tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda : handle_choice("duration")).pack(pady=4)
+    tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda : handle_choice("take_home")).pack(pady=4)
 
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
