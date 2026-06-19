@@ -9,8 +9,8 @@ class TakeHomeCalculator:
         self.pay_rate = -1.0
         self.percent_tax_rate = -1.0
         self.set_aside = -1.0
-        self.pay_freq = "Hourly"
-        self.period = "Month"
+        self.pay_freq = "hourly"
+        self.period = "monthly"
         self.file_exists = file_exists
 
     def parse_float(self, raw_value):
@@ -28,7 +28,7 @@ class TakeHomeCalculator:
     def create_gui(self):
         window = tk.Toplevel()
         window.title("Take Home Pay Calculator")
-        window.geometry("460x460")
+        window.geometry("500x420")
         window.resizable(False, False)
 
         header = tk.Label(
@@ -75,7 +75,7 @@ class TakeHomeCalculator:
         self.aside_entry = tk.Entry(inv_frame, width=28)
         self.aside_entry.grid(row=3, column=1, pady=6)
 
-        self.take_home_freq_var = tk.StringVar(value = "weekly")
+        self.take_home_freq_var = tk.StringVar(value = "monthly")
         tk.Label(inv_frame, text="Take Home Frequency:", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
         take_home_freq_frame = tk.Frame(inv_frame)
         take_home_freq_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
@@ -98,9 +98,40 @@ class TakeHomeCalculator:
         window.mainloop()
     
     def on_calculate(self):
+        try:
+            pay = self.parse_float(self.pay_entry.get())
+            tax = self.parse_float(self.tax_entry.get())
+            set_aside = self.parse_float(self.aside_entry.get())
+            freq_pay = self.pay_freq_var.get().lower() + "ly"
+            freq_take = self.take_home_freq_var.get().lower() + "ly"
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
         
+        if(pay <= 0.0):
+            messagebox.showerror("Input error", "Pay must be positive.")
+            return
+        
+        if(tax < 0.0):
+            messagebox.showerror("Input error", "Sadly, we don't live in a libertarian society.")
+            return
+        
+        if(set_aside < 0.0):
+            messagebox.showerror("Input error", "Set aside cannot be negative")
+            return
+        
+        self.pay_rate = pay
+        self.percent_tax_rate = tax
+        self.set_aside = set_aside
+        self.pay_freq = freq_pay
+        self.period = freq_take
+
+        self.file_exists = self.generate_take_home_document()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Take home document", "Take home calculation saved to InterestCalculation.xlsx.")
+    
+    def generate_take_home_document(self):
+        return self.file_exists
 
     
 
