@@ -27,9 +27,45 @@ class TakeHomeCalculator:
     
     def create_gui(self):
         window = tk.Toplevel()
-        window.title("Retirement Duration Calculator")
+        window.title("Take Home Pay Calculator")
         window.geometry("460x460")
         window.resizable(False, False)
+
+        header = tk.Label(
+            window,
+            text="Take Home Pay Calculator",
+            font=("Segoe UI", 16, "bold"),
+            wraplength=420,
+            justify="center",
+            pady=12,
+        )
+        header.pack()
+
+        instructions = tk.Label(
+            window,
+            text="Enter your pay and tax information below to see what your take home will be.",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))
+
+        inv_frame = tk.Frame(window)
+        inv_frame.pack(padx=20, pady=8, fill = "x")
+
+        tk.Label(inv_frame, text="Pay rate ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.pay_entry = tk.Entry(inv_frame, width=28)
+        self.pay_entry.grid(row=0, column=1, pady=6)
+
+        self.pay_freq_var = tk.StringVar(value="hourly")
+        tk.Label(inv_frame, text="Pay Frequency:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        freq_frame = tk.Frame(inv_frame)
+        freq_frame.grid(row=1, column=1, columnspan=5, sticky="w", pady=6)
+        tk.Radiobutton(freq_frame, text="Year", variable=self.pay_freq_var, value="yearly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(freq_frame, text="Month", variable=self.pay_freq_var, value="monthly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(freq_frame, text="Week", variable=self.pay_freq_var, value="weekly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(freq_frame, text="Day", variable=self.pay_freq_var, value="daily").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(freq_frame, text="Hour", variable=self.pay_freq_var, value="hourly").pack(side="left")
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
