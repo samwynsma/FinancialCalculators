@@ -26,13 +26,13 @@ class CollegeSavingsCalculator:
     
     def create_gui(self):
         window = tk.Toplevel()
-        window.title("Take Home Pay Calculator")
+        window.title("College Savings Calculator")
         window.geometry("500x420")
         window.resizable(False, False)
 
         header = tk.Label(
             window,
-            text="Take Home Pay Calculator",
+            text="College Savings Calculator",
             font=("Segoe UI", 16, "bold"),
             wraplength=420,
             justify="center",
@@ -42,7 +42,7 @@ class CollegeSavingsCalculator:
 
         instructions = tk.Label(
             window,
-            text="Enter your pay and tax information below to see what your take home will be.",
+            text="Enter your account information below, and see how it will grow in 18 years.",
             font=("Segoe UI", 10),
             wraplength=420,
             justify="center",
@@ -80,6 +80,38 @@ class CollegeSavingsCalculator:
 
         window.grab_set()
         window.mainloop()
+
+    def simulate_vals(self, has_goal = True):
+        try:
+            start = self.parse_float(self.start_entry.get())
+            growth = self.parse_float(self.growth_entry.get())
+            monthly_add = self.parse_float(self.monthly_entry.get())
+            end_goal = self.parse_float(self.goal_entry.get())
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+        
+        if start < 0.0:
+            messagebox.showerror("Input error", "Starting savings cannot be negative")
+            return
+        
+        if growth <= 0.0:
+            messagebox.showerror("Input error", "Interest rate must be positive. Don't put your money in a no-growth account")
+            return
+        
+        if monthly_add < 0.0:
+            messagebox.showerror("Input error", "Monthly additions to account cannot be negative")
+            return
+        
+        if end_goal <= 0.0 and has_goal:
+            messagebox.showerror("Input error", "End goal must be positive.")
+            return
+        
+        self.starting_value = start
+        self.interest_rate = growth
+        self.monthly_invest = monthly_add
+        self.goal = end_goal
+        
 
     def find_total(self):
         return
