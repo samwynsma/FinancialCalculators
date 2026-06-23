@@ -178,6 +178,67 @@ class CollegeSavingsCalculator:
         workbook.save("InterestCalculation.xlsx")
         print("Finished creating college savings documents.")
         return self.file_exists
+    
+    def generate_college_requirement(self):
+        months_to_graduate = 216
+        current_money = self.starting_value
+        growth = self.interest_rate / 12.0
+        goal = self.goal
+
+        money = []
+        money.append(current_money)
+
+        interest_part = (growth / 100.0) / (pow(1 + growth / 100.0, months_to_graduate) - 1)
+        equity_part = goal - (current_money * pow(1 + growth / 100.0, months_to_graduate))
+        monthly = interest_part * equity_part
+
+        for i in range(months_to_graduate):
+            current_money = (current_money * (1 + growth / 100.0)) + monthly
+            money.append(current_money)
+        
+        worksheet = None
+        workbook = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+        worksheet.title = "College Goal %d" % int(self.goal)
+
+        worksheet["A1"] = "College savings to get to goal."
+        worksheet["A2"] = "Starting Money: $%.2f" % self.starting_value
+        worksheet["A3"] = "Goal: $%.2f" % goal
+        worksheet["A4"] = "Growth rate: %.4f percent per month" % growth
+        worksheet["A5"] = "Money to save: %.2f per month" % monthly
+        worksheet["B1"] = "Month"
+        worksheet["C1"] = "Money in College Account"
+        money_format = "$#,##0.00"
+
+        for i in range(len(money)):
+            worksheet["B%d" % (i+3)] = i
+            worksheet["C%d" % (i+3)] = money[i]
+            worksheet["C%d" % (i+3)].number_format = money_format
+        
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating college savings documents.")
+        return self.file_exists
+
 
 
 def college_save(file_exists):
