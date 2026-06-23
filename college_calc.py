@@ -114,10 +114,41 @@ class CollegeSavingsCalculator:
         
 
     def find_total(self):
+        self.simulate_vals(False)
+        self.file_exists = self.generate_total_savings()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Retirement Duration complete", "Retirement calculation saved to InterestCalculation.xlsx.")
         return
     
     def find_goal(self):
+        self.simulate_vals(True)
         return
+    
+    def generate_total_savings(self):
+        months_to_graduate = 216
+        current_money = self.starting_value
+        growth = self.interest_rate / 12.0
+        monthly = self.monthly_invest
+
+        money = []
+        money.append(current_money)
+
+        for i in range(months_to_graduate):
+            current_money = (current_money * (1 + growth / 100.0)) + monthly
+            money.append(current_money)
+        
+        worksheet = None
+        Workbook = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+        worksheet.title = "College Start %d" % int(self.starting_value)
 
 
 def college_save(file_exists):
