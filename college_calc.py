@@ -122,6 +122,9 @@ class CollegeSavingsCalculator:
     
     def find_goal(self):
         self.simulate_vals(False, True)
+        self.file_exists = self.generate_college_requirement()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("College Savings Account Calc complete", "Retirement calculation saved to InterestCalculation.xlsx.")
         return
     
     def generate_total_savings(self):
