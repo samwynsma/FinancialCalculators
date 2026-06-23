@@ -28,7 +28,7 @@ def create_gui():
 
     root = tk.Tk()
     root.title("Sam's Financial Planning")
-    root.geometry("420x400")
+    root.geometry("420x460")
     root.resizable(False, False)
 
     header = tk.Label(
