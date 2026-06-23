@@ -75,13 +75,13 @@ class CollegeSavingsCalculator:
         button_frame.pack(pady=16)
 
         tk.Button(button_frame, text="Total Calc", width=16, command=self.find_total).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Goal Calc", width=16, command=self.find_goal).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Goal Calc", width=16, command=self.find_goal).grid(row=0, column=1, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
 
-    def simulate_vals(self, has_goal = True):
+    def simulate_vals(self, has_add = True, has_goal = True):
         try:
             start = self.parse_float(self.start_entry.get())
             growth = self.parse_float(self.growth_entry.get())
@@ -99,7 +99,7 @@ class CollegeSavingsCalculator:
             messagebox.showerror("Input error", "Interest rate must be positive. Don't put your money in a no-growth account")
             return
         
-        if monthly_add < 0.0:
+        if monthly_add < 0.0 and has_add:
             messagebox.showerror("Input error", "Monthly additions to account cannot be negative")
             return
         
@@ -114,14 +114,14 @@ class CollegeSavingsCalculator:
         
 
     def find_total(self):
-        self.simulate_vals(False)
+        self.simulate_vals(True, False)
         self.file_exists = self.generate_total_savings()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
-        messagebox.showinfo("Retirement Duration complete", "Retirement calculation saved to InterestCalculation.xlsx.")
+        messagebox.showinfo("College Savings Account Calc complete", "Retirement calculation saved to InterestCalculation.xlsx.")
         return
     
     def find_goal(self):
-        self.simulate_vals(True)
+        self.simulate_vals(False, True)
         return
     
     def generate_total_savings(self):
@@ -138,7 +138,7 @@ class CollegeSavingsCalculator:
             money.append(current_money)
         
         worksheet = None
-        Workbook = None
+        workbook = None
 
         if(not self.file_exists):
             workbook = Workbook()
@@ -149,6 +149,35 @@ class CollegeSavingsCalculator:
             worksheet = workbook.create_sheet()
         
         worksheet.title = "College Start %d" % int(self.starting_value)
+
+        worksheet["A1"] = "College savings by end date."
+        worksheet["A2"] = "Starting Money: $%.2f" % self.starting_value
+        worksheet["A3"] = "Monthly addition: $%.2f" % self.monthly_invest
+        worksheet["A4"] = "Growth rate: %.4f percent per month" % growth
+        worksheet["B1"] = "Month"
+        worksheet["C1"] = "Money in College Account"
+        money_format = "$#,##0.00"
+
+        for i in range(len(money)):
+            worksheet["B%d" % (i+3)] = i
+            worksheet["C%d" % (i+3)] = money[i]
+            worksheet["C%d" % (i+3)].number_format = money_format
+        
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating college savings documents.")
+        return self.file_exists
 
 
 def college_save(file_exists):
