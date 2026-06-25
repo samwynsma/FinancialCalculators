@@ -102,8 +102,8 @@ class TakeHomeCalculator:
             pay = self.parse_float(self.pay_entry.get())
             tax = self.parse_float(self.tax_entry.get())
             set_aside = self.parse_float(self.aside_entry.get())
-            freq_pay = self.pay_freq_var.get().lower() + "ly"
-            freq_take = self.take_home_freq_var.get().lower() + "ly"
+            freq_pay = self.pay_freq_var.get().lower()
+            freq_take = self.take_home_freq_var.get().lower()
         except ValueError:
             messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
             return
@@ -189,10 +189,7 @@ class TakeHomeCalculator:
 
         tax_take = (self.percent_tax_rate / 100.0) * ending_pay
         set_aside_take = (self.set_aside / 100.0) * ending_pay
-        ending_pay = (ending_pay - tax_take - set_aside_take)
-        ending_formula.append(tax_take)
-        ending_formula.append(set_aside_take)
-        ending_formula.append(ending_pay)
+        ending_pay_res = (ending_pay - tax_take - set_aside_take)
 
         worksheet = None
         workbook = None
@@ -206,6 +203,40 @@ class TakeHomeCalculator:
             worksheet = workbook.create_sheet()
         
         worksheet.title = "Take Home Calc %d" % int(starting_pay)
+
+        money_format = "$#,##0.00"
+
+        worksheet["A1"] = "Take Home Calculator"
+        worksheet["A2"] = "Base pay: $%.2f" % starting_pay
+        worksheet["A3"] = "Pay frequency: %s" % starting_pay_freq
+        worksheet["A4"] = "Goal pay frequency: %s" % ending_pay_freq
+        worksheet["C2"] = "Details"
+        worksheet["B3"] = "Adjusted Base Pay"
+        worksheet["B4"] = "Tax Reduction"
+        worksheet["B5"] = "Set Aside for 401K/IRA"
+        worksheet["B6"] = "Total Reductions"
+        worksheet["B7"] = "Amount Remaining"
+        worksheet["C3"] = ending_pay
+        worksheet["C3"].number_format = money_format
+        worksheet["C4"] = tax_take
+        worksheet["C4"].number_format = money_format
+        worksheet["C5"] = set_aside_take
+        worksheet["C5"].number_format = money_format
+        worksheet["C6"] = tax_take + set_aside_take
+        worksheet["C6"].number_format = money_format
+        worksheet["C7"] = ending_pay_res
+        worksheet["C7"].number_format = money_format
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
 
         workbook.save("InterestCalculation.xlsx")
         print("Finished creating take home pay documents.")
