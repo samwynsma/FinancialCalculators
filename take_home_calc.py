@@ -135,7 +135,6 @@ class TakeHomeCalculator:
         starting_pay_freq = self.pay_freq
         ending_pay = 0
         ending_pay_freq = self.period
-        starting_formula = []
         ending_formula = []
 
         if starting_pay_freq == ending_pay_freq:
@@ -185,8 +184,31 @@ class TakeHomeCalculator:
                 ending_pay = starting_pay / 52
             else:
                 ending_pay = starting_pay / 13
+        
+        ending_formula.append(ending_pay)
 
+        tax_take = (self.percent_tax_rate / 100.0) * ending_pay
+        set_aside_take = (self.set_aside / 100.0) * ending_pay
+        ending_pay = (ending_pay - tax_take - set_aside_take)
+        ending_formula.append(tax_take)
+        ending_formula.append(set_aside_take)
+        ending_formula.append(ending_pay)
 
+        worksheet = None
+        workbook = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+        
+        worksheet.title = "Take Home Calc %d" % int(starting_pay)
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating take home pay documents.")
         return self.file_exists
 
     
