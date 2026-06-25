@@ -1,0 +1,42 @@
+import tkinter as tk
+from tkinter import messagebox
+
+import openpyxl
+from openpyxl import Workbook
+
+class HomeAffordabilityCalculator:
+    def __init__(self, file_exists=False):
+        self.down_payment = -1.0
+        self.monthly_salary = -1.0
+        self.interest_rate = -1.0
+        self.additional_debt = -1.0
+        self.file_exists = False
+
+    def parse_float(self, raw_value):
+        if raw_value is None:
+            raise ValueError("Missing value")
+        if isinstance(raw_value, (int, float)):
+            return float(raw_value)
+        raw_value = raw_value.strip().replace(",", "")
+        if raw_value.endswith("%"):
+            raw_value = raw_value[:-1]
+        if raw_value.startswith("$"):
+            raw_value = raw_value[1:]
+        return float(raw_value)
+    
+    def create_gui(self):
+        window = tk.Toplevel()
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=0, padx=6)
+
+        window.grab_set()
+        window.mainloop()
+
+
+def house_affordability(file_exists):
+    calculator = HomeAffordabilityCalculator(file_exists)
+    calculator.create_gui()
+    return calculator.file_exists

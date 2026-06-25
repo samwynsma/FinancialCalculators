@@ -3,6 +3,7 @@ from tkinter import messagebox
 
 from budget_calc import budget_maker
 from college_calc import college_save
+from home_calc import house_affordability
 from interest_calc import generate_interest
 from loans_calc import loan_payoff
 from retirement_goal_calc import retirement_goal
@@ -69,6 +70,8 @@ def create_gui():
             excelFileExists = launch_calculator(take_home, excelFileExists, "Take Home Pay Calculator")
         elif choice == "college":
             excelFileExists = launch_calculator(college_save, excelFileExists, "College Savings Calculator")
+        elif choice == "new house":
+            excelFileExists = launch_calculator(house_affordability, excelFileExists, "House Affordability Calculator")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).pack(pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).pack(pady=4)
@@ -77,6 +80,7 @@ def create_gui():
     tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda : handle_choice("duration")).pack(pady=4)
     tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda : handle_choice("take_home")).pack(pady=4)
     tk.Button(button_frame, text="7. Child Savings Calculator", width=34, command=lambda : handle_choice("college")).pack(pady=4)
+    tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda : handle_choice("new house")).pack(pady=4)
 
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
