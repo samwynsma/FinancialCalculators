@@ -141,15 +141,51 @@ class TakeHomeCalculator:
         if starting_pay_freq == ending_pay_freq:
             ending_pay = starting_pay
         elif starting_pay_freq == "hourly":
-            if ending_pay_freq == "weekly":
+            if ending_pay_freq == "daily":
+                ending_pay = starting_pay * 8
+            elif ending_pay_freq == "weekly":
                 ending_pay = starting_pay * 40
             elif ending_pay_freq == "monthly":
                 ending_pay = starting_pay * 160
-            elif ending_pay_freq == "daily":
-                ending_pay = starting_pay * 8
             else:
                 ending_pay = starting_pay * 2080
-                
+        elif starting_pay_freq == "daily":
+            if ending_pay_freq == "hourly":
+                ending_pay = starting_pay / 8
+            elif ending_pay_freq == "weekly":
+                ending_pay = starting_pay * 5
+            elif ending_pay_freq == "monthly":
+                ending_pay = starting_pay * 20
+            else:
+                ending_pay = starting_pay * 260
+        elif starting_pay_freq == "weekly":
+            if ending_pay_freq == "hourly":
+                ending_pay = starting_pay / 40
+            elif ending_pay_freq == "daily":
+                ending_pay = starting_pay / 5
+            elif ending_pay_freq == "monthly":
+                ending_pay = starting_pay * 4
+            else:
+                ending_pay = starting_pay * 52
+        elif starting_pay_freq == "monthly":
+            if ending_pay_freq == "hourly":
+                ending_pay = starting_pay / 160
+            elif ending_pay_freq == "daily":
+                ending_pay = starting_pay / 20
+            elif ending_pay_freq == "weekly":
+                ending_pay = starting_pay / 4
+            else:
+                ending_pay = starting_pay * 13
+        else:
+            if ending_pay_freq == "hourly":
+                ending_pay = starting_pay / 2080
+            elif ending_pay_freq == "daily":
+                ending_pay = starting_pay / 260
+            elif ending_pay_freq == "weekly":
+                ending_pay = starting_pay / 52
+            else:
+                ending_pay = starting_pay / 13
+
 
         return self.file_exists
 
