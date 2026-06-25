@@ -131,6 +131,26 @@ class TakeHomeCalculator:
         messagebox.showinfo("Take home document", "Take home calculation saved to InterestCalculation.xlsx.")
     
     def generate_take_home_document(self):
+        starting_pay = self.pay_rate
+        starting_pay_freq = self.pay_freq
+        ending_pay = 0
+        ending_pay_freq = self.period
+        starting_formula = []
+        ending_formula = []
+
+        if starting_pay_freq == ending_pay_freq:
+            ending_pay = starting_pay
+        elif starting_pay_freq == "hourly":
+            if ending_pay_freq == "weekly":
+                ending_pay = starting_pay * 40
+            elif ending_pay_freq == "monthly":
+                ending_pay = starting_pay * 160
+            elif ending_pay_freq == "daily":
+                ending_pay = starting_pay * 8
+            else:
+                ending_pay = starting_pay * 2080
+                
+
         return self.file_exists
 
     
