@@ -28,7 +28,7 @@ class HomeAffordabilityCalculator:
     def create_gui(self):
         window = tk.Toplevel()
         window.title("Home Affordability Calculator")
-        window.geometry("400x400")
+        window.geometry("580x400")
         window.resizable(False, False)
 
         header = tk.Label(
@@ -53,7 +53,35 @@ class HomeAffordabilityCalculator:
         home_frame = tk.Frame(window)
         home_frame.pack(padx=20, pady=8, fill="x")
 
+        tk.Label(home_frame, text="Down Payment ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.start_entry = tk.Entry(home_frame, width=28)
+        self.start_entry.grid(row=0, column=1, pady=6)
 
+        tk.Label(home_frame, text="Monthly Post-Tax Salary ($):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.start_entry = tk.Entry(home_frame, width=28)
+        self.start_entry.grid(row=1, column=1, pady=6)
+
+        tk.Label(home_frame, text="Additional Debt ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        self.start_entry = tk.Entry(home_frame, width=28)
+        self.start_entry.grid(row=2, column=1, pady=6)
+
+        tk.Label(home_frame, text="Interest Rate (%):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.start_entry = tk.Entry(home_frame, width=28)
+        self.start_entry.grid(row=3, column=1, pady=6)
+
+        self.loan_length_var = tk.StringVar(value = "30 year")
+        tk.Label(home_frame, text="Loan Length:", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        loan_length_frame = tk.Frame(home_frame)
+        loan_length_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
+        tk.Radiobutton(loan_length_frame, text="30 year", variable=self.loan_length_var, value="30 year").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(loan_length_frame, text="25 year", variable=self.loan_length_var, value="25 year").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(loan_length_frame, text="20 year", variable=self.loan_length_var, value="20 year").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(loan_length_frame, text="15 year", variable=self.loan_length_var, value="15 year").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(loan_length_frame, text="10 year", variable=self.loan_length_var, value="10 year").pack(side="left")
+
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+        
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
