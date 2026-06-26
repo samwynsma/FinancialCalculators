@@ -93,13 +93,38 @@ class HomeAffordabilityCalculator:
     
     def on_calculate(self):
         try:
-            pay = self.parse_float(self.down_payment_entry.get())
-            tax = self.parse_float(self.post_tax_entry.get())
+            down_payment = self.parse_float(self.down_payment_entry.get())
+            monthly = self.parse_float(self.post_tax_entry.get())
             debt = self.parse_float(self.added_debt_entry.get())
             interest = self.parse_float(self.interest_entry.get())
         except:
             messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
             return
+        
+        if(down_payment < 0.0):
+            messagebox.showerror("Input error", "Down payment cannot be negative")
+            return
+        
+        if(monthly <= 0.0 or monthly <= debt):
+            messagebox.showerror("Input error", "Monthly post tax money must be greater than zero, and must be greater than current debt.")
+            return
+        
+        if(debt < 0.0):
+            messagebox.showerror("Input error", "Debt cannot be negative. If you have additional money coming in, put it in post tax.")
+            return
+        
+        if(interest <= 0.0):
+            messagebox.showerror("Input error", "Interest must be positive.")
+            return
+        
+        self.down_payment = down_payment
+        self.monthly_salary = monthly
+        self.additional_debt = debt
+        self.interest_rate = interest
+        self.mortgage_type = self.loan_length_var.get()
+
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Home Affordability document", "Home Affordability calculation saved to InterestCalculation.xlsx.")
 
 
 def house_affordability(file_exists):
