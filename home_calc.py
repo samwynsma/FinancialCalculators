@@ -122,9 +122,46 @@ class HomeAffordabilityCalculator:
         self.additional_debt = debt
         self.interest_rate = interest
         self.mortgage_type = self.loan_length_var.get()
-
+        self.file_exists = self.generate_house_affordability()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Home Affordability document", "Home Affordability calculation saved to InterestCalculation.xlsx.")
+    
+    def generate_house_affordability(self):
+        salary = self.monthly_salary
+        debt = self.additional_debt
+        monthly_payments = []
+        mortgages = []
+        percents = []
+
+        for i in range(10, 51):
+            percents.append(i)
+
+        worksheet = None
+        workbook = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating college savings documents.")
+        return self.file_exists
 
 
 def house_affordability(file_exists):
