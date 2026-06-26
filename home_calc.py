@@ -131,14 +131,30 @@ class HomeAffordabilityCalculator:
         debt = self.additional_debt
         interest = self.interest_rate / 12.0
         down_payment = self.down_payment
+        loan_type = self.mortgage_type
         monthly_payments = []
         mortgages = []
         percents = []
+        months = 0
+        if loan_type == "30 year":
+            months = 360
+        elif loan_type == "25 year":
+            months = 300
+        elif loan_type == "20 year":
+            months = 240
+        elif loan_type == "15 year":
+            months = 180
+        else:
+            months = 120
 
         for i in range(10, 51):
             percents.append(i)
             month_pay = max(salary * (i / 100.0) - debt, 0)
             monthly_payments.append(month_pay)
+            interest_numerator = (interest / 100.0) * pow((1 + (interest / 100.0)), months)
+            interest_denom = pow(1 + (interest / 100.0), months) - 1
+            total_loan = month_pay * interest_denom / interest_numerator
+            mortgages.append(total_loan + down_payment)
 
         worksheet = None
         workbook = None
@@ -158,14 +174,18 @@ class HomeAffordabilityCalculator:
         worksheet["A3"] = "Existing Debt: $%.2f" % debt
         worksheet["A4"] = "Interest rate: %.4f percent per month" % interest
         worksheet["A5"] = "Down Payment: $%.2f" % down_payment
-        worksheet["B1"] = "Debt Percentage"
-        worksheet["C1"] = "House Price"
-        worksheet["D1"] = "Monthly Mortgage Payment"
-        worksheet["E1"] = "Note: debt percentage greater than 50 percent is considered unwise. Thus, if you have debt, the top rows will be just down payment vals."
+        worksheet["A6"] = "Loan Type: %s" % loan_type
+        worksheet["B2"] = "Debt Percentage"
+        worksheet["C2"] = "House Price"
+        worksheet["D2"] = "Monthly Mortgage Payment"
+        worksheet["E1"] = "Note: debt percentage greater than 50 percent is discouraged."
+        worksheet["E2"] = "Most underwriters will not write someone in that case."
         money_format = "$#,##0.00"
 
         for i in range(len(percents)):
             worksheet["B%d" % (i+3)] = percents[i]
+            worksheet["C%d" % (i+3)] = mortgages[i]
+            worksheet["C%d" % (i+3)].number_format = money_format
             worksheet["D%d" % (i+3)] = monthly_payments[i]
             worksheet["D%d" % (i+3)].number_format = money_format
 
