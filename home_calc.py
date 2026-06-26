@@ -129,12 +129,16 @@ class HomeAffordabilityCalculator:
     def generate_house_affordability(self):
         salary = self.monthly_salary
         debt = self.additional_debt
+        interest = self.interest_rate / 12.0
+        down_payment = self.down_payment
         monthly_payments = []
         mortgages = []
         percents = []
 
         for i in range(10, 51):
             percents.append(i)
+            month_pay = max(salary * (i / 100.0) - debt, 0)
+            monthly_payments.append(month_pay)
 
         worksheet = None
         workbook = None
@@ -146,6 +150,24 @@ class HomeAffordabilityCalculator:
         else:
             workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
             worksheet = workbook.create_sheet()
+
+        worksheet.title = "Home Calculator %d" % int(salary)
+
+        worksheet["A1"] = "House Price by Percent"
+        worksheet["A2"] = "Monthly Take Home: $%.2f" % salary
+        worksheet["A3"] = "Existing Debt: $%.2f" % debt
+        worksheet["A4"] = "Interest rate: %.4f percent per month" % interest
+        worksheet["A5"] = "Down Payment: $%.2f" % down_payment
+        worksheet["B1"] = "Debt Percentage"
+        worksheet["C1"] = "House Price"
+        worksheet["D1"] = "Monthly Mortgage Payment"
+        worksheet["E1"] = "Note: debt percentage greater than 50 percent is considered unwise. Thus, if you have debt, the top rows will be just down payment vals."
+        money_format = "$#,##0.00"
+
+        for i in range(len(percents)):
+            worksheet["B%d" % (i+3)] = percents[i]
+            worksheet["D%d" % (i+3)] = monthly_payments[i]
+            worksheet["D%d" % (i+3)].number_format = money_format
 
         for col in worksheet.columns:
             length = 0
@@ -160,7 +182,7 @@ class HomeAffordabilityCalculator:
         
 
         workbook.save("InterestCalculation.xlsx")
-        print("Finished creating college savings documents.")
+        print("Finished creating home affordability documents.")
         return self.file_exists
 
 
