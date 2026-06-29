@@ -4,6 +4,7 @@ from tkinter import messagebox
 from budget_calc import budget_maker
 from college_calc import college_save
 from home_calc import house_affordability
+from inherit_calc import inherit_money
 from interest_calc import generate_interest
 from loans_calc import loan_payoff
 from retirement_goal_calc import retirement_goal
@@ -29,7 +30,7 @@ def create_gui():
 
     root = tk.Tk()
     root.title("Sam's Financial Planning")
-    root.geometry("420x460")
+    root.geometry("420x500")
     root.resizable(False, False)
 
     header = tk.Label(
@@ -72,6 +73,8 @@ def create_gui():
             excelFileExists = launch_calculator(college_save, excelFileExists, "College Savings Calculator")
         elif choice == "new house":
             excelFileExists = launch_calculator(house_affordability, excelFileExists, "House Affordability Calculator")
+        elif choice == "inheritance":
+            excelFileExists = launch_calculator(inherit_money, excelFileExists, "Inheritance Calculator")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).pack(pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).pack(pady=4)
@@ -81,6 +84,7 @@ def create_gui():
     tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda : handle_choice("take_home")).pack(pady=4)
     tk.Button(button_frame, text="7. Child Savings Calculator", width=34, command=lambda : handle_choice("college")).pack(pady=4)
     tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda : handle_choice("new house")).pack(pady=4)
+    tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda : handle_choice("inheritance")).pack(pady=4)
 
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
