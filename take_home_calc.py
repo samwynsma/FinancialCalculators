@@ -120,6 +120,18 @@ class TakeHomeCalculator:
             messagebox.showerror("Input error", "Set aside cannot be negative")
             return
         
+        if(tax + set_aside >= 100.0):
+            messagebox.showerror("Input error", "Tax plus set aside must be less than 100 percent.")
+            return
+        elif(tax + set_aside > 50.0):
+            proceed = messagebox.askyesno(
+                "High Amount",
+                "Tax plus set aside is greater than half your income. Do you want to continue?",
+            )
+            if not proceed:
+                return
+            
+        
         self.pay_rate = pay
         self.percent_tax_rate = tax
         self.set_aside = set_aside

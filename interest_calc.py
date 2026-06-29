@@ -130,6 +130,13 @@ class InterestCalculator:
         if interest_rate <= 0.0:
             messagebox.showerror("Input error", "Interest rate must be greater than 0%. This is an investment, not a loan.")
             return
+        elif(interest_rate > 12.0):
+            proceed = messagebox.askyesno(
+                "High Interest",
+                "Are you sure that your interest is greater than 12 percent? That is an awfully high interest rate.",
+            )
+            if not proceed:
+                return
         
         if(time_value <= 0):
             messagebox.showerror("Input error", "Time must be greater than 0.")

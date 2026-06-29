@@ -98,6 +98,13 @@ class CollegeSavingsCalculator:
         if growth <= 0.0:
             messagebox.showerror("Input error", "Interest rate must be positive. Don't put your money in a no-growth account")
             return
+        elif(growth > 12.0):
+            proceed = messagebox.askyesno(
+                "High Interest",
+                "Are you sure that your interest is greater than 12 percent? That is an awfully high interest rate.",
+            )
+            if not proceed:
+                return
         
         if monthly_add < 0.0 and has_add:
             messagebox.showerror("Input error", "Monthly additions to account cannot be negative")

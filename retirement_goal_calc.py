@@ -121,6 +121,13 @@ class RetirementCalculator:
         if(interest <= 0.0):
             messagebox.showerror("Input error", "Interest rate must be positive. This isn't a loan, its an investment.")
             return
+        elif(interest > 12.0):
+            proceed = messagebox.askyesno(
+                "High Interest",
+                "Are you sure that your interest is greater than 12 percent? That is an awfully high interest rate.",
+            )
+            if not proceed:
+                return
         
         if(needs <= 0.0):
             messagebox.showerror("Input error", "If you honestly think that you will need no money, you are dumb.")

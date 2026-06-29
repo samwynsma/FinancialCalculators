@@ -112,6 +112,13 @@ class HomeAffordabilityCalculator:
         if(debt < 0.0):
             messagebox.showerror("Input error", "Debt cannot be negative. If you have additional money coming in, put it in post tax.")
             return
+        elif(debt * 2 >= monthly):
+            proceed = messagebox.askyesno(
+                "High Debt Warning",
+                "At your debt level, you won't be able to afford a house that costs more than your down payment. Are you certain you want to proceed?"
+            )
+            if not proceed:
+                return
         
         if(interest <= 0.0):
             messagebox.showerror("Input error", "Interest must be positive.")
