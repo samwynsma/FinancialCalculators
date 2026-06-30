@@ -86,6 +86,42 @@ class InheritanceCalculator:
         window.mainloop()
     
     def on_calculate(self):
+        try:
+            inherit = self.parse_float(self.total_inh_entry.get())
+            tax = self.parse_float(self.tax_entry.get())
+            percent = self.parse_float(self.percent_inherit_entry.get())
+            debt = self.parse_float(self.debt_entry.get())
+            personal = self.parse_float(self.personal_entry.get())
+        except ValueError:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+        
+        if(inherit <= 0.0):
+            messagebox.showerror("Input error", "Inheritance must be positive")
+            return
+        
+        if(tax < 0.0):
+            messagebox.showerror("Input error", "Tax cannot be negative")
+            return
+
+        if(percent <= 0.0):
+            messagebox.showerror("Input error", "Must receive a portion of the inheritance to be relevant.")
+            return
+        
+        if(debt < 0.0):
+            messagebox.showerror("Input error", "Debt cannot be negative")
+            return
+        
+        if(personal < 0.0):
+            messagebox.showerror("Input error", "Personal fun spend cannot be negative")
+            return
+        
+        self.total_inheritance = inherit
+        self.estate_tax = tax
+        self.inherit_percent = percent
+        self.total_debt = debt
+        self.personal_spend_percent = personal
+
         return
 
 def inherit_money(file_exists):
