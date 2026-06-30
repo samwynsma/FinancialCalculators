@@ -50,8 +50,43 @@ class InheritanceCalculator:
         )
         instructions.pack(pady=(0, 10))
 
+        inh_frame = tk.Frame(window)
+        inh_frame.pack(padx=20, pady=8, fill = "x")
+
+        tk.Label(inh_frame, text="Total Inheritance Amount ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.total_inh_entry = tk.Entry(inh_frame, width=28)
+        self.total_inh_entry.grid(row=0, column=1, pady=6)
+
+        tk.Label(inh_frame, text="Estate Tax (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.tax_entry = tk.Entry(inh_frame, width=28)
+        self.tax_entry.grid(row=1, column=1, pady=6)
+
+        tk.Label(inh_frame, text="Percent Inherited (%):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        self.percent_inherit_entry = tk.Entry(inh_frame, width=28)
+        self.percent_inherit_entry.grid(row=2, column=1, pady=6)
+
+        tk.Label(inh_frame, text="Total Debt ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.debt_entry = tk.Entry(inh_frame, width=28)
+        self.debt_entry.grid(row=3, column=1, pady=6)
+
+        tk.Label(inh_frame, text="Personal Spend (%):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        self.personal_entry = tk.Entry(inh_frame, width=28)
+        self.personal_entry.grid(row=4, column=1, pady=6)
+
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
         window.grab_set()
         window.mainloop()
+    
+    def on_calculate(self):
+        return
 
 def inherit_money(file_exists):
     calculator = InheritanceCalculator(file_exists)
