@@ -122,7 +122,55 @@ class InheritanceCalculator:
         self.total_debt = debt
         self.personal_spend_percent = personal
 
-        return
+        self.file_exists = self.generate_inherit_document()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Inheritance document complete", "Inheritance saved to InterestCalculation.xlsx.")
+    
+    def generate_inherit_document(self):
+        inherit = self.total_inheritance
+        tax = self.estate_tax
+        percent = self.inherit_percent
+        debt = self.total_debt
+        personal = self.personal_spend_percent
+
+        worksheet = None
+        workbook = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+
+        worksheet.title = "Inheritance Calculator %d" % int(inherit)
+
+        worksheet["A1"] = "Inheritance Calculation"
+        worksheet["A2"] = "Initial Inheritance: $%.2f" % inherit
+        worksheet["A3"] = "Estate Tax: %.2f" % tax
+        worksheet["A4"] = "Percent Inherited: %.2f" % percent
+        worksheet["B2"] = "Planned Usage"
+        worksheet["B3"] = "Total Inherited: "
+        worksheet["A5"] = "Debt: %.2f" % debt
+        worksheet["A6"] = "Desired Personal Spend: %.2f" % personal
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+        
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating inheritance documents.")
+        return self.file_exists
+
 
 def inherit_money(file_exists):
     calculator = InheritanceCalculator(file_exists)
