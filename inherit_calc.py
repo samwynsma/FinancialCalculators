@@ -103,6 +103,9 @@ class InheritanceCalculator:
         if(tax < 0.0):
             messagebox.showerror("Input error", "Tax cannot be negative")
             return
+        if(tax > 100.0):
+            messagebox.showerror("Input error", "Tax cannot be greater than 100 percent.")
+            return
 
         if(percent <= 0.0):
             messagebox.showerror("Input error", "Must receive a portion of the inheritance to be relevant.")
@@ -114,6 +117,9 @@ class InheritanceCalculator:
         
         if(personal < 0.0):
             messagebox.showerror("Input error", "Personal fun spend cannot be negative")
+            return
+        if(personal > 100.0):
+            messagebox.showerror("Personal spend cannot be greater than 100 percent.")
             return
         
         self.total_inheritance = inherit
@@ -132,9 +138,10 @@ class InheritanceCalculator:
         percent = self.inherit_percent
         debt = self.total_debt
         personal = self.personal_spend_percent
+        money_format = "$#,##0.00"
 
         total_inherited = (inherit * (1.0 - (tax / 100.0)) * (percent / 100.0))
-        total_personal_spend = (total_inherited * (1.0 - (personal / 100.0)))
+        total_personal_spend = (total_inherited * (personal / 100.0))
 
         worksheet = None
         workbook = None
@@ -153,13 +160,22 @@ class InheritanceCalculator:
         worksheet["A2"] = "Initial Inheritance: $%.2f" % inherit
         worksheet["A3"] = "Estate Tax: %.2f" % tax
         worksheet["A4"] = "Percent Inherited: %.2f" % percent
-        worksheet["B2"] = "Planned Usage"
-        worksheet["B3"] = "Total Inherited: $%.2f" % total_inherited
-        worksheet["B4"] = "Debt to pay off: $%.2f" % debt
-        worksheet["B5"] = "Personal Usage: $%.2f" % min(total_personal_spend, total_inherited - debt)
-        worksheet["B6"] = "Remainder: $%.2f" % max(0, total_inherited - debt - min(total_personal_spend, total_inherited - debt))
         worksheet["A5"] = "Debt: $%.2f" % debt
         worksheet["A6"] = "Desired Personal Spend: %.2f" % personal
+        worksheet["B3"] = "Total Inherited" 
+        worksheet["B4"] = "Debt to pay off"
+        worksheet["B5"] = "Personal Usage"
+        worksheet["B6"] = "Remainder" 
+        worksheet["C2"] = "Planned Usage"
+        worksheet["C3"] = total_inherited
+        worksheet["C4"] = debt
+        worksheet["C5"] = min(total_personal_spend, total_inherited - debt)
+        worksheet["C6"] = max(0, total_inherited - debt - min(total_personal_spend, total_inherited - debt))
+        
+        for i in range(2, 7):
+            worksheet["C%d" % i].number_format = money_format
+        
+        
 
         for col in worksheet.columns:
             length = 0
