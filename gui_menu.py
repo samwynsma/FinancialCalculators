@@ -3,6 +3,7 @@ from tkinter import messagebox
 
 from budget_calc import budget_maker
 from college_calc import college_save
+from food_calc import food_coster
 from home_calc import house_affordability
 from inherit_calc import inherit_money
 from interest_calc import generate_interest
@@ -72,7 +73,7 @@ def create_gui():
         elif choice == "inheritance":
             excelFileExists = launch_calculator(inherit_money, excelFileExists, "Inheritance Calculator")
         elif choice == "food_cost":
-            return
+            excelFileExists = launch_calculator(food_coster, excelFileExists, "Food Cost Calculator")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
