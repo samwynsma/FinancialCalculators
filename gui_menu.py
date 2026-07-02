@@ -18,10 +18,6 @@ def launch_calculator(calc_func, excelFileExists, title):
         "This calculator will open a new window, while you will then use to input further information."
     )
     result = calc_func(excelFileExists)
-    messagebox.showinfo(
-        title,
-        "Finished creating the results. Check the console output and the generated Excel document."
-    )
     return result
 
 
@@ -30,7 +26,7 @@ def create_gui():
 
     root = tk.Tk()
     root.title("Sam's Financial Planning")
-    root.geometry("420x500")
+    root.geometry("600x410")
     root.resizable(False, False)
 
     header = tk.Label(
@@ -75,16 +71,19 @@ def create_gui():
             excelFileExists = launch_calculator(house_affordability, excelFileExists, "House Affordability Calculator")
         elif choice == "inheritance":
             excelFileExists = launch_calculator(inherit_money, excelFileExists, "Inheritance Calculator")
+        elif choice == "food_cost":
+            return
 
-    tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).pack(pady=4)
-    tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).pack(pady=4)
-    tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement")).pack(pady=4)
-    tk.Button(button_frame, text="4. Budget Calculator", width=34, command=lambda: handle_choice("budget")).pack(pady=4)
-    tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda : handle_choice("duration")).pack(pady=4)
-    tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda : handle_choice("take_home")).pack(pady=4)
-    tk.Button(button_frame, text="7. Child Savings Calculator", width=34, command=lambda : handle_choice("college")).pack(pady=4)
-    tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda : handle_choice("new house")).pack(pady=4)
-    tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda : handle_choice("inheritance")).pack(pady=4)
+    tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement")).grid(row=2, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="4. Budget Calculator", width=34, command=lambda: handle_choice("budget")).grid(row=3, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda : handle_choice("duration")).grid(row=4, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda : handle_choice("take_home")).grid(row=0, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="7. Child Savings Calculator", width=34, command=lambda : handle_choice("college")).grid(row=1, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda : handle_choice("new house")).grid(row=2, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda : handle_choice("inheritance")).grid(row=3, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="10. Food Cost Calculator", width=34, command=lambda : handle_choice("food_cost")).grid(row=3, column=1, sticky="w", pady=4)
 
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
