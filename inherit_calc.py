@@ -133,6 +133,9 @@ class InheritanceCalculator:
         debt = self.total_debt
         personal = self.personal_spend_percent
 
+        total_inherited = (inherit * (1.0 - (tax / 100.0)) * (percent / 100.0))
+        total_personal_spend = (total_inherited * (1.0 - (personal / 100.0)))
+
         worksheet = None
         workbook = None
 
@@ -151,8 +154,11 @@ class InheritanceCalculator:
         worksheet["A3"] = "Estate Tax: %.2f" % tax
         worksheet["A4"] = "Percent Inherited: %.2f" % percent
         worksheet["B2"] = "Planned Usage"
-        worksheet["B3"] = "Total Inherited: "
-        worksheet["A5"] = "Debt: %.2f" % debt
+        worksheet["B3"] = "Total Inherited: $%.2f" % total_inherited
+        worksheet["B4"] = "Debt to pay off: $%.2f" % debt
+        worksheet["B5"] = "Personal Usage: $%.2f" % min(total_personal_spend, total_inherited - debt)
+        worksheet["B6"] = "Remainder: $%.2f" % max(0, total_inherited - debt - min(total_personal_spend, total_inherited - debt))
+        worksheet["A5"] = "Debt: $%.2f" % debt
         worksheet["A6"] = "Desired Personal Spend: %.2f" % personal
 
         for col in worksheet.columns:
