@@ -143,6 +143,8 @@ class InheritanceCalculator:
         total_inherited = (inherit * (1.0 - (tax / 100.0)) * (percent / 100.0))
         total_personal_spend = (total_inherited * (personal / 100.0))
 
+        debt_percent = debt / total_inherited * 100.0
+
         worksheet = None
         workbook = None
 
@@ -171,6 +173,18 @@ class InheritanceCalculator:
         worksheet["C4"] = debt
         worksheet["C5"] = min(total_personal_spend, total_inherited - debt)
         worksheet["C6"] = max(0, total_inherited - debt - min(total_personal_spend, total_inherited - debt))
+        worksheet["D2"] = "Potential Amounts"
+        worksheet["E2"] = "Personal Spend"
+        worksheet["F2"] = "Amount Invested"
+
+        personal_percent = 0
+        while personal_percent < (100.0 - debt_percent):
+            worksheet["D%d" % (personal_percent + 3)] = personal_percent
+            worksheet["E%d" % (personal_percent + 3)] = total_inherited * (personal_percent / 100.0)
+            worksheet["F%d" % (personal_percent + 3)] = total_inherited - debt - (total_inherited * (personal_percent / 100.0))
+            worksheet["E%d" % (personal_percent + 3)].number_format = money_format
+            worksheet["F%d" % (personal_percent + 3)].number_format = money_format
+            personal_percent += 1
         
         for i in range(2, 7):
             worksheet["C%d" % i].number_format = money_format
