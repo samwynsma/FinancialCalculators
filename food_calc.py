@@ -73,8 +73,29 @@ class FoodCostCalculator:
         self.day_meals_entry = tk.Entry(food_frame, width=28)
         self.day_meals_entry.grid(row=1, column=1, pady=6)
 
+        tk.Label(food_frame, text="Snacks per day per person:", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        self.day_snacks_entry = tk.Entry(food_frame, width=28)
+        self.day_snacks_entry.grid(row=2, column=1, pady=6)
+
+        tk.Label(food_frame, text="Current money spent on food ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.current_spend_entry = tk.Entry(food_frame, width=28)
+        self.current_spend_entry.grid(row=3, column=1, pady=6)
+
+        tk.Label(food_frame, text="Target Spend per meal ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        self.target_spend_entry = tk.Entry(food_frame, width=28)
+        self.target_spend_entry.grid(row=4, column=1, pady=6)
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
         window.grab_set()
         window.mainloop()
+
+    def on_calculate(self):
+        return
     
 
 
