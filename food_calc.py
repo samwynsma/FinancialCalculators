@@ -85,6 +85,9 @@ class FoodCostCalculator:
         self.target_spend_entry = tk.Entry(food_frame, width=28)
         self.target_spend_entry.grid(row=4, column=1, pady=6)
 
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
@@ -95,7 +98,15 @@ class FoodCostCalculator:
         window.mainloop()
 
     def on_calculate(self):
-        return
+        try:
+            family = self.parse_int(self.family_entry.get())
+            meals = self.parse_int(self.day_meals_entry.get())
+            snacks = self.parse_int(self.day_snacks_entry.get())
+            current_spend = self.parse_float(self.current_spend_entry.get())
+            target_spend = self.parse_float(self.target_spend_entry.get())
+        except:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
     
 
 

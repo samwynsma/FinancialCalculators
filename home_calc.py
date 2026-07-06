@@ -123,6 +123,16 @@ class HomeAffordabilityCalculator:
         if(interest <= 0.0):
             messagebox.showerror("Input error", "Interest must be positive.")
             return
+        elif(interest >= 30.0):
+            messagebox.showerror("Input error", "Unrealistically high interest for loan.")
+            return
+        elif(interest >= 10.0):
+            proceed = messagebox.askyesno(
+                "High Interest Warning",
+                "The interest that you entered, " + str(interest) + ", is quite high for a home loan. Are you certain that you want to proceed?"
+            )
+            if not proceed:
+                return
         
         self.down_payment = down_payment
         self.monthly_salary = monthly
