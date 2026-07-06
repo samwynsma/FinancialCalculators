@@ -107,6 +107,39 @@ class FoodCostCalculator:
         except:
             messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
             return
+        
+        if(family < 1):
+            messagebox.showerror("Input error", "Family size must be positive.")
+            return
+        
+        if(meals < 1):
+            messagebox.showerror("Input error", "You must have at least one, preferably three meals a day.")
+            return
+        
+        if(snacks < 0):
+            messagebox.showerror("Input error", "Snacks cannot be negative.")
+            return
+        
+        if(current_spend < 0.0):
+            messagebox.showerror("Input error", "Amount spent on food cannot be negative.")
+            return
+        
+        if(target_spend < 0.0):
+            messagebox.showerror("Input error", "Target amount to spend cannot be negative.")
+            return
+        
+        self.family_size = family
+        self.meals_per_day = meals
+        self.snacks_per_day = snacks
+        self.current_food_spend = current_spend
+        self.cost_per_meal = target_spend
+        
+        self.file_exists = self.generate_food_cost_doc()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Inheritance document complete", "Inheritance saved to InterestCalculation.xlsx.")
+
+    def generate_food_cost_doc(self):
+        return self.file_exists
     
 
 
