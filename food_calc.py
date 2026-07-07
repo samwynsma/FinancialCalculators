@@ -11,6 +11,7 @@ class FoodCostCalculator:
         self.snacks_per_day = -1
         self.current_food_spend = -1.0
         self.cost_per_meal = -1.0
+        self.cost_per_snack = -1.0
         self.file_exists = file_exists
     
     def parse_float(self, raw_value):
@@ -82,8 +83,12 @@ class FoodCostCalculator:
         self.current_spend_entry.grid(row=3, column=1, pady=6)
 
         tk.Label(food_frame, text="Target Spend per meal ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
-        self.target_spend_entry = tk.Entry(food_frame, width=28)
-        self.target_spend_entry.grid(row=4, column=1, pady=6)
+        self.target_meal_entry = tk.Entry(food_frame, width=28)
+        self.target_meal_entry.grid(row=4, column=1, pady=6)
+
+        tk.Label(food_frame, text="Target Spend per snack ($):", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        self.target_snack_entry = tk.Entry(food_frame, width=28)
+        self.target_snack_entry.grid(row=5, column=1, pady=6)
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
@@ -103,7 +108,8 @@ class FoodCostCalculator:
             meals = self.parse_int(self.day_meals_entry.get())
             snacks = self.parse_int(self.day_snacks_entry.get())
             current_spend = self.parse_float(self.current_spend_entry.get())
-            target_spend = self.parse_float(self.target_spend_entry.get())
+            target_meal = self.parse_float(self.target_meal_entry.get())
+            target_snack = self.parse_float(self.target_snack_entry.get())
         except:
             messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
             return
@@ -124,21 +130,31 @@ class FoodCostCalculator:
             messagebox.showerror("Input error", "Amount spent on food cannot be negative.")
             return
         
-        if(target_spend < 0.0):
-            messagebox.showerror("Input error", "Target amount to spend cannot be negative.")
+        if(target_meal < 0.0):
+            messagebox.showerror("Input error", "Target meal spend cannot be negative.")
+            return
+        
+        if(target_snack < 0.0):
+            messagebox.showerror("Input error", "Target snack spend cannot be negative.")
             return
         
         self.family_size = family
         self.meals_per_day = meals
         self.snacks_per_day = snacks
         self.current_food_spend = current_spend
-        self.cost_per_meal = target_spend
+        self.cost_per_meal = target_meal
+        self.cost_per_snack = target_snack
         
         self.file_exists = self.generate_food_cost_doc()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Inheritance document complete", "Inheritance saved to InterestCalculation.xlsx.")
 
     def generate_food_cost_doc(self):
+        family = self.family_size
+        day_meals = self.meals_per_day * family
+        day_snacks = self.snacks_per_day * family
+        day_meal_cost = self.cost_per_meal * day_meals
+        day_snack_cost = self.cost_per_snack * day_snacks
         return self.file_exists
     
 
