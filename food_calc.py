@@ -78,7 +78,7 @@ class FoodCostCalculator:
         self.day_snacks_entry = tk.Entry(food_frame, width=28)
         self.day_snacks_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(food_frame, text="Current money spent on food ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        tk.Label(food_frame, text="Current money spent on food per week ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
         self.current_spend_entry = tk.Entry(food_frame, width=28)
         self.current_spend_entry.grid(row=3, column=1, pady=6)
 
@@ -155,6 +155,14 @@ class FoodCostCalculator:
         day_snacks = self.snacks_per_day * family
         day_meal_cost = self.cost_per_meal * day_meals
         day_snack_cost = self.cost_per_snack * day_snacks
+        est_meal_cst = self.current_food_spend / (7 * day_meals + 3.5 * day_snacks)
+        est_snack_cst = est_meal_cst / 2.0
+
+        cost_set = []
+        cost_set_1 = [est_meal_cst, est_snack_cst]
+        cost_set_2 = [day_meal_cost, day_snack_cost]
+        cost_set.append(cost_set_1)
+        cost_set.append(cost_set_2)
 
         worksheet = None
         workbook = None
@@ -168,6 +176,24 @@ class FoodCostCalculator:
             worksheet = workbook.create_sheet()
 
         worksheet.title = "Food Cost Calculator %d %d %d" % (day_meals, day_snacks, family)
+
+        worksheet["A1"] = "Food Cost Calculator"
+        worksheet["A2"] = "Family Size: %d" % family
+        worksheet["A3"] = "Daily Meals Total: %d" % day_meals
+        worksheet["A4"] = "Daily Snacks Total: %d" % day_snacks
+        worksheet["C2"] = "Current Usage"
+        worksheet["D2"] = "Target Usage"
+        worksheet["E2"] = "Low Cost Usage"
+        worksheet["F2"] = "Modest Cost Usage"
+        worksheet["G2"] = "High Cost Usage"
+        worksheet["H2"] = "Luxury Lifestyle Usage"
+        worksheet["B3"] = "Total Cost per Month"
+        worksheet["B4"] = "Total Cost per Week"
+        worksheet["B5"] = "Total Cost per Day"
+        worksheet["B6"] = "Est Cost per Meal"
+        worksheet["B7"] = "Est Cost per Snack"
+        worksheet["B8"] = "Total Yearly Cost"
+        worksheet["B9"] = "Savings Compared To Current"
 
         for col in worksheet.columns:
             length = 0
