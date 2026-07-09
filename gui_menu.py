@@ -8,6 +8,7 @@ from home_calc import house_affordability
 from inherit_calc import inherit_money
 from interest_calc import generate_interest
 from loans_calc import loan_payoff
+from net_worth_calc import net_worth
 from retirement_goal_calc import retirement_goal
 from retirement_calc import retirement_dur
 from take_home_calc import take_home
@@ -74,6 +75,8 @@ def create_gui():
             excelFileExists = launch_calculator(inherit_money, excelFileExists, "Inheritance Calculator")
         elif choice == "food_cost":
             excelFileExists = launch_calculator(food_coster, excelFileExists, "Food Cost Calculator")
+        elif choice == "net_worth":
+            excelFileExists = launch_calculator(net_worth, excelFileExists, "Net Worth Calculator")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
@@ -85,6 +88,7 @@ def create_gui():
     tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda : handle_choice("new house")).grid(row=2, column=1, sticky="w", pady=4)
     tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda : handle_choice("inheritance")).grid(row=3, column=1, sticky="w", pady=4)
     tk.Button(button_frame, text="10. Food Cost Calculator", width=34, command=lambda : handle_choice("food_cost")).grid(row=4, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="11. Net Worth Calculator", width=34, command=lambda : handle_choice("net_worth")).grid(row=5, column=0, sticky="w", pady=4)
 
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
