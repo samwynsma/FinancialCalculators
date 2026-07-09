@@ -238,4 +238,4 @@ class FoodCostCalculator:
 def food_coster(file_exists):
     calculator = FoodCostCalculator(file_exists)
     calculator.create_gui()
-    return file_exists
+    return calculator.file_exists

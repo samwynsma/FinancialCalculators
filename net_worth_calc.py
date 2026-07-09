@@ -44,6 +44,13 @@ class NetWorthCalculator:
                             521000.20, 551988.00, 587968.00, 622546.00, 685340.00, 697576.00, 743564.00, 785484.00, 836944.00, 891750.00,
                             947453.00, 1009860.00, 1078294.00, 1154634.00, 1234848.00, 1308426.00, 1399334.00, 1510942.00, 1693542.00, 1920758.00,
                             2157988.00, 2382960.00, 2692160.00, 3088722.00, 3779600.00, 4699180.20, 6150980.00, 8464740.20, 13666778.00]
+        for i in range(len(percentile_values)):
+            if percentile_values[i] > self.total:
+                self.percentile = i
+                return
+        self.percentile = 99
 
 def net_worth(file_exists):
-    return file_exists
+    calculator = NetWorthCalculator(file_exists)
+    calculator.create_gui()
+    return calculator.file_exists
