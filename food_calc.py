@@ -158,6 +158,8 @@ class FoodCostCalculator:
         est_meal_cst = self.current_food_spend / (7 * day_meals + 3.5 * day_snacks)
         est_snack_cst = est_meal_cst / 2.0
 
+        money_format = "$#,##0.00"
+
         cost_set = []
         cost_set_1 = [est_meal_cst, est_snack_cst]
         cost_set_2 = [day_meal_cost, day_snack_cost]
@@ -203,6 +205,14 @@ class FoodCostCalculator:
         worksheet["B8"] = "Total Yearly Cost"
         worksheet["B9"] = "Savings Compared To Current"
 
+        data_columns = "CDEFGH"
+
+        for i in range(len(data_columns)):
+            worksheet["%c6" % data_columns[i]] = cost_set[i][0]
+            worksheet["%c7" % data_columns[i]] = cost_set[i][1]
+            worksheet["%c5" % data_columns[i]] = cost_set[i][0] * day_meals + cost_set[i][1] * day_snacks
+            for j in range(3, 10):
+                worksheet["%c%d" % (data_columns[i], j)].number_format = money_format
 
 
         for col in worksheet.columns:
