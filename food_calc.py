@@ -161,8 +161,16 @@ class FoodCostCalculator:
         cost_set = []
         cost_set_1 = [est_meal_cst, est_snack_cst]
         cost_set_2 = [day_meal_cost, day_snack_cost]
+        cost_set_3 = [3, 1]
+        cost_set_4 = [5, 2]
+        cost_set_5 = [10, 4]
+        cost_set_6 = [20, 8]
         cost_set.append(cost_set_1)
         cost_set.append(cost_set_2)
+        cost_set.append(cost_set_3)
+        cost_set.append(cost_set_4)
+        cost_set.append(cost_set_5)
+        cost_set.append(cost_set_6)
 
         worksheet = None
         workbook = None
@@ -194,6 +202,8 @@ class FoodCostCalculator:
         worksheet["B7"] = "Est Cost per Snack"
         worksheet["B8"] = "Total Yearly Cost"
         worksheet["B9"] = "Savings Compared To Current"
+
+
 
         for col in worksheet.columns:
             length = 0
