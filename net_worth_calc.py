@@ -101,7 +101,7 @@ class NetWorthCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        #tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
 
         window.grab_set()
@@ -167,6 +167,18 @@ class NetWorthCalculator:
         self.results_text.configure(state="normal")
         self.results_text.insert("end", liability + ": " + str(-liability_value) + "\n")
         self.results_text.configure(state="disabled")
+    
+    def on_calculate(self):
+        self.total = 0.0
+        for item in self.amount_per_category:
+            self.total += item
+        self.file_exists = self.generate_net_worth_document()
+        self.get_percentile()
+        self.result_label.config(text="Your net worth is " + str(self.total) + " which puts you at the " + str(self.percentile) + " percentile of Americans. Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Inheritance document complete", "Inheritance saved to InterestCalculation.xlsx.")
+    
+    def generate_net_worth_document(self):
+        return self.file_exists
 
         
 
