@@ -60,7 +60,7 @@ class NetWorthCalculator:
         self.worth_entry = tk.Entry(net_frame, width=28)
         self.worth_entry.grid(row=1, column=1, pady=6)
 
-        tk.Button(net_frame, text="Asset", width=16).grid(row=0, column=2, padx=6)
+        tk.Button(net_frame, text="Asset", width=16, command=self.add_asset).grid(row=0, column=2, padx=6)
         tk.Button(net_frame, text="Liability", width=16).grid(row=1, column=2, padx=6)
 
         values_frame = tk.LabelFrame(window, text="Assets and Liabilities", padx=10, pady=10)
@@ -93,7 +93,6 @@ class NetWorthCalculator:
         results_inner.bind("<Configure>", on_canvas_configure)
         results_canvas.bind("<Configure>", on_canvas_configure)
 
-        self.results_text.insert("end", "Your net worth results will appear here.\n")
         self.results_text.configure(state="disabled")
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
@@ -124,6 +123,29 @@ class NetWorthCalculator:
                 self.percentile = i
                 return
         self.percentile = 99
+
+    def add_asset(self):
+        try:
+            asset_value = self.parse_float(self.worth_entry.get())
+        except:
+            messagebox.showerror("Input error", "Please enter valid numeric values for asset value.")
+            return
+        if(asset_value <= 0.0):
+            messagebox.showerror("Input error", "Asset value must be positive")
+            return
+        asset = self.item_entry.get()
+        if(len(asset) == 0):
+            messagebox.showerror("Input error", "Please enter an asset.")
+            return
+        if asset in self.categories:
+            messagebox.showerror("Input error", "Asset category already listed.")
+            return
+        self.categories.append(asset)
+        self.amount_per_category.append(asset_value)
+        self.results_text.configure(state="normal")
+        self.results_text.insert("end", asset + ": " + str(asset_value) + "\n")
+        self.results_text.configure(state="disabled")
+        
 
 def net_worth(file_exists):
     calculator = NetWorthCalculator(file_exists)
