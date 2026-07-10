@@ -60,6 +60,18 @@ class NetWorthCalculator:
         self.worth_entry = tk.Entry(net_frame, width=28)
         self.worth_entry.grid(row=1, column=1, pady=6)
 
+        tk.Button(net_frame, text="Asset", width=16).grid(row=0, column=2, padx=6)
+        tk.Button(net_frame, text="Liability", width=16).grid(row=1, column=2, padx=6)
+
+        self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
+        self.result_label.pack(pady=(8, 0))
+
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+
+        #tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
         window.grab_set()
         window.mainloop()
 
