@@ -30,6 +30,36 @@ class NetWorthCalculator:
         window.geometry("460x460")
         window.resizable(False, False)
 
+        header = tk.Label(
+            window,
+            text="Net Worth Calculator",
+            font=("Segoe UI", 16, "bold"),
+            wraplength=420,
+            justify="center",
+            pady=12,
+        )
+        header.pack()
+
+        instructions = tk.Label(
+            window,
+            text="Type in an item and an amount, indicate whether it is an asset (something you own) or a liability (debt). Calculate when you have everything.",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))
+
+        net_frame = tk.Frame(window)
+        net_frame.pack(padx=20, pady=8, fill="x")
+
+        tk.Label(net_frame, text="Item:", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.item_entry = tk.Entry(net_frame, width=28)
+        self.item_entry.grid(row=0, column=1, pady=6)
+
+        tk.Label(net_frame, text="Value:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        self.worth_entry = tk.Entry(net_frame, width=28)
+        self.worth_entry.grid(row=1, column=1, pady=6)
+
         window.grab_set()
         window.mainloop()
 
