@@ -27,7 +27,7 @@ class NetWorthCalculator:
     def create_gui(self):
         window = tk.Toplevel()
         window.title("Net Worth Calculator")
-        window.geometry("460x460")
+        window.geometry("460x520")
         window.resizable(False, False)
 
         header = tk.Label(
@@ -62,6 +62,39 @@ class NetWorthCalculator:
 
         tk.Button(net_frame, text="Asset", width=16).grid(row=0, column=2, padx=6)
         tk.Button(net_frame, text="Liability", width=16).grid(row=1, column=2, padx=6)
+
+        values_frame = tk.LabelFrame(window, text="Assets and Liabilities", padx=10, pady=10)
+        values_frame.pack(padx=20, pady=(8, 10), fill="both", expand=True)
+
+        results_canvas = tk.Canvas(values_frame, height=140, highlightthickness=0)
+        results_scrollbar = tk.Scrollbar(values_frame, orient="vertical", command=results_canvas.yview)
+        results_canvas.configure(yscrollcommand=results_scrollbar.set)
+
+        results_inner = tk.Frame(results_canvas)
+        results_canvas.create_window((0, 0), window=results_inner, anchor="nw")
+
+        self.results_text = tk.Text(
+            results_inner,
+            wrap="word",
+            height=12,
+            yscrollcommand=results_scrollbar.set,
+            state="normal",
+            padx=6,
+            pady=6,
+        )
+        self.results_text.pack(fill="both", expand=True)
+
+        results_canvas.pack(side="left", fill="both", expand=True)
+        results_scrollbar.pack(side="right", fill="y")
+
+        def on_canvas_configure(event):
+            results_canvas.configure(scrollregion=results_canvas.bbox("all"))
+
+        results_inner.bind("<Configure>", on_canvas_configure)
+        results_canvas.bind("<Configure>", on_canvas_configure)
+
+        self.results_text.insert("end", "Your net worth results will appear here.\n")
+        self.results_text.configure(state="disabled")
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
