@@ -61,7 +61,7 @@ class NetWorthCalculator:
         self.worth_entry.grid(row=1, column=1, pady=6)
 
         tk.Button(net_frame, text="Asset", width=16, command=self.add_asset).grid(row=0, column=2, padx=6)
-        tk.Button(net_frame, text="Liability", width=16).grid(row=1, column=2, padx=6)
+        tk.Button(net_frame, text="Liability", width=16, command=self.add_liability).grid(row=1, column=2, padx=6)
 
         values_frame = tk.LabelFrame(window, text="Assets and Liabilities", padx=10, pady=10)
         values_frame.pack(padx=20, pady=(8, 10), fill="both", expand=True)
@@ -145,6 +145,29 @@ class NetWorthCalculator:
         self.results_text.configure(state="normal")
         self.results_text.insert("end", asset + ": " + str(asset_value) + "\n")
         self.results_text.configure(state="disabled")
+    
+    def add_liability(self):
+        try:
+            liability_value = self.parse_float(self.worth_entry.get())
+        except:
+            messagebox.showerror("Input error", "Please enter valid numeric values for liability value.")
+            return
+        if(liability_value <= 0.0):
+            messagebox.showerror("Input error", "Liability value must be positive")
+            return
+        liability = self.item_entry.get()
+        if(len(liability) == 0):
+            messagebox.showerror("Input error", "Please enter an liability.")
+            return
+        if liability in self.categories:
+            messagebox.showerror("Input error", "Liability category already listed.")
+            return
+        self.categories.append(liability)
+        self.amount_per_category.append(-liability_value)
+        self.results_text.configure(state="normal")
+        self.results_text.insert("end", liability + ": " + str(-liability_value) + "\n")
+        self.results_text.configure(state="disabled")
+
         
 
 def net_worth(file_exists):
