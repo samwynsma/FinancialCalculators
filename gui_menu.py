@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
+from apr_dpr_calc import increase_decrease
 from budget_calc import budget_maker
 from college_calc import college_save
 from food_calc import food_coster
@@ -77,6 +78,8 @@ def create_gui():
             excelFileExists = launch_calculator(food_coster, excelFileExists, "Food Cost Calculator")
         elif choice == "net_worth":
             excelFileExists = launch_calculator(net_worth, excelFileExists, "Net Worth Calculator")
+        elif choice == "apr_dep":
+            excelFileExists = launch_calculator(increase_decrease, excelFileExists, "Appreciation/Depreciation Calculator")
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
@@ -89,7 +92,9 @@ def create_gui():
     tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda : handle_choice("inheritance")).grid(row=2, column=1, sticky="w", pady=4)
     tk.Button(button_frame, text="10. Food Cost Calculator", width=34, command=lambda : handle_choice("food_cost")).grid(row=3, column=1, sticky="w", pady=4)
     tk.Button(button_frame, text="11. Net Worth Calculator", width=34, command=lambda : handle_choice("net_worth")).grid(row=4, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="12. Appreciation/Depreciation Calculator", width=34, command=lambda : handle_choice("apr_dep")).grid(row=5, column=1, sticky='w', pady=4)
 
+    #tk.Button(root, text="File", width=16).pack(pady=16)
     tk.Button(root, text="Quit", width=16, command=root.destroy).pack(pady=16)
 
     root.mainloop()
