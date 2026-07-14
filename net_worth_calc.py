@@ -212,6 +212,11 @@ class NetWorthCalculator:
         worksheet["C2"] = "Asset Value"
         worksheet["D2"] = "Liabilities"
         worksheet["E2"] = "Liability Value"
+        worksheet["F3"] = "Total Asset Value"
+        worksheet["F4"] = "Total Liability Value"
+        worksheet["F5"] = "Total Net Worth"
+        worksheet["F6"] = "Net Worth Percentile"
+        worksheet["G2"] = "Full Information"
 
         for col in worksheet.columns:
             length = 0
