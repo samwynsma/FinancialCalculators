@@ -183,6 +183,15 @@ class NetWorthCalculator:
         liabilities = []
         asset_vals = []
         liability_vals = []
+        for i in range(len(self.amount_per_category)):
+            item_value = self.amount_per_category[i]
+            if item_value < 0:
+                liabilities.append(self.categories[i])
+                liability_vals.append(self.amount_per_category[i])
+            else:
+                assets.append(self.categories)
+                asset_vals.append(self.amount_per_category[i])
+        
         return self.file_exists
 
         
