@@ -172,12 +172,17 @@ class NetWorthCalculator:
         self.total = 0.0
         for item in self.amount_per_category:
             self.total += item
-        self.file_exists = self.generate_net_worth_document()
         self.get_percentile()
+        self.file_exists = self.generate_net_worth_document()
         self.result_label.config(text="Your net worth is " + str(self.total) + " which puts you at the " + str(self.percentile) + " percentile of Americans. Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Inheritance document complete", "Inheritance saved to InterestCalculation.xlsx.")
     
     def generate_net_worth_document(self):
+        percentile = self.percentile
+        assets = []
+        liabilities = []
+        asset_vals = []
+        liability_vals = []
         return self.file_exists
 
         
