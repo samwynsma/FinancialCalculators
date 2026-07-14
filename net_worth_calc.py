@@ -191,7 +191,35 @@ class NetWorthCalculator:
             else:
                 assets.append(self.categories)
                 asset_vals.append(self.amount_per_category[i])
+
+        worksheet = None
+        workbook = None
+
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+
+        worksheet.title = "Net Worth %d" % self.total
+
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
         
+
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating net worth documents.")
         return self.file_exists
 
         
