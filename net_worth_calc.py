@@ -192,6 +192,8 @@ class NetWorthCalculator:
                 assets.append(self.categories)
                 asset_vals.append(self.amount_per_category[i])
 
+        money_format = "$#,##0.00"
+
         worksheet = None
         workbook = None
 
@@ -205,6 +207,11 @@ class NetWorthCalculator:
 
         worksheet.title = "Net Worth %d" % self.total
 
+        worksheet["A1"] = "Net Worth Calculator"
+        worksheet["B2"] = "Assets"
+        worksheet["C2"] = "Asset Value"
+        worksheet["D2"] = "Liabilities"
+        worksheet["E2"] = "Liability Value"
 
         for col in worksheet.columns:
             length = 0
