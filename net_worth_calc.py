@@ -183,14 +183,20 @@ class NetWorthCalculator:
         liabilities = []
         asset_vals = []
         liability_vals = []
+        total_asset = 0.0
+        total_liability = 0.0
         for i in range(len(self.amount_per_category)):
             item_value = self.amount_per_category[i]
             if item_value < 0:
                 liabilities.append(self.categories[i])
                 liability_vals.append(self.amount_per_category[i])
+                total_liability -= self.amount_per_category[i]
             else:
                 assets.append(self.categories)
                 asset_vals.append(self.amount_per_category[i])
+                total_asset += self.amount_per_category[i]
+        
+        total_net = total_asset - total_liability
 
         money_format = "$#,##0.00"
 
@@ -217,6 +223,14 @@ class NetWorthCalculator:
         worksheet["F5"] = "Total Net Worth"
         worksheet["F6"] = "Net Worth Percentile"
         worksheet["G2"] = "Full Information"
+
+        for i in range(len(assets)):
+            worksheet["B%d" % (i+2)] = assets[i]
+            worksheet["C%d" % (i+2)] = asset_vals[i]
+
+        for i in range(len(liabilities)):
+            worksheet["D%d" % (i+2)] = liabilities[i]
+            worksheet["E%d" % (i+2)] = liability_vals[i]
 
         for col in worksheet.columns:
             length = 0
