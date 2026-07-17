@@ -231,6 +231,11 @@ class NetWorthCalculator:
         for i in range(len(liabilities)):
             worksheet["D%d" % (i+2)] = liabilities[i]
             worksheet["E%d" % (i+2)] = liability_vals[i]
+        
+        worksheet["G3"] = total_asset
+        worksheet["G4"] = total_liability
+        worksheet["G5"] = total_net
+        worksheet["G6"] = self.percentile
 
         for col in worksheet.columns:
             length = 0
