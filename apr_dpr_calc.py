@@ -32,7 +32,7 @@ class AppreciateDepreciateCalculator:
 
         header = tk.Label(
             window,
-            text="Net Worth Calculator",
+            text="Appreciation and Depreciation Calculator",
             font=("Segoe UI", 16, "bold"),
             wraplength=420,
             justify="center",
@@ -52,6 +52,10 @@ class AppreciateDepreciateCalculator:
         apr_frame = tk.Frame(window)
         apr_frame.pack(padx=20, pady=8, fill="x")
 
+        tk.Label(apr_frame, text="Asset Name:", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        self.item_entry = tk.Entry(apr_frame, width=28)
+        self.item_entry.grid(row=0, column=1, pady=6)
+
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
 
@@ -70,4 +74,6 @@ class AppreciateDepreciateCalculator:
 
 
 def increase_decrease(file_exists):
-    return file_exists
+    calculator = AppreciateDepreciateCalculator(file_exists)
+    calculator.create_gui()
+    return calculator.file_exists
