@@ -56,16 +56,20 @@ class AppreciateDepreciateCalculator:
         self.item_entry = tk.Entry(apr_frame, width=28)
         self.item_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(apr_frame, text="Current Value:", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        tk.Label(apr_frame, text="Current Value:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
         self.value_entry = tk.Entry(apr_frame, width=28)
-        self.value_entry.grid(row=0, column=1, pady=6)
+        self.value_entry.grid(row=1, column=1, pady=6)
 
         self.pay_freq_var = tk.StringVar(value="increasing")
-        tk.Label(apr_frame, text="Appreciating or Depreciating", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        tk.Label(apr_frame, text="Appreciating or Depreciating", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
         inc_dec_frame = tk.Frame(apr_frame)
-        inc_dec_frame.grid(row=1, column=1, columnspan=5, sticky="w", pady=6)
+        inc_dec_frame.grid(row=2, column=1, columnspan=5, sticky="w", pady=6)
         tk.Radiobutton(inc_dec_frame, text="Apr", variable=self.pay_freq_var, value="increasing").pack(side="left", padx=(0, 12))
         tk.Radiobutton(inc_dec_frame, text="Dpr", variable=self.pay_freq_var, value="decreasing").pack(side="left", padx=(0, 12))
+
+        tk.Label(apr_frame, text="Yearly Growth (%):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        self.value_entry = tk.Entry(apr_frame, width=28)
+        self.value_entry.grid(row=3, column=1, pady=6)
 
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
