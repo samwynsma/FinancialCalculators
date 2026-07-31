@@ -86,6 +86,9 @@ class AppreciateDepreciateCalculator:
     def on_calculate(self):
         return
     
+    def generate_apr_document(self):
+        return
+    
 
 
 def increase_decrease(file_exists):
