@@ -84,7 +84,20 @@ class AppreciateDepreciateCalculator:
         window.mainloop()
 
     def on_calculate(self):
-        return
+        try:
+            initial = self.parse_float(self.item_entry.get())
+            growth = self.parse_float(self.value_entry.get())
+        except:
+            messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
+            return
+
+        if growth < 0.0:
+            messagebox.showerror("Input error", "Growth must be positive.")
+            return
+
+        if(self.pay_freq_var.get() == "decreasing"):
+            growth = -growth
+
     
     def generate_apr_document(self):
         return
