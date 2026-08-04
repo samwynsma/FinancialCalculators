@@ -10,6 +10,7 @@ class AppreciateDepreciateCalculator:
         self.initial_value = 0.0
         self.is_growing = False
         self.apr_dpr_rate = 0.0
+        self.asset_name = ""
     
     def parse_float(self, raw_value):
         if raw_value is None:
@@ -91,16 +92,34 @@ class AppreciateDepreciateCalculator:
             messagebox.showerror("Input error", "Please enter valid numeric values for all fields.")
             return
 
+        if initial <= 0.0:
+            messagebox.showerror("Input error", "Initial value must be positive.")
+            return
+
         if growth < 0.0:
             messagebox.showerror("Input error", "Growth must be positive.")
+            return
+
+        if growth == 0.0:
+            messagebox.showerror("Input error", "If the growth is 0, the item is constant.")
             return
 
         if(self.pay_freq_var.get() == "decreasing"):
             growth = -growth
 
+        self.initial_value = initial
+        self.apr_dpr_rate = growth
+        self.is_growing = self.pay_freq_var.get()
+        self.asset_name = self.item_entry.get()
+
+        self.file_exists = self.generate_apr_document()
+        self.result_label.config(text="Results saved to InterestCalculation.xlsx")
+        messagebox.showinfo("Apr/Dpr document complete", "Apr/Dpr saved to InterestCalculation.xlsx.")
+
+
     
     def generate_apr_document(self):
-        return
+        return self.file_exists
     
 
 
