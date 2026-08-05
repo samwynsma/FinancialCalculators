@@ -55,7 +55,7 @@ def create_gui():
     button_frame.pack(padx=20, fill="x")
 
     utility_frame = tk.Frame(root)
-    utility_frame.pack(padx=20, fill="x")
+    utility_frame.pack(padx=20, anchor="center")
 
     def handle_choice(choice):
         nonlocal excelFileExists
@@ -100,8 +100,8 @@ def create_gui():
     tk.Button(button_frame, text="11. Net Worth Calculator", width=34, command=lambda : handle_choice("net_worth")).grid(row=4, column=1, sticky="w", pady=4)
     tk.Button(button_frame, text="12. Appreciation/Depreciation Calculator", width=34, command=lambda : handle_choice("apr_dep")).grid(row=5, column=1, sticky='w', pady=4)
 
-    tk.Button(utility_frame, text="File", width=16, command=lambda : open_file()).grid(row=0, column=0, sticky="w", pady=4)
-    tk.Button(utility_frame, text="Quit", width=16, command=root.destroy).grid(row=0, column=1, sticky='w', pady=4)
+    tk.Button(utility_frame, text="File", width=16, command=lambda : open_file()).grid(row=0, column=0, pady=4)
+    tk.Button(utility_frame, text="Quit", width=16, command=root.destroy).grid(row=0, column=1, pady=4)
 
     root.mainloop()
 
