@@ -116,9 +116,35 @@ class AppreciateDepreciateCalculator:
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
         messagebox.showinfo("Apr/Dpr document complete", "Apr/Dpr saved to InterestCalculation.xlsx.")
 
-
     
     def generate_apr_document(self):
+        value_set = []
+
+        worksheet = None
+        workbook = None
+        
+        if(not self.file_exists):
+            workbook = Workbook()
+            worksheet = workbook.active
+            self.file_exists = True
+        else:
+            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            worksheet = workbook.create_sheet()
+
+        for col in worksheet.columns:
+            length = 0
+            column = col[0].column_letter
+            for cell in col:
+                try:
+                    if(len(str(cell.value)) > length):
+                        length = len(str(cell.value))
+                except:
+                    pass
+            worksheet.column_dimensions[column].width = length + 2
+                
+        
+        workbook.save("InterestCalculation.xlsx")
+        print("Finished creating apr/dpr documents.")
         return self.file_exists
     
 
