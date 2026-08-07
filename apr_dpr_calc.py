@@ -72,6 +72,13 @@ class AppreciateDepreciateCalculator:
         self.value_entry = tk.Entry(apr_frame, width=28)
         self.value_entry.grid(row=3, column=1, pady=6)
 
+        self.period_var = tk.StringVar(value="yearly")
+        tk.Label(apr_frame, text="Frequency of Calculation", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        period_frame = tk.Frame(apr_frame)
+        period_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
+        tk.Radiobutton(period_frame, text="Year", variable=self.pay_freq_var, value="yearly").pack(side="left", padx=(0, 12))
+        tk.Radiobutton(period_frame, text="Month", variable=self.pay_freq_var, value="monthly").pack(side="left", padx=(0, 12))
+
         self.result_label = tk.Label(window, text="", font=("Segoe UI", 10), fg="green", wraplength=420, justify="center")
         self.result_label.pack(pady=(8, 0))
 
