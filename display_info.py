@@ -25,6 +25,15 @@ class GetExcelInformation:
         )
         header.pack()
 
+        instructions = tk.Label(
+            window,
+            text="Select a page from the excel file and see what's on it.",
+            font=("Segoe UI", 10),
+            wraplength=420,
+            justify="center",
+        )
+        instructions.pack(pady=(0, 10))
+
         window.grab_set()
         window.mainloop()
 

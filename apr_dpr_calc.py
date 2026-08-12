@@ -9,6 +9,7 @@ class AppreciateDepreciateCalculator:
         self.file_exists = file_exists
         self.initial_value = 0.0
         self.is_growing = False
+        self.freq = "yearly"
         self.apr_dpr_rate = 0.0
         self.asset_name = ""
     
@@ -118,6 +119,7 @@ class AppreciateDepreciateCalculator:
         self.apr_dpr_rate = growth
         self.is_growing = self.pay_freq_var.get()
         self.asset_name = self.item_entry.get()
+        self.freq = self.period_var.get()
 
         self.file_exists = self.generate_apr_document()
         self.result_label.config(text="Results saved to InterestCalculation.xlsx")
