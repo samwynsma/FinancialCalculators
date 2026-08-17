@@ -34,6 +34,12 @@ class GetExcelInformation:
         )
         instructions.pack(pady=(0, 10))
 
+        button_frame = tk.Frame(window)
+        button_frame.pack(pady=16)
+        
+        #tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+
         window.grab_set()
         window.mainloop()
 
