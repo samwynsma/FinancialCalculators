@@ -10,11 +10,25 @@ class ExcelDocument:
     def __init__(self):
         self.pages = 0
         self.page_list = []
+        self.current_page = 0
 
     def create_page(self, info):
         page = ExcelPage(info)
         self.page_list.append(page)
-        self.pages += 1
+        self.pages = len(self.page_list)
+        if self.pages == 1:
+            self.current_page = 0
+        return page
+
+    @property
+    def current_page_title(self):
+        if not self.page_list:
+            return "No page available"
+
+        page = self.page_list[self.current_page]
+        if getattr(page, "title", ""):
+            return page.title
+        return f"Page {self.current_page + 1}"
 
     def print_document_xls(self):
         workbook = Workbook()

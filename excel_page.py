@@ -6,12 +6,9 @@ from openpyxl import Workbook
 
 class ExcelPage:
 
-    def __init__(self):
-        self.columns = []
+    def __init__(self, info=None):
+        self.columns = info if info is not None else []
         self.title = ""
-
-    def __init__(self, info):
-        self.columns = info
 
     def add_column(self, col):
         self.columns.append(col)
