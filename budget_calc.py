@@ -7,6 +7,7 @@ import openpyxl
 
 class BudgetMaker:
     def __init__(self, file_exists=False):
+        self.excel_file = "InterestCalculation.xlsx"
         self.salary = -1.0
         self.family_size = -1
         self.pets = -1
@@ -217,7 +218,7 @@ class BudgetMaker:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
         
         worksheet.title = "Budget creator $%.2f" % info[0]
@@ -287,7 +288,7 @@ class BudgetMaker:
         self.generate_pie_chart(worksheet, 2, 3)
         self.generate_pie_chart(worksheet, 2, 4)
         self.generate_pie_chart(worksheet, 2, 5)
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating budget documents.")
 
             

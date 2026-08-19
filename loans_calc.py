@@ -7,6 +7,7 @@ from openpyxl import Workbook
 
 class LoanCalculator:
     def __init__(self, file_exists=False):
+        self.excel_file = "InterestCalculation.xlsx"
         self.starting_loan = 0.0
         self.interest_rate = 0.0
         self.amount_paid = 0.0
@@ -124,7 +125,7 @@ class LoanCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
 
         worksheet.title = "Loan %d" % int(self.starting_loan)
@@ -179,7 +180,7 @@ class LoanCalculator:
                     pass
             worksheet.column_dimensions[column].width = length + 2
 
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         return self.file_exists
 
 

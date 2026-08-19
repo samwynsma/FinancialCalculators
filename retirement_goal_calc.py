@@ -6,6 +6,7 @@ from openpyxl import Workbook
 
 class RetirementCalculator:
     def __init__(self, file_exists=False):
+        self.excel_file = "InterestCalculation.xlsx"
         self.monthly_needs = -1.0
         self.current_savings = -1.0
         self.growth_rate = -1.0
@@ -219,7 +220,7 @@ class RetirementCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
         
 
@@ -270,7 +271,7 @@ class RetirementCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
 
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating retirement documents.")
         return self.file_exists
         

@@ -6,6 +6,7 @@ from openpyxl import Workbook
 
 class HomeAffordabilityCalculator:
     def __init__(self, file_exists=False):
+        self.excel_file = "InterestCalculation.xlsx"
         self.down_payment = -1.0
         self.monthly_salary = -1.0
         self.interest_rate = -1.0
@@ -181,7 +182,7 @@ class HomeAffordabilityCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
 
         worksheet.title = "Home Calculator %d" % int(salary)
@@ -218,7 +219,7 @@ class HomeAffordabilityCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
 
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating home affordability documents.")
         return self.file_exists
 

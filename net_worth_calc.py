@@ -7,6 +7,7 @@ from openpyxl import Workbook
 class NetWorthCalculator:
     def __init__(self, file_exists = False):
         self.file_exists = file_exists
+        self.excel_file = "InterestCalculation.xlsx"
         self.categories = []
         self.amount_per_category = []
         self.total = 0.0
@@ -250,7 +251,7 @@ class NetWorthCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
 
         worksheet.title = "Net Worth %d" % self.total
@@ -291,7 +292,7 @@ class NetWorthCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
 
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating net worth documents.")
         return self.file_exists
 

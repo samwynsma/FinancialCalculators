@@ -7,6 +7,7 @@ from openpyxl.chart import BarChart, Reference
 
 class InterestCalculator:
     def __init__(self, file_exists=False):
+        self.excel_file = "InterestCalculation.xlsx"
         self.starting_value = 0.0
         self.interest_rate = 0.0
         self.time = -1
@@ -184,7 +185,7 @@ class InterestCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
         
         worksheet.title = "Investment %d" % int(self.starting_value)
@@ -218,7 +219,7 @@ class InterestCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
         self.generate_graph(worksheet)
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating financial documents.")
         return self.file_exists
     

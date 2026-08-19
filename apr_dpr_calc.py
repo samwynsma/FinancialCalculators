@@ -7,6 +7,7 @@ from openpyxl import Workbook
 class AppreciateDepreciateCalculator:
     def __init__(self, file_exists = False):
         self.file_exists = file_exists
+        self.excel_file = "InterestCalculation.xlsx"
         self.initial_value = 0.0
         self.is_growing = False
         self.freq = "yearly"
@@ -137,7 +138,7 @@ class AppreciateDepreciateCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
 
         for col in worksheet.columns:
@@ -152,7 +153,7 @@ class AppreciateDepreciateCalculator:
             worksheet.column_dimensions[column].width = length + 2
                 
         
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating apr/dpr documents.")
         return self.file_exists
     

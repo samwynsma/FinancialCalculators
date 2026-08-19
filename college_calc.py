@@ -5,7 +5,8 @@ import openpyxl
 from openpyxl import Workbook
 
 class CollegeSavingsCalculator:
-    def __init__(self, file_exists):
+    def __init__(self, file_exists=False):
+        self.excel_file = "InterestCalculation.xlsx"
         self.starting_value = -1.0
         self.interest_rate = -1.0
         self.monthly_invest = -1.0
@@ -155,7 +156,7 @@ class CollegeSavingsCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
         
         worksheet.title = "College Start %d" % int(self.starting_value)
@@ -185,7 +186,7 @@ class CollegeSavingsCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
 
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating college savings documents.")
         return self.file_exists
     
@@ -214,7 +215,7 @@ class CollegeSavingsCalculator:
             worksheet = workbook.active
             self.file_exists = True
         else:
-            workbook = openpyxl.load_workbook("InterestCalculation.xlsx")
+            workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
         
         worksheet.title = "College Goal %d" % int(self.goal)
@@ -245,7 +246,7 @@ class CollegeSavingsCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
 
-        workbook.save("InterestCalculation.xlsx")
+        workbook.save(self.excel_file)
         print("Finished creating college savings documents.")
         return self.file_exists
 
