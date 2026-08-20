@@ -34,10 +34,14 @@ class ExcelDocument:
         workbook = Workbook()
         worksheet = workbook.active
 
-        for page in self.page_list:
+        for page_index, page in enumerate(self.page_list):
+            if page_index > 0:
+                worksheet = workbook.create_sheet()
+
             for item in page.columns:
                 for row in item:
                     print(row)
+            
 
         workbook.save("FinancialDocuments.xlsx")
         print("XLS document created.")
