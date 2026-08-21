@@ -38,9 +38,9 @@ class ExcelDocument:
             if page_index > 0:
                 worksheet = workbook.create_sheet()
 
-            for item in page.columns:
-                for row in item:
-                    print(row)
+            for column_index, column in enumerate(page.columns, start=1):
+                for row_index, value in enumerate(column, start=1):
+                    worksheet.cell(row=row_index, column=column_index, value=value)
             
 
         workbook.save("FinancialDocuments.xlsx")
