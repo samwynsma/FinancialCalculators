@@ -91,16 +91,17 @@ class GetExcelInformation:
         button_frame.pack(pady=16)
 
         tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
+        tk.Button(button_frame, text="Export XLS", width=16, command=self.export_xls).grid(row=0, column=1, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
 
     def export_csv(self):
-        return
+        self.document.print_document_csv()
 
     def export_xls(self):
-        return
+        self.document.print_document_xls()
 
 
 def display_info(document=None):
