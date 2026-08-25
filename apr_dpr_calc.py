@@ -116,6 +116,10 @@ class AppreciateDepreciateCalculator:
         if(self.pay_freq_var.get() == "decreasing"):
             growth = -growth
 
+        if(growth < -100.0):
+            messagebox.showerror("Input error", "Value cannot depreciate more than its original value")
+            return
+
         self.initial_value = initial
         self.apr_dpr_rate = growth
         self.is_growing = self.pay_freq_var.get()
@@ -129,6 +133,16 @@ class AppreciateDepreciateCalculator:
     
     def generate_apr_document(self):
         value_set = []
+        interest = self.apr_dpr_rate
+        if(self.freq == "monthly"):
+            interest /= 12.0
+
+        value_set.append(self.initial_value)
+        current_value = self.initial_value
+        if(self.freq == "yearly"):
+            for i in range(20):
+                current_value = current_value * (1.0 + self.apr_dpr_rate / 100.0)
+                value_set.append(current_value)
 
         worksheet = None
         workbook = None
