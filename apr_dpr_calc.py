@@ -143,6 +143,10 @@ class AppreciateDepreciateCalculator:
             for i in range(20):
                 current_value = current_value * (1.0 + self.apr_dpr_rate / 100.0)
                 value_set.append(current_value)
+        elif(self.freq == "monthly"):
+            for i in range(120):
+                current_value = current_value * (1.0 + self.apr_dpr_rate / 100.0)
+                value_set.append(current_value)
 
         worksheet = None
         workbook = None
@@ -154,6 +158,8 @@ class AppreciateDepreciateCalculator:
         else:
             workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
+
+        worksheet.title = "AprDpr %d" % self.initial_value
 
         for col in worksheet.columns:
             length = 0
