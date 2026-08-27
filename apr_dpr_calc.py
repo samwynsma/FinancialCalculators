@@ -114,7 +114,10 @@ class AppreciateDepreciateCalculator:
             return
 
         if(self.pay_freq_var.get() == "decreasing"):
+            self.is_growing = False
             growth = -growth
+        else:
+            self.is_growing = True
 
         if(growth < -100.0):
             messagebox.showerror("Input error", "Value cannot depreciate more than its original value")
@@ -122,7 +125,6 @@ class AppreciateDepreciateCalculator:
 
         self.initial_value = initial
         self.apr_dpr_rate = growth
-        self.is_growing = self.pay_freq_var.get()
         self.asset_name = self.item_entry.get()
         self.freq = self.period_var.get()
 
@@ -159,7 +161,17 @@ class AppreciateDepreciateCalculator:
             workbook = openpyxl.load_workbook(self.excel_file)
             worksheet = workbook.create_sheet()
 
-        worksheet.title = "AprDpr %d" % self.initial_value
+        if self.is_growing:
+            worksheet.title = "Appreciation %d" % self.initial_value
+            worksheet["A1"] = "Appreciation of Asset"
+            worksheet["A3"] = "Appreciation Rate: %.2f" % self.apr_dpr_rate
+        else:
+            worksheet.title = "Depreciation %d" % self.initial_value
+            worksheet["A1"] = "Depreciation of Asset"
+            worksheet["A3"] = "Depreciation Rate: %.2f" % self.apr_dpr_rate
+
+        worksheet["A2"] = "Starting value: $%.2f" % self.initial_value
+        
 
         for col in worksheet.columns:
             length = 0
