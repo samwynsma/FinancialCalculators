@@ -171,6 +171,14 @@ class AppreciateDepreciateCalculator:
             worksheet["A3"] = "Depreciation Rate: %.2f" % self.apr_dpr_rate
 
         worksheet["A2"] = "Starting value: $%.2f" % self.initial_value
+        worksheet["A4"] = "Frequency rating: %s" % self.freq
+
+        worksheet["B1"] = "Month"
+        worksheet["C1"] = "Asset Value"
+
+        for i in range(len(value_set)):
+            worksheet["B%d" % (i+2)] = i
+            worksheet["C%d" % (i+2)] = value_set[i]
         
 
         for col in worksheet.columns:
