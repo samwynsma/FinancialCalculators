@@ -4,6 +4,7 @@ from tkinter import messagebox
 from apr_dpr_calc import increase_decrease
 from budget_calc import budget_maker
 from college_calc import college_save
+from excel_doc import ExcelDocument
 from food_calc import food_coster
 from home_calc import house_affordability
 from inherit_calc import inherit_money
@@ -13,6 +14,8 @@ from net_worth_calc import net_worth
 from retirement_goal_calc import retirement_goal
 from retirement_calc import retirement_dur
 from take_home_calc import take_home
+
+document = ExcelDocument()
 
 
 def launch_calculator(calc_func, excelFileExists, title):
