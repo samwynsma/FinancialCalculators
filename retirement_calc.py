@@ -4,8 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class RetirementDurationCalculator:
-    def __init__(self, file_exists = False):
+    def __init__(self, file_exists = False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.current_savings = -1.0
         self.growth_rate = -1.0
@@ -319,7 +323,10 @@ class RetirementDurationCalculator:
         
 
 
-def retirement_dur(file_exists):
-    calculator = RetirementDurationCalculator(file_exists)
+def retirement_dur(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = RetirementDurationCalculator(document=document_or_file_exists)
+    else:
+        calculator = RetirementDurationCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists

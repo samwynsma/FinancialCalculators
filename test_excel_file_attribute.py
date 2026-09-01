@@ -1,6 +1,7 @@
 from apr_dpr_calc import AppreciateDepreciateCalculator
 from budget_calc import BudgetMaker
 from college_calc import CollegeSavingsCalculator
+from excel_doc import ExcelDocument
 from food_calc import FoodCostCalculator
 from home_calc import HomeAffordabilityCalculator
 from inherit_calc import InheritanceCalculator
@@ -33,3 +34,10 @@ def test_each_calculator_has_excel_file_path():
         calculator = calculator_class()
         assert hasattr(calculator, "excel_file")
         assert calculator.excel_file == "InterestCalculation.xlsx"
+
+
+def test_each_calculator_accepts_excel_document():
+    document = ExcelDocument()
+    for calculator_class in CALCULATORS:
+        calculator = calculator_class(document=document)
+        assert calculator.document is document

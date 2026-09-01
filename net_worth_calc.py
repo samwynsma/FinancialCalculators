@@ -4,8 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class NetWorthCalculator:
-    def __init__(self, file_exists = False):
+    def __init__(self, file_exists = False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.file_exists = file_exists
         self.excel_file = "InterestCalculation.xlsx"
         self.categories = []
@@ -298,7 +302,10 @@ class NetWorthCalculator:
 
         
 
-def net_worth(file_exists):
-    calculator = NetWorthCalculator(file_exists)
+def net_worth(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = NetWorthCalculator(document=document_or_file_exists)
+    else:
+        calculator = NetWorthCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists

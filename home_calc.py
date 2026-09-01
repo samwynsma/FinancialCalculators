@@ -4,15 +4,19 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class HomeAffordabilityCalculator:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.down_payment = -1.0
         self.monthly_salary = -1.0
         self.interest_rate = -1.0
         self.additional_debt = -1.0
         self.mortgage_type = "30 year"
-        self.file_exists = False
+        self.file_exists = file_exists
 
     def parse_float(self, raw_value):
         if raw_value is None:
@@ -224,7 +228,10 @@ class HomeAffordabilityCalculator:
         return self.file_exists
 
 
-def house_affordability(file_exists):
-    calculator = HomeAffordabilityCalculator(file_exists)
+def house_affordability(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = HomeAffordabilityCalculator(document=document_or_file_exists)
+    else:
+        calculator = HomeAffordabilityCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists

@@ -4,8 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class CollegeSavingsCalculator:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.starting_value = -1.0
         self.interest_rate = -1.0

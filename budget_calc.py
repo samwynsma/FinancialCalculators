@@ -5,8 +5,12 @@ from openpyxl import Workbook
 from openpyxl.chart import PieChart, Reference
 import openpyxl
 
+from excel_doc import ExcelDocument
+
+
 class BudgetMaker:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.salary = -1.0
         self.family_size = -1

@@ -17,19 +17,15 @@ from take_home_calc import take_home
 
 document = ExcelDocument()
 
-
-def launch_calculator(calc_func, excelFileExists, title):
+def launch_calculator(calc_func, document_obj, title):
     messagebox.showinfo(
         title,
         "This calculator will open a new window, while you will then use to input further information."
     )
-    result = calc_func(excelFileExists)
-    return result
+    return calc_func(document_obj)
 
 
 def create_gui():
-    excelFileExists = False
-
     root = tk.Tk()
     root.title("Sam's Financial Planning")
     root.geometry("600x410")
@@ -61,31 +57,30 @@ def create_gui():
     utility_frame.pack(padx=20, anchor="center")
 
     def handle_choice(choice):
-        nonlocal excelFileExists
         if choice == "investments":
-            excelFileExists = launch_calculator(generate_interest, excelFileExists, "Investments")
+            launch_calculator(generate_interest, document, "Investments")
         elif choice == "loan":
-            excelFileExists = launch_calculator(loan_payoff, excelFileExists, "Loan Payoff Time")
+            launch_calculator(loan_payoff, document, "Loan Payoff Time")
         elif choice == "retirement":
-            excelFileExists = launch_calculator(retirement_goal, excelFileExists, "Retirement Goals")
+            launch_calculator(retirement_goal, document, "Retirement Goals")
         elif choice == "budget":
-            excelFileExists = launch_calculator(budget_maker, excelFileExists, "Budget Calculator")
+            launch_calculator(budget_maker, document, "Budget Calculator")
         elif choice == "duration":
-            excelFileExists = launch_calculator(retirement_dur, excelFileExists, "Retirement Duration")
+            launch_calculator(retirement_dur, document, "Retirement Duration")
         elif choice == "take_home":
-            excelFileExists = launch_calculator(take_home, excelFileExists, "Take Home Pay Calculator")
+            launch_calculator(take_home, document, "Take Home Pay Calculator")
         elif choice == "college":
-            excelFileExists = launch_calculator(college_save, excelFileExists, "College Savings Calculator")
+            launch_calculator(college_save, document, "College Savings Calculator")
         elif choice == "new house":
-            excelFileExists = launch_calculator(house_affordability, excelFileExists, "House Affordability Calculator")
+            launch_calculator(house_affordability, document, "House Affordability Calculator")
         elif choice == "inheritance":
-            excelFileExists = launch_calculator(inherit_money, excelFileExists, "Inheritance Calculator")
+            launch_calculator(inherit_money, document, "Inheritance Calculator")
         elif choice == "food_cost":
-            excelFileExists = launch_calculator(food_coster, excelFileExists, "Food Cost Calculator")
+            launch_calculator(food_coster, document, "Food Cost Calculator")
         elif choice == "net_worth":
-            excelFileExists = launch_calculator(net_worth, excelFileExists, "Net Worth Calculator")
+            launch_calculator(net_worth, document, "Net Worth Calculator")
         elif choice == "apr_dep":
-            excelFileExists = launch_calculator(increase_decrease, excelFileExists, "Appreciation/Depreciation Calculator")
+            launch_calculator(increase_decrease, document, "Appreciation/Depreciation Calculator")
     
     def open_file():
         return

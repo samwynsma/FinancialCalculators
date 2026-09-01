@@ -4,8 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class FoodCostCalculator:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.family_size = -1
         self.meals_per_day = -1
@@ -236,7 +240,10 @@ class FoodCostCalculator:
     
 
 
-def food_coster(file_exists):
-    calculator = FoodCostCalculator(file_exists)
+def food_coster(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = FoodCostCalculator(document=document_or_file_exists)
+    else:
+        calculator = FoodCostCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists

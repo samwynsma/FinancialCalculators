@@ -5,8 +5,12 @@ import openpyxl
 from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
 
+from excel_doc import ExcelDocument
+
+
 class InterestCalculator:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.starting_value = 0.0
         self.interest_rate = 0.0
@@ -242,8 +246,11 @@ class InterestCalculator:
         return
 
 
-def generate_interest(fileExists):
-    calculator = InterestCalculator(fileExists)
+def generate_interest(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = InterestCalculator(document=document_or_file_exists)
+    else:
+        calculator = InterestCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists
 

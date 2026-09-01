@@ -4,9 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
 
 class LoanCalculator:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.starting_loan = 0.0
         self.interest_rate = 0.0
@@ -184,7 +187,10 @@ class LoanCalculator:
         return self.file_exists
 
 
-def loan_payoff(fileExists):
-    calculator = LoanCalculator(fileExists)
+def loan_payoff(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = LoanCalculator(document=document_or_file_exists)
+    else:
+        calculator = LoanCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists

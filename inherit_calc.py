@@ -4,8 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class InheritanceCalculator:
-    def __init__(self, file_exists=False):
+    def __init__(self, file_exists=False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.total_inheritance = 0.0
         self.estate_tax = -1.0
@@ -209,7 +213,10 @@ class InheritanceCalculator:
         return self.file_exists
 
 
-def inherit_money(file_exists):
-    calculator = InheritanceCalculator(file_exists)
+def inherit_money(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = InheritanceCalculator(document=document_or_file_exists)
+    else:
+        calculator = InheritanceCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
-    return file_exists
+    return calculator.file_exists

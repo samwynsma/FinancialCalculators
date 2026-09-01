@@ -4,8 +4,12 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+from excel_doc import ExcelDocument
+
+
 class TakeHomeCalculator:
-    def __init__(self, file_exists = False):
+    def __init__(self, file_exists = False, document=None):
+        self.document = document if document is not None else ExcelDocument()
         self.excel_file = "InterestCalculation.xlsx"
         self.pay_rate = -1.0
         self.percent_tax_rate = -1.0
@@ -257,7 +261,10 @@ class TakeHomeCalculator:
 
     
 
-def take_home(file_exists):
-    calculator = TakeHomeCalculator(file_exists)
+def take_home(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = TakeHomeCalculator(document=document_or_file_exists)
+    else:
+        calculator = TakeHomeCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists
