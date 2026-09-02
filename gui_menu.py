@@ -4,6 +4,7 @@ from tkinter import messagebox
 from apr_dpr_calc import increase_decrease
 from budget_calc import budget_maker
 from college_calc import college_save
+from display_info import display_info
 from excel_doc import ExcelDocument
 from food_calc import food_coster
 from home_calc import house_affordability
@@ -83,7 +84,7 @@ def create_gui():
             launch_calculator(increase_decrease, document, "Appreciation/Depreciation Calculator")
     
     def open_file():
-        return
+        display_info(document)
 
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
