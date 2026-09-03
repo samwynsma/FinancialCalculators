@@ -57,6 +57,12 @@ class GetExcelInformation:
         )
         current_page_label.pack()
 
+        navigation_frame = tk.Frame(window)
+        navigation_frame.pack(pady=16)
+
+        tk.Button(navigation_frame, text="Prev", width=16).grid(row=0, column=0, padx=6)
+        tk.Button(navigation_frame, text="Next", width=16).grid(row=0, column=1, padx=6)
+
         page_frame = tk.Frame(window)
         page_frame.pack(pady=12)
 
@@ -87,6 +93,8 @@ class GetExcelInformation:
             )
             empty_label.pack()
 
+        
+
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
@@ -102,6 +110,12 @@ class GetExcelInformation:
 
     def export_xls(self):
         self.document.print_document_xls()
+
+    def next_page(self):
+        return
+
+    def prev_page(self):
+        return
 
 
 def display_info(document=None):
