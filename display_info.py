@@ -11,6 +11,7 @@ class GetExcelInformation:
     def __init__(self, document=None):
         self.document = document if document is not None else ExcelDocument()
         self.current_page = self.document.current_page
+        self.page_num = 0
 
     def get_current_page_name(self):
         if not self.document.page_list:
@@ -60,7 +61,13 @@ class GetExcelInformation:
         navigation_frame = tk.Frame(window)
         navigation_frame.pack(pady=16)
 
-        tk.Button(navigation_frame, text="Prev", width=16).grid(row=0, column=0, padx=6)
+        prev_button = tk.Button(
+            navigation_frame,
+            text="Prev",
+            width=16,
+            state=tk.DISABLED if self.current_page == 0 else tk.NORMAL,
+        )
+        prev_button.grid(row=0, column=0, padx=6)
         tk.Button(navigation_frame, text="Next", width=16).grid(row=0, column=1, padx=6)
 
         page_frame = tk.Frame(window)
@@ -82,6 +89,7 @@ class GetExcelInformation:
                         self.current_page = index
                         self.document.current_page = index
                         current_page_label.config(text=f"Current page: {self.get_current_page_name()}")
+                        prev_button.config(state=tk.DISABLED if index == 0 else tk.NORMAL)
                         break
 
             selected_page.trace_add("write", update_selected_page)
