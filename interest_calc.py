@@ -223,6 +223,10 @@ class InterestCalculator:
             worksheet.column_dimensions[column].width = length + 2
         
         self.generate_graph(worksheet)
+        page_info = []
+        for row in worksheet.iter_rows(values_only=True):
+            page_info.append(list(row))
+        self.document.create_page(page_info)
         workbook.save(self.excel_file)
         print("Finished creating financial documents.")
         return self.file_exists
