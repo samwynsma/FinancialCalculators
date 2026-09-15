@@ -292,6 +292,10 @@ class BudgetMaker:
         self.generate_pie_chart(worksheet, 2, 3)
         self.generate_pie_chart(worksheet, 2, 4)
         self.generate_pie_chart(worksheet, 2, 5)
+        page_info = []
+        for row in worksheet.iter_rows(values_only=True):
+            page_info.append(list(row))
+        self.document.create_page(page_info)
         workbook.save(self.excel_file)
         print("Finished creating budget documents.")
 
@@ -316,7 +320,10 @@ class BudgetMaker:
         return
 
 
-def budget_maker(file_exists):
-    calculator = BudgetMaker(file_exists)
+def budget_maker(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = BudgetMaker(document=document_or_file_exists)
+    else:
+        calculator = BudgetMaker(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists
