@@ -248,15 +248,21 @@ class CollegeSavingsCalculator:
                 except:
                     pass
             worksheet.column_dimensions[column].width = length + 2
-        
 
+        page_info = []
+        for row in worksheet.iter_rows(values_only=True):
+            page_info.append(list(row))
+        self.document.create_page(page_info)
         workbook.save(self.excel_file)
         print("Finished creating college savings documents.")
         return self.file_exists
 
 
 
-def college_save(file_exists):
-    calculator = CollegeSavingsCalculator(file_exists)
+def college_save(document_or_file_exists=None):
+    if isinstance(document_or_file_exists, ExcelDocument):
+        calculator = CollegeSavingsCalculator(document=document_or_file_exists)
+    else:
+        calculator = CollegeSavingsCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
-    return file_exists
+    return calculator.file_exists
