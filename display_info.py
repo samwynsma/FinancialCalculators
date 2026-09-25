@@ -68,7 +68,13 @@ class GetExcelInformation:
             state=tk.DISABLED if self.current_page == 0 else tk.NORMAL,
         )
         prev_button.grid(row=0, column=0, padx=6)
-        tk.Button(navigation_frame, text="Next", width=16).grid(row=0, column=1, padx=6)
+        next_button = tk.Button(
+            navigation_frame,
+            text="Next",
+            width=16,
+            state=tk.DISABLED if self.current_page + 1 == self.document.pages else tk.NORMAL,
+        )
+        next_button.grid(row=0, column=1, padx=6)
 
         page_frame = tk.Frame(window)
         page_frame.pack(pady=12)
