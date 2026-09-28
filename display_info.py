@@ -192,10 +192,10 @@ class GetExcelInformation:
         self.document.print_document_xls()
 
     def next_page(self):
-        return
+        self.current_page += 1
 
     def prev_page(self):
-        return
+        self.current_page -= 1
 
 
 def display_info(document=None):
