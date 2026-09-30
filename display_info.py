@@ -130,14 +130,9 @@ class GetExcelInformation:
         def refresh_page_content():
             lines = []
             if self.document.page_list:
-                columns = self.document.page_list[self.current_page].columns
-                row_count = max((len(column) for column in columns), default=0)
-                for row_index in range(row_count):
-                    values = [
-                        str(column[row_index]) if row_index < len(column) else ""
-                        for column in columns
-                    ]
-                    lines.append(" | ".join(values))
+                rows = self.document.page_list[self.current_page].columns
+                for row in rows:
+                    lines.append(" | ".join(str(value) for value in row))
             if not lines:
                 lines.append("No information is available on this page.")
 
