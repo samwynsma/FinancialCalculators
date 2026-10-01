@@ -175,7 +175,8 @@ class GetExcelInformation:
 
         tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=6)
         tk.Button(button_frame, text="Export XLS", width=16, command=self.export_xls).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Help", width=16).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=6)
 
         window.grab_set()
         window.mainloop()
