@@ -1,0 +1,14 @@
+Menu.1: The investments calculator gives you a calculator that allows you to determine how your money will grow if you invest it.
+Menu.2: Loan payoff time will tell you how long it will take to pay off your loan given a certain monthly payment, and how much total money you will pay.
+Menu.3: Retirement goals helps you determine how much money you need to save for your retirement, based on how much money you will need per month after retirement.
+Menu.4: Budget calculator helps you calculate your budget and figure out where you can save money.
+Menu.5: Retirement duration helps you determine how long your current retirement savings will last.
+Menu.6: Take home pay calculator allows you to turn an hourly salary into a monthly salary for budgeting, or any other similar calculation.
+Menu.7: Child savings calculator helps you determine how much money your kid will have for college if you set aside a certain amount for them.
+Menu.8: Home affordability calculator takes your salary, down payment, and current debt and calculates what kind of house you can afford.
+Menu.9: Inheritance calculator determines how much you will inherit, based on the money, subtracting for taxes and debt.
+Menu.10: Food cost calculator helps you determine how much money you currently spend on food and how much you could spend on food.
+Menu.11: Net worth calculator takes your assets and liabilities and compares you to all Americans, giving you a percentile.
+Menu.12: Appreciation/Deprecation calculator allows you to see how an asset will change in value over time.
+Menu.13: The file button will allow you to see all the calculations you've done so far and create an excel file to take it with you.
+Menu.14: You don't need help with this.
