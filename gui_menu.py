@@ -15,6 +15,7 @@ from net_worth_calc import net_worth
 from retirement_goal_calc import retirement_goal
 from retirement_calc import retirement_dur
 from take_home_calc import take_home
+import app_help
 
 document = ExcelDocument()
 
@@ -86,6 +87,10 @@ def create_gui():
     def open_file():
         display_info(document)
 
+    def get_help():
+        app_help.activate_help()
+        
+
     tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
     tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
     tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement")).grid(row=2, column=0, sticky="w", pady=4)
@@ -100,7 +105,7 @@ def create_gui():
     tk.Button(button_frame, text="12. Appreciation/Depreciation Calculator", width=34, command=lambda : handle_choice("apr_dep")).grid(row=5, column=1, sticky='w', pady=4)
 
     tk.Button(utility_frame, text="File", width=16, command=lambda : open_file()).grid(row=0, column=0, pady=4)
-    tk.Button(utility_frame, text="Help", width=16).grid(row=0, column=1, pady=4)
+    tk.Button(utility_frame, text="Help", width=16, command=lambda : get_help()).grid(row=0, column=1, pady=4)
     tk.Button(utility_frame, text="Quit", width=16, command=root.destroy).grid(row=0, column=2, pady=4)
 
     root.mainloop()
