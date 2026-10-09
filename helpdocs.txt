@@ -12,3 +12,9 @@ Menu.11: Net worth calculator takes your assets and liabilities and compares you
 Menu.12: Appreciation/Deprecation calculator allows you to see how an asset will change in value over time.
 Menu.13: The file button will allow you to see all the calculations you've done so far and create an excel file to take it with you.
 Menu.14: You don't need help with this.
+Appreciation.1: An asset is something that you own that has value. This can be a house, a car, or a rare valuable.
+Appreciation.2: Current value is the estimated monetary value of the asset.
+Appreciation.3: Indicate whether the asset's value is increasing or decreasing over time.
+Appreciation.4: Yearly growth/reduction is how much you think your asset is changing. A car depreciates fast during its early years and then slows down after five years.
+Appreciation.5: Frequency of calculation allows you to get a glimpse of the value depreciation at either a yearly or monthly rate.
+Appreciation.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
