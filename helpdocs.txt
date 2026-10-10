@@ -18,3 +18,20 @@ Appreciation.3: Indicate whether the asset's value is increasing or decreasing o
 Appreciation.4: Yearly growth/reduction is how much you think your asset is changing. A car depreciates fast during its early years and then slows down after five years.
 Appreciation.5: Frequency of calculation allows you to get a glimpse of the value depreciation at either a yearly or monthly rate.
 Appreciation.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+Appreciation.7: You don't need help with this.
+Budget.1: Monthly take home pay should can be calculated using the take home calculator. Make sure to remove 401K and taxes from your take home before placing it here.
+Budget.2: Number of humans in your family. Kids might be cheap now, but wait until they eat more than you. Used for the other budget calculations.
+Budget.3: Number of non-humans in your family. Used for the other budget calculations.
+Budget.4: Number of cars you own. This is important for determining insurnace costs.
+Budget.5: Current monthly mortgage/rent. Do not include utilities in this. This is only for your monthly payment.
+Budget.6: Monthly car loan payment is for all your cars combined. Do not do individual cars.
+Budget.7: Add up your minimum monthly paymens from personal loans, credit cards, student loans, or medical debt. Anything that isn't a car or home.
+Budget.8: Utilities includes gas, electric, power, internet, and other necessary monthly payments. It does not include subscriptions.
+Budget.9: For monthly insurance costs, include car, house, renters, and medical insurance. If you own pets, include their insurance too.
+Budget.10: Monthly food costs includes both food you prepare at home and food you get when you go out to eat.
+Budget.11: Monthly medical costs outside of insurance, like copays.
+Budget.12: This is for any monetary donations that you give to church or charity.
+Budget.13: This is money that you give to investments, not money that you take out of investments. If you pull money out of your investments, include that in monthly income.
+Budget.14: Put any cost not listed in the other categories here.
+Budget.15: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+Budget.16: You don't need help with this.
