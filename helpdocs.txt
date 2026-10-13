@@ -35,3 +35,10 @@ Budget.13: This is money that you give to investments, not money that you take o
 Budget.14: Put any cost not listed in the other categories here.
 Budget.15: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
 Budget.16: You don't need help with this.
+College.1: This is how much money your college savings account for your child starts with. A typical amount is often 10,000 to 25,000 dollars at birth.
+College.2: Growth rate is how much the college savings account will grow over time. 6-8% is a good conservative estimate.
+College.3: While some people choose to put aside money for their child and leave it, others add more to the account over time. This is for those who do that.
+College.4: This is the amount that you want to have at the end. Use this for the goal calculation.
+College.5: Total calculation requires starting value, growth rate, and monthly addition. It does not require a goal, as it calculates that.
+College.6: The goal calculation requires a starting value, growth rate, and goal. It does not require a monthly addition, as it calculates that.
+College.7: You don't need help with this.

@@ -4,6 +4,7 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+import app_help
 from excel_doc import ExcelDocument
 
 
@@ -81,11 +82,14 @@ class CollegeSavingsCalculator:
 
         tk.Button(button_frame, text="Total Calc", width=16, command=self.find_total).grid(row=0, column=0, padx=6)
         tk.Button(button_frame, text="Goal Calc", width=16, command=self.find_goal).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Help", width=16).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=2, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=6)
 
         window.grab_set()
         window.mainloop()
+
+    def get_help():
+        app_help.activate_help()
 
     def simulate_vals(self, has_add = True, has_goal = True):
         try:
