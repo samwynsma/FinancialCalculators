@@ -42,3 +42,11 @@ College.4: This is the amount that you want to have at the end. Use this for the
 College.5: Total calculation requires starting value, growth rate, and monthly addition. It does not require a goal, as it calculates that.
 College.6: The goal calculation requires a starting value, growth rate, and goal. It does not require a monthly addition, as it calculates that.
 College.7: You don't need help with this.
+Food.1: When calculating the number of people in your family, include all human members, regardless of their age.
+Food.2: Average meals per day per person. This will be multiplied by the number of people in your family to give you a cost estimate.
+Food.3: Snacks per day per person. This will also be multiplied by the number of people in your famiy to give you a cost estimate.
+Food.4: Current money spent on food each week should include restaurants, take out, doordash, quick service meals and deliveries. Food you make from home is only part of your food spend.
+Food.5: How much your target meal spend is per person per day. This will allow me to give you a good estimate on how much you should spend given your family size.
+Food.6: How much your snack spend is per person per day. This will allow the app to give you a good estimate on how much you should send on snacks.
+Food.7: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+Food.8: You don't need help with this.
