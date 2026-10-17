@@ -57,3 +57,10 @@ Home.4: Interest rate is the interest rate on your loan, not the market interest
 Home.5: Loan length ranges from 10 years to 30 years. Longer duration means a higher monthly payment, but a lower total interest paid.
 Home.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
 Home.7: You don't need help with this.
+Inherit.1: Total inheritance amount is the total amount that the person has left behind. If you are the only inheritor, or you only know your amount, put the amount here.
+Inherit.2: Estate tax differs from state to state and based on the amount that you are going to inherit. Expect something around 10-20% for anything larger than 1 million dollars.
+Inherit.3: Percent inherited is the amount of that inheritance that will end up in your hands. If you are the only inheriter, or you only know your amount, put a "1" in this box.
+Inherit.4: Total debt is the amount of debt that you have, not the amount that the bequeathor had. When inheriting money from someone else, the FIRST thing you should do is pay off your own debts.
+Inherit.5: Personal spend percent is how much of the remainder that you plan to spend on yourself, be it travel, vacations, or other fun.
+Inherit.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+Inherit.7: You don't need help with this.
