@@ -64,3 +64,11 @@ Inherit.4: Total debt is the amount of debt that you have, not the amount that t
 Inherit.5: Personal spend percent is how much of the remainder that you plan to spend on yourself, be it travel, vacations, or other fun.
 Inherit.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
 Inherit.7: You don't need help with this.
+Interest.1: Starting investment amount can be zero. This is how much money you have at the start of the period.
+Interest.2: Annual growth rate. This will be adjusted accordingly for month to month calculations. 7% is a good estimate for a decent mutual fund, 3.5% is good for a high yield savings account.
+Interest.3: Choose between having it calculate every month or every year.
+Interest.4: Duration of investment in years or months. Remember that twelve months = a year. If you want ten years, then 120 months.
+Interest.5: If you want your investment to grow faster, adding more money to it will work well. Just a little can be massive. To see, add that to this.
+Interest.6: Put here how much money you will add to your investment every month or year.
+Interest.7: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+Interest.8: You don't need help with this.
