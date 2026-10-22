@@ -4,6 +4,7 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+import app_help
 from excel_doc import ExcelDocument
 
 
@@ -109,11 +110,15 @@ class NetWorthCalculator:
         button_frame.pack(pady=16)
 
         tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Percentiles", width=16, command=self.display_ranges).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Percentiles", width=16, command=self.display_ranges).grid(row=0, column=3, padx=6)
 
         window.grab_set()
         window.mainloop()
+
+    def get_help():
+        app_help.activate_help()
 
     def get_percentile_values(self):
         return [-76472.00, -45428.00, -26450.00, -14983.00, -9878.00, -4381.00, -831.80, 1.00, 182.20, 440.20, 

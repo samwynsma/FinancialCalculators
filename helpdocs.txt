@@ -77,3 +77,11 @@ Loan.2: Annual interest rate for your loan. This will be low for a house or car 
 Loan.3: Put down the amount of money that you want to pay each month.
 Loan.4: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
 Loan.5: You don't need help with this.
+NetWorth.1: Put an asset or liability here. A home is an asset, but a mortgage is a liability. List them separately.
+NetWorth.2: This is how much the asset or liability is valued at.
+NetWorth.3: An asset includes a car, house, land, mutual fund, savings account, checking account, or other owned thing.
+NetWorth.4: A liability includes a loan, unpaid credit card, mortgage, car loan, or anything that you do not own but pay on.
+NetWorth.5: This box displays your assets and your liabilities.
+NetWorth.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+NetWorth.7: Click this to see a 2023 chart of networths by percentile in the USA.
+NetWorth.8: You don't need help with this.
