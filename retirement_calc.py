@@ -4,6 +4,7 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+import app_help
 from excel_doc import ExcelDocument
 
 
@@ -103,10 +104,14 @@ class RetirementDurationCalculator:
 
         tk.Button(button_frame, text="Duration", width=16, command=self.calculate_duration).grid(row=0, column=0, padx=6)
         tk.Button(button_frame, text="Scenarios", width=16, command=self.calculate_scenarios).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=2, padx=6)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=6)
 
         window.grab_set()
         window.mainloop()
+
+    def get_help():
+        app_help.activate_help()
 
     def simulate_vals(self, has_needs=True):
         try:

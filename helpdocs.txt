@@ -85,3 +85,12 @@ NetWorth.5: This box displays your assets and your liabilities.
 NetWorth.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
 NetWorth.7: Click this to see a 2023 chart of networths by percentile in the USA.
 NetWorth.8: You don't need help with this.
+RetDuration.1: This is how much money you currently have in savings. Only include investments that you can pull from. Houses and other assets do not count.
+RetDuration.2: Annual interest rate here means rate of growth on the account. Remember that your account keeps growing, even after you retire. A good investment account grows at 7-8% a year.
+RetDuration.3: In your monthly needs, include all your needs. You can use the budget calculator to determine how much you need.
+RetDuration.4: If both you and your spouse get social security, include both amounts together. Otherwise, just include one amount.
+RetDuration.5: Not all jobs have a pension. If you get a pension, put it here. You may also include any other non-investment permanent income, like a perpetuity account, in this box. I would also include rental income.
+RetDuration.6: Put the number of years you expect to live in the rest of your life. The calculation will take account of this and add five, in case you live five years longer.
+RetDuration.7: The duration calculator takes the money, interest, needs, social security, and pension and determines how long your account will last based on your criteria.
+RetDuration.8: The scenarios calculator calculates a variety of scenarios and then sends your information to the file page. Go to the file page at the end to see all of your calculations.
+RetDuration.9: You don't need help with this.
