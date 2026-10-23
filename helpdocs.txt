@@ -94,3 +94,11 @@ RetDuration.6: Put the number of years you expect to live in the rest of your li
 RetDuration.7: The duration calculator takes the money, interest, needs, social security, and pension and determines how long your account will last based on your criteria.
 RetDuration.8: The scenarios calculator calculates a variety of scenarios and then sends your information to the file page. Go to the file page at the end to see all of your calculations.
 RetDuration.9: You don't need help with this.
+RetGoal.1: Current savings is the amount of money that you currently have.
+RetGoal.2: The annual interest rate is how fast your savings/investments are growing. 6-7% is good for an investment account, 3.5-4% is good for a high yield savings account.
+RetGoal.3: Calculate your monthly needs using the budget calculator, but leave an additional 20% for medicare and other expenses.
+RetGoal.4: Your current age. It's never too late to begin investing.
+RetGoal.5: Your retirement age is the age that you want to retire. To get the maximum social security benefits, retire at 67 or later. Retirement at 70 is what I would recommend, unless your job is physically taxing.
+RetGoal.6: Your life expectancy is how long you expect to live. If you don't know what to put here, take your family history and add five years, ten if they died from something that is now cured.
+RetGoal.7: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+RetGoal.8: You don't need help with this.
