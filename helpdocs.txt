@@ -102,3 +102,10 @@ RetGoal.5: Your retirement age is the age that you want to retire. To get the ma
 RetGoal.6: Your life expectancy is how long you expect to live. If you don't know what to put here, take your family history and add five years, ten if they died from something that is now cured.
 RetGoal.7: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
 RetGoal.8: You don't need help with this.
+TakeHome.1: This is your current pay rate. Do not adjust for taxes here.
+TakeHome.2: This is where you put your salary, or where you put your hourly if you are on hours. Salaried employees should use their salary time calculation, usually year.
+TakeHome.3: Subtract out your taxes. This includes state tax, city tax, federal tax, and social security.
+TakeHome.4: Any 401K or IRA investment percent should be put here.
+TakeHome.5: Take home frequency is what you want to calculate for. This is used for the budgeting here.
+TakeHome.6: This button will calculate your result and send your information to the file page. Go to the file page at the end to see all of your calculations.
+TakeHome.7: You don't need help with this.
