@@ -26,7 +26,7 @@ class GetExcelInformation:
         window = tk.Toplevel()
         self.window = window
         window.title("Financial Information Window")
-        window.geometry("460x520")
+        window.geometry("500x520")
         window.minsize(360, 360)
 
         header = tk.Label(
@@ -110,7 +110,7 @@ class GetExcelInformation:
         content_frame = tk.Frame(window)
         content_frame.pack(fill=tk.BOTH, expand=True, padx=12, pady=(0, 8))
 
-        page_content = tk.Text(content_frame, wrap=tk.NONE, state=tk.DISABLED)
+        page_content = tk.Text(content_frame, wrap=tk.NONE, height=10, state=tk.DISABLED)
         vertical_scrollbar = tk.Scrollbar(
             content_frame, orient=tk.VERTICAL, command=page_content.yview
         )
@@ -171,12 +171,12 @@ class GetExcelInformation:
             refresh_page_content()
 
         button_frame = tk.Frame(window)
-        button_frame.pack(pady=16)
+        button_frame.pack(side=tk.BOTTOM, pady=16)
 
-        tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Export XLS", width=16, command=self.export_xls).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Help", width=16).grid(row=0, column=2, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=6)
+        tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=0)
+        tk.Button(button_frame, text="Export XLS", width=16, command=self.export_xls).grid(row=0, column=1, padx=0)
+        tk.Button(button_frame, text="Help", width=16).grid(row=0, column=2, padx=0)
+        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=0)
 
         window.grab_set()
         window.mainloop()
