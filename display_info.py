@@ -4,6 +4,7 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
 
+import app_help
 from excel_doc import ExcelDocument
 
 
@@ -175,7 +176,7 @@ class GetExcelInformation:
 
         tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=0)
         tk.Button(button_frame, text="Export XLS", width=16, command=self.export_xls).grid(row=0, column=1, padx=0)
-        tk.Button(button_frame, text="Help", width=16).grid(row=0, column=2, padx=0)
+        tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=2, padx=0)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=0)
 
         window.grab_set()
@@ -192,6 +193,9 @@ class GetExcelInformation:
 
     def prev_page(self):
         self.current_page -= 1
+
+    def get_help():
+        app_help.activate_help()
 
 
 def display_info(document=None):
