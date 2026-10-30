@@ -24,7 +24,7 @@ def help_files(category, index):
 def activate_help():
     global is_help_mode
     is_help_mode = not is_help_mode
-    return
+    return is_help_mode
 
 def get_help(category, index):
     if is_help_mode:

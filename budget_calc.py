@@ -81,7 +81,9 @@ class BudgetMaker:
         inv_frame = tk.Frame(window)
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
-        tk.Label(inv_frame, text="Monthly post-tax take home pay ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        take_home_label = tk.Label(inv_frame, text="Monthly post-tax take home pay ($):", anchor="w")
+        take_home_label.grid(row=0, column=0, sticky="w", pady=6)
+        take_home_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 1))
         self.take_home_entry = tk.Entry(inv_frame, width=28)
         self.take_home_entry.grid(row=0, column=1, pady=6)
 
@@ -150,8 +152,12 @@ class BudgetMaker:
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        help_val = app_help.activate_help()
+        if(help_val):
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
     
     def on_calculate(self):
         try:
