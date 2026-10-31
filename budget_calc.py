@@ -87,55 +87,81 @@ class BudgetMaker:
         self.take_home_entry = tk.Entry(inv_frame, width=28)
         self.take_home_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Number of people in Family:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        family_label = tk.Label(inv_frame, text="Number of people in Family:", anchor="w")
+        family_label.grid(row=1, column=0, sticky="w", pady=6)
+        family_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 2))
         self.family_entry = tk.Entry(inv_frame, width=28)
         self.family_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Number of pets you own:", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        pets_label = tk.Label(inv_frame, text="Number of pets you own:", anchor="w")
+        pets_label.grid(row=2, column=0, sticky="w", pady=6)
+        pets_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 3))
         self.pets_entry = tk.Entry(inv_frame, width=28)
         self.pets_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Number of cars you own:", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        cars_label = tk.Label(inv_frame, text="Number of cars you own:", anchor="w")
+        cars_label.grid(row=3, column=0, sticky="w", pady=6)
+        cars_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 4))
         self.cars_entry = tk.Entry(inv_frame, width=28)
         self.cars_entry.grid(row=3, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monthly mortgage/rent payment ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        mortrent_label = tk.Label(inv_frame, text="Monthly mortgage/rent payment ($):", anchor="w")
+        mortrent_label.grid(row=4, column=0, sticky="w", pady=6)
+        mortrent_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 5))
         self.mortrent_entry = tk.Entry(inv_frame, width=28)
         self.mortrent_entry.grid(row=4, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monthly car loan payment ($):", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        car_loan_label = tk.Label(inv_frame, text="Monthly car loan payment ($):", anchor="w")
+        car_loan_label.grid(row=5, column=0, sticky="w", pady=6)
+        car_loan_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 6))
         self.car_loan_entry = tk.Entry(inv_frame, width=28)
         self.car_loan_entry.grid(row=5, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monthly other debt payments ($):", anchor="w").grid(row=6, column=0, sticky="w", pady=6)
+        other_debt_label = tk.Label(inv_frame, text="Monthly other debt payments ($):", anchor="w")
+        other_debt_label.grid(row=6, column=0, sticky="w", pady=6)
+        other_debt_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 7))
         self.other_debt_entry = tk.Entry(inv_frame, width=28)
         self.other_debt_entry.grid(row=6, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monthly utilities ($):", anchor="w").grid(row=0, column=2, sticky="w", pady=6)
+        utilities_label = tk.Label(inv_frame, text="Monthly utilities ($):", anchor="w")
+        utilities_label.grid(row=0, column=2, sticky="w", pady=6)
+        utilities_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 8))
         self.util_entry = tk.Entry(inv_frame, width=28)
         self.util_entry.grid(row=0, column=3, pady=6)
 
-        tk.Label(inv_frame, text="Monthly insurance costs ($):", anchor="w").grid(row=1, column=2, sticky="w", pady=6)
+        insurance_label = tk.Label(inv_frame, text="Monthly insurance costs ($):", anchor="w")
+        insurance_label.grid(row=1, column=2, sticky="w", pady=6)
+        insurance_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 9))
         self.insurance_entry = tk.Entry(inv_frame, width=28)
         self.insurance_entry.grid(row=1, column=3, pady=6)
 
-        tk.Label(inv_frame, text="Monthly food costs ($):", anchor="w").grid(row=2, column=2, sticky="w", pady=6)
+        food_label = tk.Label(inv_frame, text="Monthly food costs ($):", anchor="w")
+        food_label.grid(row=2, column=2, sticky="w", pady=6)
+        food_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 10))
         self.food_entry = tk.Entry(inv_frame, width=28)
         self.food_entry.grid(row=2, column=3, pady=6)
 
-        tk.Label(inv_frame, text="Monthly copays/medical costs ($):", anchor="w").grid(row=3, column=2, sticky="w", pady=6)
+        medical_label = tk.Label(inv_frame, text="Monthly copays/medical costs ($):", anchor="w")
+        medical_label.grid(row=3, column=2, sticky="w", pady=6)
+        medical_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 11))
         self.med_entry = tk.Entry(inv_frame, width=28)
         self.med_entry.grid(row=3, column=3, pady=6)
 
-        tk.Label(inv_frame, text="Monthly giving ($):", anchor="w").grid(row=4, column=2, sticky="w", pady=6)
+        giving_label = tk.Label(inv_frame, text="Monthly giving ($):", anchor="w")
+        giving_label.grid(row=4, column=2, sticky="w", pady=6)
+        giving_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 12))
         self.give_entry = tk.Entry(inv_frame, width=28)
         self.give_entry.grid(row=4, column=3, pady=6)
 
-        tk.Label(inv_frame, text="Monthly investments ($):", anchor="w").grid(row=5, column=2, sticky="w", pady=6)
+        investments_label = tk.Label(inv_frame, text="Monthly investments ($):", anchor="w")
+        investments_label.grid(row=5, column=2, sticky="w", pady=6)
+        investments_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 13))
         self.invest_entry = tk.Entry(inv_frame, width=28)
         self.invest_entry.grid(row=5, column=3, pady=6)
 
-        tk.Label(inv_frame, text="Monthly other costs ($):", anchor="w").grid(row=6, column=2, sticky="w", pady=6)
+        other_costs_label = tk.Label(inv_frame, text="Monthly other costs ($):", anchor="w")
+        other_costs_label.grid(row=6, column=2, sticky="w", pady=6)
+        other_costs_label.bind("<Button-1>", lambda event: app_help.get_help("Budget", 14))
         self.other_entry = tk.Entry(inv_frame, width=28)
         self.other_entry.grid(row=6, column=3, pady=6)
 
@@ -145,7 +171,17 @@ class BudgetMaker:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(
+            button_frame,
+            text="Calculate",
+            width=16,
+            command=self.on_calculate,
+        )
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind(
+            "<Button-1>",
+            lambda event: app_help.get_help("Budget", 15),
+        )
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
