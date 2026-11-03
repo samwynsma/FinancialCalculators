@@ -58,19 +58,27 @@ class CollegeSavingsCalculator:
         inv_frame = tk.Frame(window)
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
-        tk.Label(inv_frame, text="Starting Value ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        start_label = tk.Label(inv_frame, text="Starting Value ($):", anchor="w")
+        start_label.grid(row=0, column=0, sticky="w", pady=6)
+        start_label.bind("<Button-1>", lambda event: app_help.get_help("College", 1))
         self.start_entry = tk.Entry(inv_frame, width=28)
         self.start_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Growth Rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        growth_label = tk.Label(inv_frame, text="Growth Rate (%):", anchor="w")
+        growth_label.grid(row=1, column=0, sticky="w", pady=6)
+        growth_label.bind("<Button-1>", lambda event: app_help.get_help("College", 2))
         self.growth_entry = tk.Entry(inv_frame, width=28)
         self.growth_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monthly investment ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        monthly_label = tk.Label(inv_frame, text="Monthly investment ($):", anchor="w")
+        monthly_label.grid(row=2, column=0, sticky="w", pady=6)
+        monthly_label.bind("<Button-1>", lambda event: app_help.get_help("College", 3))
         self.monthly_entry = tk.Entry(inv_frame, width=28)
         self.monthly_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monetary Goal ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        goal_label = tk.Label(inv_frame, text="Monetary Goal ($):", anchor="w")
+        goal_label.grid(row=3, column=0, sticky="w", pady=6)
+        goal_label.bind("<Button-1>", lambda event: app_help.get_help("College", 4))
         self.goal_entry = tk.Entry(inv_frame, width=28)
         self.goal_entry.grid(row=3, column=1, pady=6)
 
@@ -80,16 +88,25 @@ class CollegeSavingsCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Total Calc", width=16, command=self.find_total).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Goal Calc", width=16, command=self.find_goal).grid(row=0, column=1, padx=6)
+        total_button = tk.Button(button_frame, text="Total Calc", width=16, command=self.find_total)
+        total_button.grid(row=0, column=0, padx=6)
+        total_button.bind("<Button-1>", lambda event: app_help.get_help("College", 5))
+
+        goal_button = tk.Button(button_frame, text="Goal Calc", width=16, command=self.find_goal)
+        goal_button.grid(row=0, column=1, padx=6)
+        goal_button.bind("<Button-1>", lambda event: app_help.get_help("College", 6))
+
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=2, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=6)
 
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        if app_help.activate_help():
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
 
     def simulate_vals(self, has_add = True, has_goal = True):
         try:
