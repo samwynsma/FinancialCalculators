@@ -60,27 +60,37 @@ class AppreciateDepreciateCalculator:
         apr_frame = tk.Frame(window)
         apr_frame.pack(padx=20, pady=8, fill="x")
 
-        tk.Label(apr_frame, text="Asset Name:", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        asset_label = tk.Label(apr_frame, text="Asset Name:", anchor="w")
+        asset_label.grid(row=0, column=0, sticky="w", pady=6)
+        asset_label.bind("<Button-1>", lambda event: app_help.get_help("Appreciation", 1))
         self.item_entry = tk.Entry(apr_frame, width=28)
         self.item_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(apr_frame, text="Current Value:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        value_label = tk.Label(apr_frame, text="Current Value:", anchor="w")
+        value_label.grid(row=1, column=0, sticky="w", pady=6)
+        value_label.bind("<Button-1>", lambda event: app_help.get_help("Appreciation", 2))
         self.value_entry = tk.Entry(apr_frame, width=28)
         self.value_entry.grid(row=1, column=1, pady=6)
 
         self.pay_freq_var = tk.StringVar(value="increasing")
-        tk.Label(apr_frame, text="Appreciating or Depreciating", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        direction_label = tk.Label(apr_frame, text="Appreciating or Depreciating", anchor="w")
+        direction_label.grid(row=2, column=0, sticky="w", pady=6)
+        direction_label.bind("<Button-1>", lambda event: app_help.get_help("Appreciation", 3))
         inc_dec_frame = tk.Frame(apr_frame)
         inc_dec_frame.grid(row=2, column=1, columnspan=5, sticky="w", pady=6)
         tk.Radiobutton(inc_dec_frame, text="Apr", variable=self.pay_freq_var, value="increasing").pack(side="left", padx=(0, 12))
         tk.Radiobutton(inc_dec_frame, text="Dpr", variable=self.pay_freq_var, value="decreasing").pack(side="left", padx=(0, 12))
 
-        tk.Label(apr_frame, text="Yearly Growth (%):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        growth_label = tk.Label(apr_frame, text="Yearly Growth (%):", anchor="w")
+        growth_label.grid(row=3, column=0, sticky="w", pady=6)
+        growth_label.bind("<Button-1>", lambda event: app_help.get_help("Appreciation", 4))
         self.value_entry = tk.Entry(apr_frame, width=28)
         self.value_entry.grid(row=3, column=1, pady=6)
 
         self.period_var = tk.StringVar(value="yearly")
-        tk.Label(apr_frame, text="Frequency of Calculation", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        frequency_label = tk.Label(apr_frame, text="Frequency of Calculation", anchor="w")
+        frequency_label.grid(row=4, column=0, sticky="w", pady=6)
+        frequency_label.bind("<Button-1>", lambda event: app_help.get_help("Appreciation", 5))
         period_frame = tk.Frame(apr_frame)
         period_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
         tk.Radiobutton(period_frame, text="Year", variable=self.pay_freq_var, value="yearly").pack(side="left", padx=(0, 12))
@@ -92,15 +102,20 @@ class AppreciateDepreciateCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: app_help.get_help("Appreciation", 6))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        if app_help.activate_help():
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
 
     def on_calculate(self):
         try:
