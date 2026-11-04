@@ -59,24 +59,34 @@ class HomeAffordabilityCalculator:
         home_frame = tk.Frame(window)
         home_frame.pack(padx=20, pady=8, fill="x")
 
-        tk.Label(home_frame, text="Down Payment ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        down_payment_label = tk.Label(home_frame, text="Down Payment ($):", anchor="w")
+        down_payment_label.grid(row=0, column=0, sticky="w", pady=6)
+        down_payment_label.bind("<Button-1>", lambda event: app_help.get_help("Home", 1))
         self.down_payment_entry = tk.Entry(home_frame, width=28)
         self.down_payment_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(home_frame, text="Monthly Post-Tax Salary ($):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        monthly_salary_label = tk.Label(home_frame, text="Monthly Post-Tax Salary ($):", anchor="w")
+        monthly_salary_label.grid(row=1, column=0, sticky="w", pady=6)
+        monthly_salary_label.bind("<Button-1>", lambda event: app_help.get_help("Home", 2))
         self.post_tax_entry = tk.Entry(home_frame, width=28)
         self.post_tax_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(home_frame, text="Additional Debt ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        additional_debt_label = tk.Label(home_frame, text="Additional Debt ($):", anchor="w")
+        additional_debt_label.grid(row=2, column=0, sticky="w", pady=6)
+        additional_debt_label.bind("<Button-1>", lambda event: app_help.get_help("Home", 3))
         self.added_debt_entry = tk.Entry(home_frame, width=28)
         self.added_debt_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(home_frame, text="Interest Rate (%):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        interest_label = tk.Label(home_frame, text="Interest Rate (%):", anchor="w")
+        interest_label.grid(row=3, column=0, sticky="w", pady=6)
+        interest_label.bind("<Button-1>", lambda event: app_help.get_help("Home", 4))
         self.interest_entry = tk.Entry(home_frame, width=28)
         self.interest_entry.grid(row=3, column=1, pady=6)
 
         self.loan_length_var = tk.StringVar(value = "30 year")
-        tk.Label(home_frame, text="Loan Length:", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        loan_length_label = tk.Label(home_frame, text="Loan Length:", anchor="w")
+        loan_length_label.grid(row=4, column=0, sticky="w", pady=6)
+        loan_length_label.bind("<Button-1>", lambda event: app_help.get_help("Home", 5))
         loan_length_frame = tk.Frame(home_frame)
         loan_length_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
         tk.Radiobutton(loan_length_frame, text="30 year", variable=self.loan_length_var, value="30 year").pack(side="left", padx=(0, 12))
@@ -91,16 +101,27 @@ class HomeAffordabilityCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", widt=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", self.on_calculate_help)
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
     
-    def get_help():
-        app_help.activate_help()
-    
+    def get_help(self):
+        help_val = app_help.activate_help()
+        if(help_val):
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
+
+    def on_calculate_help(self, event):
+        app_help.get_help("Home", 6)
+        if app_help.is_help_mode:
+            return "break"
+
     def on_calculate(self):
         try:
             down_payment = self.parse_float(self.down_payment_entry.get())
