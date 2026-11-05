@@ -72,27 +72,39 @@ class FoodCostCalculator:
         food_frame = tk.Frame(window)
         food_frame.pack(padx=20, pady=8, fill="x")
 
-        tk.Label(food_frame, text="Number of people in your family:", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        family_label = tk.Label(food_frame, text="Number of people in your family:", anchor="w")
+        family_label.grid(row=0, column=0, sticky="w", pady=6)
+        family_label.bind("<Button-1>", lambda event: app_help.get_help("Food", 1))
         self.family_entry = tk.Entry(food_frame, width=28)
         self.family_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(food_frame, text="Average meals per day per person:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        meals_label = tk.Label(food_frame, text="Average meals per day per person:", anchor="w")
+        meals_label.grid(row=1, column=0, sticky="w", pady=6)
+        meals_label.bind("<Button-1>", lambda event: app_help.get_help("Food", 2))
         self.day_meals_entry = tk.Entry(food_frame, width=28)
         self.day_meals_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(food_frame, text="Snacks per day per person:", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        snacks_label = tk.Label(food_frame, text="Snacks per day per person:", anchor="w")
+        snacks_label.grid(row=2, column=0, sticky="w", pady=6)
+        snacks_label.bind("<Button-1>", lambda event: app_help.get_help("Food", 3))
         self.day_snacks_entry = tk.Entry(food_frame, width=28)
         self.day_snacks_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(food_frame, text="Current money spent on food per week ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        current_spend_label = tk.Label(food_frame, text="Current money spent on food per week ($):", anchor="w")
+        current_spend_label.grid(row=3, column=0, sticky="w", pady=6)
+        current_spend_label.bind("<Button-1>", lambda event: app_help.get_help("Food", 4))
         self.current_spend_entry = tk.Entry(food_frame, width=28)
         self.current_spend_entry.grid(row=3, column=1, pady=6)
 
-        tk.Label(food_frame, text="Target Spend per meal ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        target_meal_label = tk.Label(food_frame, text="Target Spend per meal ($):", anchor="w")
+        target_meal_label.grid(row=4, column=0, sticky="w", pady=6)
+        target_meal_label.bind("<Button-1>", lambda event: app_help.get_help("Food", 5))
         self.target_meal_entry = tk.Entry(food_frame, width=28)
         self.target_meal_entry.grid(row=4, column=1, pady=6)
 
-        tk.Label(food_frame, text="Target Spend per snack ($):", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        target_snack_label = tk.Label(food_frame, text="Target Spend per snack ($):", anchor="w")
+        target_snack_label.grid(row=5, column=0, sticky="w", pady=6)
+        target_snack_label.bind("<Button-1>", lambda event: app_help.get_help("Food", 6))
         self.target_snack_entry = tk.Entry(food_frame, width=28)
         self.target_snack_entry.grid(row=5, column=1, pady=6)
 
@@ -102,15 +114,21 @@ class FoodCostCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: app_help.get_help("Food", 7))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        help_val = app_help.activate_help()
+        if(help_val):
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
 
     def on_calculate(self):
         try:

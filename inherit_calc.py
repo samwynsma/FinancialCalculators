@@ -59,23 +59,33 @@ class InheritanceCalculator:
         inh_frame = tk.Frame(window)
         inh_frame.pack(padx=20, pady=8, fill = "x")
 
-        tk.Label(inh_frame, text="Total Inheritance Amount ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        total_inheritance_label = tk.Label(inh_frame, text="Total Inheritance Amount ($):", anchor="w")
+        total_inheritance_label.grid(row=0, column=0, sticky="w", pady=6)
+        total_inheritance_label.bind("<Button-1>", lambda event: app_help.get_help("Inherit", 1))
         self.total_inh_entry = tk.Entry(inh_frame, width=28)
         self.total_inh_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(inh_frame, text="Estate Tax (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        estate_tax_label = tk.Label(inh_frame, text="Estate Tax (%):", anchor="w")
+        estate_tax_label.grid(row=1, column=0, sticky="w", pady=6)
+        estate_tax_label.bind("<Button-1>", lambda event: app_help.get_help("Inherit", 2))
         self.tax_entry = tk.Entry(inh_frame, width=28)
         self.tax_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(inh_frame, text="Percent Inherited (%):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        percent_inherited_label = tk.Label(inh_frame, text="Percent Inherited (%):", anchor="w")
+        percent_inherited_label.grid(row=2, column=0, sticky="w", pady=6)
+        percent_inherited_label.bind("<Button-1>", lambda event: app_help.get_help("Inherit", 3))
         self.percent_inherit_entry = tk.Entry(inh_frame, width=28)
         self.percent_inherit_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(inh_frame, text="Total Debt ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        debt_label = tk.Label(inh_frame, text="Total Debt ($):", anchor="w")
+        debt_label.grid(row=3, column=0, sticky="w", pady=6)
+        debt_label.bind("<Button-1>", lambda event: app_help.get_help("Inherit", 4))
         self.debt_entry = tk.Entry(inh_frame, width=28)
         self.debt_entry.grid(row=3, column=1, pady=6)
 
-        tk.Label(inh_frame, text="Personal Spend (%):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        personal_spend_label = tk.Label(inh_frame, text="Personal Spend (%):", anchor="w")
+        personal_spend_label.grid(row=4, column=0, sticky="w", pady=6)
+        personal_spend_label.bind("<Button-1>", lambda event: app_help.get_help("Inherit", 5))
         self.personal_entry = tk.Entry(inh_frame, width=28)
         self.personal_entry.grid(row=4, column=1, pady=6)
 
@@ -85,15 +95,21 @@ class InheritanceCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: app_help.get_help("Inherit", 6))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
         tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
 
         window.grab_set()
         window.mainloop()
     
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        help_val = app_help.activate_help()
+        if(help_val):
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
     
     def on_calculate(self):
         try:
