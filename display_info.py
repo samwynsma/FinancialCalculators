@@ -194,7 +194,7 @@ class GetExcelInformation:
     def prev_page(self):
         self.current_page -= 1
 
-    def get_help():
+    def get_help(self):
         app_help.activate_help()
 
 

@@ -58,7 +58,11 @@ def create_gui():
     utility_frame = tk.Frame(root)
     utility_frame.pack(padx=20, anchor="center")
 
-    def handle_choice(choice):
+    def handle_choice(choice, help_index):
+        if app_help.is_help_mode:
+            app_help.get_help("Menu", help_index)
+            return
+
         if choice == "investments":
             launch_calculator(generate_interest, document, "Investments")
         elif choice == "loan":
@@ -85,28 +89,41 @@ def create_gui():
             launch_calculator(increase_decrease, document, "Appreciation/Depreciation Calculator")
     
     def open_file():
+        if app_help.is_help_mode:
+            app_help.get_help("Menu", 13)
+            return
+
         display_info(document)
 
     def get_help():
-        app_help.activate_help()
-        
+        help_mode = app_help.activate_help()
+        help_button.config(text="Help: On" if help_mode else "Help")
 
-    tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments")).grid(row=0, column=0, sticky="w", pady=4)
-    tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan")).grid(row=1, column=0, sticky="w", pady=4)
-    tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement")).grid(row=2, column=0, sticky="w", pady=4)
-    tk.Button(button_frame, text="4. Budget Calculator", width=34, command=lambda: handle_choice("budget")).grid(row=3, column=0, sticky="w", pady=4)
-    tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda : handle_choice("duration")).grid(row=4, column=0, sticky="w", pady=4)
-    tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda : handle_choice("take_home")).grid(row=5, column=0, sticky="w", pady=4)
-    tk.Button(button_frame, text="7. Child Savings Calculator", width=34, command=lambda : handle_choice("college")).grid(row=0, column=1, sticky="w", pady=4)
-    tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda : handle_choice("new house")).grid(row=1, column=1, sticky="w", pady=4)
-    tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda : handle_choice("inheritance")).grid(row=2, column=1, sticky="w", pady=4)
-    tk.Button(button_frame, text="10. Food Cost Calculator", width=34, command=lambda : handle_choice("food_cost")).grid(row=3, column=1, sticky="w", pady=4)
-    tk.Button(button_frame, text="11. Net Worth Calculator", width=34, command=lambda : handle_choice("net_worth")).grid(row=4, column=1, sticky="w", pady=4)
-    tk.Button(button_frame, text="12. Appreciation/Depreciation Calculator", width=34, command=lambda : handle_choice("apr_dep")).grid(row=5, column=1, sticky='w', pady=4)
+    tk.Button(button_frame, text="1. Investments", width=34, command=lambda: handle_choice("investments", 1)).grid(row=0, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="2. Loan Payoff Time", width=34, command=lambda: handle_choice("loan", 2)).grid(row=1, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="3. Retirement Goals Calculator", width=34, command=lambda: handle_choice("retirement", 3)).grid(row=2, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="4. Budget Calculator", width=34, command=lambda: handle_choice("budget", 4)).grid(row=3, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="5. Retirement Duration Calculator", width=34, command=lambda: handle_choice("duration", 5)).grid(row=4, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="6. Take Home Pay Calculator", width=34, command=lambda: handle_choice("take_home", 6)).grid(row=5, column=0, sticky="w", pady=4)
+    tk.Button(button_frame, text="7. Child Savings Calculator", width=34, command=lambda: handle_choice("college", 7)).grid(row=0, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="8. Home Affordability Calculator", width=34, command=lambda: handle_choice("new house", 8)).grid(row=1, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="9. Inheritance Calculator", width=34, command=lambda: handle_choice("inheritance", 9)).grid(row=2, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="10. Food Cost Calculator", width=34, command=lambda: handle_choice("food_cost", 10)).grid(row=3, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="11. Net Worth Calculator", width=34, command=lambda: handle_choice("net_worth", 11)).grid(row=4, column=1, sticky="w", pady=4)
+    tk.Button(button_frame, text="12. Appreciation/Depreciation Calculator", width=34, command=lambda: handle_choice("apr_dep", 12)).grid(row=5, column=1, sticky="w", pady=4)
 
-    tk.Button(utility_frame, text="File", width=16, command=lambda : open_file()).grid(row=0, column=0, pady=4)
-    tk.Button(utility_frame, text="Help", width=16, command=lambda : get_help()).grid(row=0, column=1, pady=4)
-    tk.Button(utility_frame, text="Quit", width=16, command=root.destroy).grid(row=0, column=2, pady=4)
+    tk.Button(utility_frame, text="File", width=16, command=open_file).grid(row=0, column=0, pady=4)
+    help_button = tk.Button(utility_frame, text="Help", width=16, command=get_help)
+    help_button.grid(row=0, column=1, pady=4)
+
+    def quit_application():
+        if app_help.is_help_mode:
+            app_help.get_help("Menu", 14)
+            return
+
+        root.destroy()
+
+    tk.Button(utility_frame, text="Quit", width=16, command=quit_application).grid(row=0, column=2, pady=4)
 
     root.mainloop()
 
