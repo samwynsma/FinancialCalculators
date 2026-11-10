@@ -73,29 +73,41 @@ class InterestCalculator:
         inv_frame = tk.Frame(window)
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
-        tk.Label(inv_frame, text="Starting investment amount ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        starting_inv_label = tk.Label(inv_frame, text="Starting investment amount ($):", anchor="w")
+        starting_inv_label.grid(row=0, column=0, sticky="w", pady=6)
+        starting_inv_label.bind("<Button-1>", lambda event: app_help.get_help("Interest", 1))
         self.starting_inv_entry = tk.Entry(inv_frame, width=28)
         self.starting_inv_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        interest_rate_label = tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w")
+        interest_rate_label.grid(row=1, column=0, sticky="w", pady=6)
+        interest_rate_label.bind("<Button-1>", lambda event: app_help.get_help("Interest", 2))
         self.interest_rate_entry = tk.Entry(inv_frame, width=28)
         self.interest_rate_entry.grid(row=1, column=1, pady=6)
 
         self.period_type_var = tk.StringVar(value="year")
-        tk.Label(inv_frame, text="Period Type:", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        period_type_label = tk.Label(inv_frame, text="Period Type:", anchor="w")
+        period_type_label.grid(row=2, column=0, sticky="w", pady=6)
+        period_type_label.bind("<Button-1>", lambda event: app_help.get_help("Interest", 3))
         tk.Radiobutton(inv_frame, text="Year", variable=self.period_type_var, value="year").grid(row=2, column=1, sticky="w")
         tk.Radiobutton(inv_frame, text="Month", variable=self.period_type_var, value="month").grid(row=2, column=1)
 
-        tk.Label(inv_frame, text="Duration of investment:", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        duration_label = tk.Label(inv_frame, text="Duration of investment:", anchor="w")
+        duration_label.grid(row=3, column=0, sticky="w", pady=6)
+        duration_label.bind("<Button-1>", lambda event: app_help.get_help("Interest", 4))
         self.time_var = tk.Entry(inv_frame, width=28)
         self.time_var.grid(row=3, column=1, pady=6)
 
         self.will_add_var = tk.StringVar(value="yes")
-        tk.Label(inv_frame, text="Add investment each period?", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        will_add_label = tk.Label(inv_frame, text="Add investment each period?", anchor="w")
+        will_add_label.grid(row=4, column=0, sticky="w", pady=6)
+        will_add_label.bind("<Button-1>", lambda event: app_help.get_help("Interest", 5))
         tk.Radiobutton(inv_frame, text="Yes", variable=self.will_add_var, value="yes").grid(row=4, column=1, sticky="w")
         tk.Radiobutton(inv_frame, text="No", variable=self.will_add_var, value="no").grid(row=4, column=1)
 
-        tk.Label(inv_frame, text="Additional Investment ($):", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        added_investment_label = tk.Label(inv_frame, text="Additional Investment ($):", anchor="w")
+        added_investment_label.grid(row=5, column=0, sticky="w", pady=6)
+        added_investment_label.bind("<Button-1>", lambda event: app_help.get_help("Interest", 6))
         self.added_investment_var = tk.Entry(inv_frame, width=28)
         self.added_investment_var.grid(row=5, column=1, pady=6)
 
@@ -105,15 +117,22 @@ class InterestCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: app_help.get_help("Interest", 7))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
+        quit_button = tk.Button(button_frame, text="Quit", width=16, command=window.destroy)
+        quit_button.grid(row=0, column=2, padx=6)
+        quit_button.bind("<Button-1>", lambda event: app_help.get_help("Interest", 8))
 
         window.grab_set()
         window.mainloop()
     
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        if app_help.activate_help():
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
     
     def on_calculate(self):
         try:
@@ -262,4 +281,3 @@ def generate_interest(document_or_file_exists=None):
         calculator = InterestCalculator(file_exists=document_or_file_exists)
     calculator.create_gui()
     return calculator.file_exists
-
