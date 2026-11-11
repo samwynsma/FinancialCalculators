@@ -58,15 +58,21 @@ class LoanCalculator:
         form_frame = tk.Frame(window)
         form_frame.pack(padx=20, pady=8, fill="x")
 
-        tk.Label(form_frame, text="Starting loan amount ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        starting_loan_label = tk.Label(form_frame, text="Starting loan amount ($):", anchor="w")
+        starting_loan_label.grid(row=0, column=0, sticky="w", pady=6)
+        starting_loan_label.bind("<Button-1>", lambda event: app_help.get_help("Loan", 1))
         self.starting_loan_entry = tk.Entry(form_frame, width=28)
         self.starting_loan_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(form_frame, text="Annual interest rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        interest_rate_label = tk.Label(form_frame, text="Annual interest rate (%):", anchor="w")
+        interest_rate_label.grid(row=1, column=0, sticky="w", pady=6)
+        interest_rate_label.bind("<Button-1>", lambda event: app_help.get_help("Loan", 2))
         self.interest_rate_entry = tk.Entry(form_frame, width=28)
         self.interest_rate_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(form_frame, text="Monthly payment ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        amount_paid_label = tk.Label(form_frame, text="Monthly payment ($):", anchor="w")
+        amount_paid_label.grid(row=2, column=0, sticky="w", pady=6)
+        amount_paid_label.bind("<Button-1>", lambda event: app_help.get_help("Loan", 3))
         self.amount_paid_entry = tk.Entry(form_frame, width=28)
         self.amount_paid_entry.grid(row=2, column=1, pady=6)
 
@@ -76,15 +82,27 @@ class LoanCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: self.on_button_help(event, 4))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
+        quit_button = tk.Button(button_frame, text="Quit", width=16, command=window.destroy)
+        quit_button.grid(row=0, column=2, padx=6)
+        quit_button.bind("<Button-1>", lambda event: self.on_button_help(event, 5))
 
         window.grab_set()
         window.mainloop()
     
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        if app_help.activate_help():
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
+
+    def on_button_help(self, event, help_index):
+        app_help.get_help("Loan", help_index)
+        if app_help.is_help_mode:
+            return "break"
 
     def on_calculate(self):
         try:
