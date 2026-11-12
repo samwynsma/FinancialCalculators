@@ -60,16 +60,24 @@ class NetWorthCalculator:
         net_frame = tk.Frame(window)
         net_frame.pack(padx=20, pady=8, fill="x")
 
-        tk.Label(net_frame, text="Item:", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        item_label = tk.Label(net_frame, text="Item:", anchor="w")
+        item_label.grid(row=0, column=0, sticky="w", pady=6)
+        item_label.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 1))
         self.item_entry = tk.Entry(net_frame, width=28)
         self.item_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(net_frame, text="Value:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        value_label = tk.Label(net_frame, text="Value:", anchor="w")
+        value_label.grid(row=1, column=0, sticky="w", pady=6)
+        value_label.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 2))
         self.worth_entry = tk.Entry(net_frame, width=28)
         self.worth_entry.grid(row=1, column=1, pady=6)
 
-        tk.Button(net_frame, text="Asset", width=16, command=self.add_asset).grid(row=0, column=2, padx=6)
-        tk.Button(net_frame, text="Liability", width=16, command=self.add_liability).grid(row=1, column=2, padx=6)
+        asset_button = tk.Button(net_frame, text="Asset", width=16, command=self.add_asset)
+        asset_button.grid(row=0, column=2, padx=6)
+        asset_button.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 3))
+        liability_button = tk.Button(net_frame, text="Liability", width=16, command=self.add_liability)
+        liability_button.grid(row=1, column=2, padx=6)
+        liability_button.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 4))
 
         values_frame = tk.LabelFrame(window, text="Assets and Liabilities", padx=10, pady=10)
         values_frame.pack(padx=20, pady=(8, 10), fill="both", expand=True)
@@ -91,6 +99,7 @@ class NetWorthCalculator:
             pady=6,
         )
         self.results_text.pack(fill="both", expand=True)
+        self.results_text.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 5))
 
         results_canvas.pack(side="left", fill="both", expand=True)
         results_scrollbar.pack(side="right", fill="y")
@@ -109,16 +118,25 @@ class NetWorthCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 6))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
-        tk.Button(button_frame, text="Percentiles", width=16, command=self.display_ranges).grid(row=0, column=3, padx=6)
+        quit_button = tk.Button(button_frame, text="Quit", width=16, command=window.destroy)
+        quit_button.grid(row=0, column=2, padx=6)
+        quit_button.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 8))
+        percentiles_button = tk.Button(button_frame, text="Percentiles", width=16, command=self.display_ranges)
+        percentiles_button.grid(row=0, column=3, padx=6)
+        percentiles_button.bind("<Button-1>", lambda event: app_help.get_help("NetWorth", 7))
 
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        if app_help.activate_help():
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
 
     def get_percentile_values(self):
         return [-76472.00, -45428.00, -26450.00, -14983.00, -9878.00, -4381.00, -831.80, 1.00, 182.20, 440.20, 
