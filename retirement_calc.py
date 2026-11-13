@@ -72,27 +72,39 @@ class RetirementDurationCalculator:
         inv_frame = tk.Frame(window)
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
-        tk.Label(inv_frame, text="Current Savings ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        current_savings_label = tk.Label(inv_frame, text="Current Savings ($):", anchor="w")
+        current_savings_label.grid(row=0, column=0, sticky="w", pady=6)
+        current_savings_label.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 1))
         self.savings_entry = tk.Entry(inv_frame, width=28)
         self.savings_entry.grid(row=0, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        interest_rate_label = tk.Label(inv_frame, text="Annual interest rate (%):", anchor="w")
+        interest_rate_label.grid(row=1, column=0, sticky="w", pady=6)
+        interest_rate_label.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 2))
         self.interest_rate_entry = tk.Entry(inv_frame, width=28)
         self.interest_rate_entry.grid(row=1, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Monthly Needs ($):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        needs_label = tk.Label(inv_frame, text="Monthly Needs ($):", anchor="w")
+        needs_label.grid(row=2, column=0, sticky="w", pady=6)
+        needs_label.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 3))
         self.needs_entry = tk.Entry(inv_frame, width=28)
         self.needs_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Social Security ($):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        social_security_label = tk.Label(inv_frame, text="Social Security ($):", anchor="w")
+        social_security_label.grid(row=3, column=0, sticky="w", pady=6)
+        social_security_label.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 4))
         self.social_security_entry = tk.Entry(inv_frame, width=28)
         self.social_security_entry.grid(row=3, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Pension ($):", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        pension_label = tk.Label(inv_frame, text="Pension ($):", anchor="w")
+        pension_label.grid(row=4, column=0, sticky="w", pady=6)
+        pension_label.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 5))
         self.retirement_entry = tk.Entry(inv_frame, width=28)
         self.retirement_entry.grid(row=4, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Expected Remaining Life Expectancy:", anchor="w").grid(row=5, column=0, sticky="w", pady=6)
+        life_expectancy_label = tk.Label(inv_frame, text="Expected Remaining Life Expectancy:", anchor="w")
+        life_expectancy_label.grid(row=5, column=0, sticky="w", pady=6)
+        life_expectancy_label.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 6))
         self.meet_Jesus_entry = tk.Entry(inv_frame, width=28)
         self.meet_Jesus_entry.grid(row=5, column=1, pady=6)
 
@@ -102,16 +114,30 @@ class RetirementDurationCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Duration", width=16, command=self.calculate_duration).grid(row=0, column=0, padx=6)
-        tk.Button(button_frame, text="Scenarios", width=16, command=self.calculate_scenarios).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=2, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=6)
+        duration_button = tk.Button(button_frame, text="Duration", width=16, command=self.calculate_duration)
+        duration_button.grid(row=0, column=0, padx=6)
+        duration_button.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 7))
+
+        scenarios_button = tk.Button(button_frame, text="Scenarios", width=16, command=self.calculate_scenarios)
+        scenarios_button.grid(row=0, column=1, padx=6)
+        scenarios_button.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 8))
+
+        help_button = tk.Button(button_frame, text="Help", width=16, command=self.get_help)
+        help_button.grid(row=0, column=2, padx=6)
+
+        quit_button = tk.Button(button_frame, text="Quit", width=16, command=window.destroy)
+        quit_button.grid(row=0, column=3, padx=6)
+        quit_button.bind("<Button-1>", lambda event: app_help.get_help("RetDuration", 9))
 
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        help_val = app_help.activate_help()
+        if(help_val):
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
 
     def simulate_vals(self, has_needs=True):
         try:
