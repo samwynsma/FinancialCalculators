@@ -59,12 +59,16 @@ class TakeHomeCalculator:
         inv_frame = tk.Frame(window)
         inv_frame.pack(padx=20, pady=8, fill = "x")
 
-        tk.Label(inv_frame, text="Pay Rate ($):", anchor="w").grid(row=0, column=0, sticky="w", pady=6)
+        pay_rate_label = tk.Label(inv_frame, text="Pay Rate ($):", anchor="w")
+        pay_rate_label.grid(row=0, column=0, sticky="w", pady=6)
+        pay_rate_label.bind("<Button-1>", lambda event: app_help.get_help("TakeHome", 1))
         self.pay_entry = tk.Entry(inv_frame, width=28)
         self.pay_entry.grid(row=0, column=1, pady=6)
 
         self.pay_freq_var = tk.StringVar(value="hourly")
-        tk.Label(inv_frame, text="Pay Frequency:", anchor="w").grid(row=1, column=0, sticky="w", pady=6)
+        pay_freq_label = tk.Label(inv_frame, text="Pay Frequency:", anchor="w")
+        pay_freq_label.grid(row=1, column=0, sticky="w", pady=6)
+        pay_freq_label.bind("<Button-1>", lambda event: app_help.get_help("TakeHome", 2))
         pay_freq_frame = tk.Frame(inv_frame)
         pay_freq_frame.grid(row=1, column=1, columnspan=5, sticky="w", pady=6)
         tk.Radiobutton(pay_freq_frame, text="Year", variable=self.pay_freq_var, value="yearly").pack(side="left", padx=(0, 12))
@@ -73,16 +77,22 @@ class TakeHomeCalculator:
         tk.Radiobutton(pay_freq_frame, text="Day", variable=self.pay_freq_var, value="daily").pack(side="left", padx=(0, 12))
         tk.Radiobutton(pay_freq_frame, text="Hour", variable=self.pay_freq_var, value="hourly").pack(side="left")
 
-        tk.Label(inv_frame, text="Tax Rate (%):", anchor="w").grid(row=2, column=0, sticky="w", pady=6)
+        tax_label = tk.Label(inv_frame, text="Tax Rate (%):", anchor="w")
+        tax_label.grid(row=2, column=0, sticky="w", pady=6)
+        tax_label.bind("<Button-1>", lambda event: app_help.get_help("TakeHome", 3))
         self.tax_entry = tk.Entry(inv_frame, width=28)
         self.tax_entry.grid(row=2, column=1, pady=6)
 
-        tk.Label(inv_frame, text="Set Aside (%):", anchor="w").grid(row=3, column=0, sticky="w", pady=6)
+        aside_label = tk.Label(inv_frame, text="Set Aside (%):", anchor="w")
+        aside_label.grid(row=3, column=0, sticky="w", pady=6)
+        aside_label.bind("<Button-1>", lambda event: app_help.get_help("TakeHome", 4))
         self.aside_entry = tk.Entry(inv_frame, width=28)
         self.aside_entry.grid(row=3, column=1, pady=6)
 
         self.take_home_freq_var = tk.StringVar(value = "monthly")
-        tk.Label(inv_frame, text="Take Home Frequency:", anchor="w").grid(row=4, column=0, sticky="w", pady=6)
+        take_home_freq_label = tk.Label(inv_frame, text="Take Home Frequency:", anchor="w")
+        take_home_freq_label.grid(row=4, column=0, sticky="w", pady=6)
+        take_home_freq_label.bind("<Button-1>", lambda event: app_help.get_help("TakeHome", 5))
         take_home_freq_frame = tk.Frame(inv_frame)
         take_home_freq_frame.grid(row=4, column=1, columnspan=5, sticky="w", pady=6)
         tk.Radiobutton(take_home_freq_frame, text="Year", variable=self.take_home_freq_var, value="yearly").pack(side="left", padx=(0, 12))
@@ -97,15 +107,27 @@ class TakeHomeCalculator:
         button_frame = tk.Frame(window)
         button_frame.pack(pady=16)
 
-        tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate).grid(row=0, column=0, padx=6)
+        calculate_button = tk.Button(button_frame, text="Calculate", width=16, command=self.on_calculate)
+        calculate_button.grid(row=0, column=0, padx=6)
+        calculate_button.bind("<Button-1>", lambda event: self.on_button_help(event, 6))
         tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=1, padx=6)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=2, padx=6)
+        quit_button = tk.Button(button_frame, text="Quit", width=16, command=window.destroy)
+        quit_button.grid(row=0, column=2, padx=6)
+        quit_button.bind("<Button-1>", lambda event: self.on_button_help(event, 7))
 
         window.grab_set()
         window.mainloop()
 
-    def get_help():
-        app_help.activate_help()
+    def get_help(self):
+        if app_help.activate_help():
+            self.result_label.config(text="In Help Mode")
+        else:
+            self.result_label.config(text="")
+
+    def on_button_help(self, event, help_index):
+        app_help.get_help("TakeHome", help_index)
+        if app_help.is_help_mode:
+            return "break"
     
     def on_calculate(self):
         try:
