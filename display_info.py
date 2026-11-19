@@ -112,6 +112,9 @@ class GetExcelInformation:
         content_frame.pack(fill=tk.BOTH, expand=True, padx=12, pady=(0, 8))
 
         page_content = tk.Text(content_frame, wrap=tk.NONE, height=10, state=tk.DISABLED)
+        page_content.bind(
+            "<Button-1>", lambda event: app_help.get_help("InfoPage", 1)
+        )
         vertical_scrollbar = tk.Scrollbar(
             content_frame, orient=tk.VERTICAL, command=page_content.yview
         )
@@ -165,8 +168,16 @@ class GetExcelInformation:
                         break
 
             selected_page.trace_add("write", update_selected_page)
-            prev_button.config(command=lambda: show_page(self.current_page - 1))
-            next_button.config(command=lambda: show_page(self.current_page + 1))
+            prev_button.config(
+                command=lambda: self.run_or_show_help(
+                    2, lambda: show_page(self.current_page - 1)
+                )
+            )
+            next_button.config(
+                command=lambda: self.run_or_show_help(
+                    3, lambda: show_page(self.current_page + 1)
+                )
+            )
             refresh_page_content()
         else:
             refresh_page_content()
@@ -174,10 +185,28 @@ class GetExcelInformation:
         button_frame = tk.Frame(window)
         button_frame.pack(side=tk.BOTTOM, pady=16)
 
-        tk.Button(button_frame, text="Export CSV", width=16, command=self.export_csv).grid(row=0, column=0, padx=0)
-        tk.Button(button_frame, text="Export XLS", width=16, command=self.export_xls).grid(row=0, column=1, padx=0)
-        tk.Button(button_frame, text="Help", width=16, command=self.get_help).grid(row=0, column=2, padx=0)
-        tk.Button(button_frame, text="Quit", width=16, command=window.destroy).grid(row=0, column=3, padx=0)
+        tk.Button(
+            button_frame,
+            text="Export CSV",
+            width=16,
+            command=lambda: self.run_or_show_help(4, self.export_csv),
+        ).grid(row=0, column=0, padx=0)
+        tk.Button(
+            button_frame,
+            text="Export XLS",
+            width=16,
+            command=lambda: self.run_or_show_help(5, self.export_xls),
+        ).grid(row=0, column=1, padx=0)
+        self.help_button = tk.Button(
+            button_frame, text="Help", width=16, command=self.get_help
+        )
+        self.help_button.grid(row=0, column=2, padx=0)
+        tk.Button(
+            button_frame,
+            text="Quit",
+            width=16,
+            command=lambda: self.run_or_show_help(6, window.destroy),
+        ).grid(row=0, column=3, padx=0)
 
         window.grab_set()
         window.mainloop()
@@ -195,7 +224,15 @@ class GetExcelInformation:
         self.current_page -= 1
 
     def get_help(self):
-        app_help.activate_help()
+        help_mode = app_help.activate_help()
+        self.help_button.config(text="Help: On" if help_mode else "Help")
+        return help_mode
+
+    def run_or_show_help(self, help_index, action):
+        if app_help.is_help_mode:
+            app_help.get_help("InfoPage", help_index)
+            return
+        action()
 
 
 def display_info(document=None):
