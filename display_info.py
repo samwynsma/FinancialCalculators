@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import messagebox
 
 import openpyxl
 from openpyxl import Workbook
@@ -215,7 +214,54 @@ class GetExcelInformation:
         self.document.print_document_csv()
 
     def export_xls(self):
-        self.document.print_document_xls()
+        choice = tk.StringVar(value="cancel")
+        parent = getattr(self, "window", None)
+        dialog = tk.Toplevel(parent) if parent is not None else tk.Toplevel()
+        dialog.title("Export XLS")
+        dialog.resizable(False, False)
+        dialog.transient(parent) if parent is not None else None
+
+        tk.Label(
+            dialog,
+            text="Which pages do you want to export?",
+            padx=20,
+            pady=12,
+        ).pack()
+
+        def close(choice_value):
+            choice.set(choice_value)
+            dialog.destroy()
+
+        button_frame = tk.Frame(dialog)
+        button_frame.pack(padx=12, pady=(0, 12))
+        tk.Button(
+            button_frame,
+            text="All pages",
+            width=12,
+            command=lambda: close("all"),
+        ).grid(row=0, column=0, padx=4)
+        tk.Button(
+            button_frame,
+            text="This page",
+            width=12,
+            command=lambda: close("current"),
+        ).grid(row=0, column=1, padx=4)
+        tk.Button(
+            button_frame,
+            text="Cancel",
+            width=12,
+            command=lambda: close("cancel"),
+        ).grid(row=0, column=2, padx=4)
+
+        dialog.protocol("WM_DELETE_WINDOW", lambda: close("cancel"))
+        dialog.bind("<Escape>", lambda event: close("cancel"))
+        dialog.grab_set()
+        dialog.wait_window()
+
+        if choice.get() == "all":
+            self.document.print_document_xls()
+        elif choice.get() == "current":
+            self.document.print_document_xls(self.current_page)
 
     def next_page(self):
         self.current_page += 1

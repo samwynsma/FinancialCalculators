@@ -30,12 +30,17 @@ class ExcelDocument:
             return page.title
         return f"Page {self.current_page + 1}"
 
-    def print_document_xls(self):
+    def print_document_xls(self, page_index=None):
         workbook = Workbook()
         worksheet = workbook.active
 
-        for page_index, page in enumerate(self.page_list):
-            if page_index > 0:
+        if page_index is None:
+            pages = enumerate(self.page_list)
+        else:
+            pages = [(0, self.page_list[page_index])]
+
+        for output_index, page in pages:
+            if output_index > 0:
                 worksheet = workbook.create_sheet()
 
             for column_index, column in enumerate(page.columns, start=1):
