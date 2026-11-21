@@ -54,7 +54,7 @@ class ExcelDocument:
     def print_document_word(self):
         return
 
-    def print_document_csv(self):
+    def print_document_csv(self, page_index=None):
         return
 
 

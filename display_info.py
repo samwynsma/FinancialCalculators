@@ -211,13 +211,25 @@ class GetExcelInformation:
         window.mainloop()
 
     def export_csv(self):
-        self.document.print_document_csv()
+        choice = self.select_export_pages("CSV")
+        if choice == "all":
+            self.document.print_document_csv()
+        elif choice == "current":
+            self.document.print_document_csv(self.current_page)
 
     def export_xls(self):
+        choice = self.select_export_pages("XLS")
+
+        if choice == "all":
+            self.document.print_document_xls()
+        elif choice == "current":
+            self.document.print_document_xls(self.current_page)
+
+    def select_export_pages(self, file_type):
         choice = tk.StringVar(value="cancel")
         parent = getattr(self, "window", None)
         dialog = tk.Toplevel(parent) if parent is not None else tk.Toplevel()
-        dialog.title("Export XLS")
+        dialog.title(f"Export {file_type}")
         dialog.resizable(False, False)
         dialog.transient(parent) if parent is not None else None
 
@@ -258,10 +270,7 @@ class GetExcelInformation:
         dialog.grab_set()
         dialog.wait_window()
 
-        if choice.get() == "all":
-            self.document.print_document_xls()
-        elif choice.get() == "current":
-            self.document.print_document_xls(self.current_page)
+        return choice.get()
 
     def next_page(self):
         self.current_page += 1
