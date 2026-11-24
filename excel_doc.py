@@ -55,6 +55,24 @@ class ExcelDocument:
         return
 
     def print_document_csv(self, page_index=None):
-        return
+        workbook = Workbook()
+        worksheet = workbook.active
+        
+        if page_index is None:
+            pages = enumerate(self.page_list)
+        else:
+            pages = [(0, self.page_list[page_index])]
+        
+        for output_index, page in pages:
+            if output_index > 0:
+                worksheet = workbook.create_sheet()
+        
+            for column_index, column in enumerate(page.columns, start=1):
+                for row_index, value in enumerate(column, start=1):
+                    worksheet.cell(row=row_index, column=column_index, value=value)
+                    
+        
+        workbook.save("FinancialDocuments.csv")
+        print("XLS document created.")
 
 
