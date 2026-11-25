@@ -19,11 +19,7 @@ import app_help
 
 document = ExcelDocument()
 
-def launch_calculator(calc_func, document_obj, title):
-    messagebox.showinfo(
-        title,
-        "This calculator will open a new window, while you will then use to input further information."
-    )
+def launch_calculator(calc_func, document_obj):
     return calc_func(document_obj)
 
 
@@ -64,29 +60,29 @@ def create_gui():
             return
 
         if choice == "investments":
-            launch_calculator(generate_interest, document, "Investments")
+            launch_calculator(generate_interest, document)
         elif choice == "loan":
-            launch_calculator(loan_payoff, document, "Loan Payoff Time")
+            launch_calculator(loan_payoff, document)
         elif choice == "retirement":
-            launch_calculator(retirement_goal, document, "Retirement Goals")
+            launch_calculator(retirement_goal, document)
         elif choice == "budget":
-            launch_calculator(budget_maker, document, "Budget Calculator")
+            launch_calculator(budget_maker, document)
         elif choice == "duration":
-            launch_calculator(retirement_dur, document, "Retirement Duration")
+            launch_calculator(retirement_dur, document)
         elif choice == "take_home":
-            launch_calculator(take_home, document, "Take Home Pay Calculator")
+            launch_calculator(take_home, document)
         elif choice == "college":
-            launch_calculator(college_save, document, "College Savings Calculator")
+            launch_calculator(college_save, document)
         elif choice == "new house":
-            launch_calculator(house_affordability, document, "House Affordability Calculator")
+            launch_calculator(house_affordability, document)
         elif choice == "inheritance":
-            launch_calculator(inherit_money, document, "Inheritance Calculator")
+            launch_calculator(inherit_money, document)
         elif choice == "food_cost":
-            launch_calculator(food_coster, document, "Food Cost Calculator")
+            launch_calculator(food_coster, document)
         elif choice == "net_worth":
-            launch_calculator(net_worth, document, "Net Worth Calculator")
+            launch_calculator(net_worth, document)
         elif choice == "apr_dep":
-            launch_calculator(increase_decrease, document, "Appreciation/Depreciation Calculator")
+            launch_calculator(increase_decrease, document)
     
     def open_file():
         if app_help.is_help_mode:
