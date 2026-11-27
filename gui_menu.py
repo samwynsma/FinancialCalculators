@@ -25,13 +25,13 @@ def launch_calculator(calc_func, document_obj):
 
 def create_gui():
     root = tk.Tk()
-    root.title("Sam's Financial Planning")
+    root.title("Sam's 12 in 1 financial calculators")
     root.geometry("600x410")
     root.resizable(False, False)
 
     header = tk.Label(
         root,
-        text="Welcome to Sam's financial planning application",
+        text="Welcome to Sam's 12 in 1 financial calculator application!",
         font=("Segoe UI", 14, "bold"),
         wraplength=380,
         justify="center",
@@ -41,7 +41,7 @@ def create_gui():
 
     instructions = tk.Label(
         root,
-        text="Select a calculator below. Detailed questions will appear in the console.",
+        text="Select a calculator below. Detailed questions will appear in the console. Select File to see your calculated information.",
         font=("Segoe UI", 10),
         wraplength=380,
         justify="center",
